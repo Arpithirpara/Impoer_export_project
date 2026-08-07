@@ -1,0 +1,529 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fbfb 0%, #eff7f6 48%, #ffffff 100%);
+  color: #0f172a;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 48px;
+  padding: 72px 8% 48px;
+}
+
+.heroContent {
+  max-width: 680px;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  background: rgba(34, 197, 94, 0.12);
+  border-radius: 999px;
+  color: #047857;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-size: clamp(2.8rem, 3.5vw, 4.4rem);
+  line-height: 1.02;
+  margin: 0;
+}
+
+.hero p {
+  margin-top: 24px;
+  color: #475569;
+  line-height: 1.9;
+  font-size: 1.05rem;
+  max-width: 640px;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 36px;
+}
+
+.primaryButton,
+.secondaryButton,
+.eventLink,
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.primaryButton,
+.submitButton {
+  background: linear-gradient(135deg, #22c55e 0%, #38bdf8 100%);
+  color: #ffffff;
+  box-shadow: 0 22px 60px rgba(56, 189, 248, 0.2);
+}
+
+.primaryButton:hover,
+.submitButton:hover,
+.eventLink:hover {
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+.heroImageWrapper {
+  position: relative;
+  min-height: 520px;
+}
+
+.heroImageCard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 32px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 36px 100px rgba(15, 23, 42, 0.12);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.18), transparent 26%);
+  pointer-events: none;
+}
+
+.sectionHeader {
+  margin-bottom: 34px;
+}
+
+.sectionLabel {
+  display: inline-block;
+  color: #16a34a;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.82rem;
+  margin-bottom: 12px;
+}
+
+.sectionHeader h2 {
+  margin: 0;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  line-height: 1.05;
+}
+
+.eventGrid,
+.galleryGrid,
+.statsGrid,
+.whyGrid,
+.testimonialGrid {
+  display: grid;
+  gap: 24px;
+}
+
+.eventGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.eventCard {
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.eventCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 34px 95px rgba(15, 23, 42, 0.12);
+}
+
+.eventMedia {
+  position: relative;
+  height: 240px;
+}
+
+.eventImage {
+  object-fit: cover;
+}
+
+.eventBody {
+  padding: 26px;
+}
+
+.eventMetaTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.flag {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.eventCategory {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.14);
+  color: #0f172a;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.eventCard h3 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+}
+
+.eventLocation,
+.eventDate {
+  margin: 4px 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.eventLink {
+  display: inline-flex;
+  margin-top: 16px;
+  color: #0f172a;
+}
+
+.mapSection,
+.gallery,
+.stats,
+.whyAttend,
+.testimonials,
+.contact {
+  padding: 72px 8%;
+}
+
+.mapCard {
+  position: relative;
+  min-height: 420px;
+  border-radius: 32px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
+}
+
+.mapImage {
+  object-fit: cover;
+}
+
+.mapOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 25% 25%, rgba(56, 189, 248, 0.14), transparent 14%),
+    radial-gradient(circle at 75% 20%, rgba(16, 185, 129, 0.16), transparent 12%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%);
+  pointer-events: none;
+}
+
+.galleryGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.galleryCard {
+  position: relative;
+  min-height: 240px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #f8fafc;
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+}
+
+.galleryImg {
+  object-fit: cover;
+}
+
+.statsGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.statCard {
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 32px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.statCard p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.whyGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.whyCard {
+  border-radius: 28px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+  transition: transform 0.25s ease;
+}
+
+.whyCard:hover {
+  transform: translateY(-4px);
+}
+
+.whyCard h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.testimonialGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.testimonialCard {
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+  padding: 28px;
+}
+
+.testimonialBody {
+  color: #334155;
+  line-height: 1.85;
+  margin-bottom: 24px;
+}
+
+.testimonialFooter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #22c55e 0%, #38bdf8 100%);
+  color: #fff;
+  font-weight: 700;
+}
+
+.testimonialName {
+  margin: 0;
+  font-weight: 700;
+}
+
+.testimonialRole {
+  margin: 4px 0 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.contactPanel {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 32px;
+  align-items: start;
+}
+
+.contactHeader {
+  margin-bottom: 24px;
+}
+
+.contactForm {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+  border-radius: 28px;
+  padding: 32px;
+}
+
+.contactVisual {
+  position: relative;
+  min-height: 560px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+}
+
+.contactImage {
+  object-fit: cover;
+}
+
+.contactVisualOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.05));
+}
+
+.contactVisualLabel {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.contactVisualLabel h3 {
+  margin: 0 0 10px;
+  font-size: 1.7rem;
+}
+
+.contactVisualLabel p {
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.formGrid label {
+  display: grid;
+  gap: 10px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.formGrid input,
+.formGrid select,
+.formGrid textarea {
+  width: 100%;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.98);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formGrid input:focus,
+.formGrid select:focus,
+.formGrid textarea:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+}
+
+.fullWidth {
+  grid-column: span 2;
+}
+
+.fullWidth textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 16px;
+}
+
+@media (max-width: 1120px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .page,
+  .sectionHeader,
+  .events,
+  .mapSection,
+  .gallery,
+  .stats,
+  .whyAttend,
+  .testimonials,
+  .contact {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .eventGrid,
+  .galleryGrid,
+  .statsGrid,
+  .whyGrid,
+  .testimonialGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contactPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 760px) {
+  .sectionHeader h2,
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .heroActions {
+    flex-direction: column;
+  }
+
+  .eventGrid,
+  .galleryGrid,
+  .statsGrid,
+  .whyGrid,
+  .testimonialGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroImageWrapper {
+    min-height: 360px;
+  }
+}

@@ -1,0 +1,153 @@
+.footer {
+  position: relative;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 25%),
+    linear-gradient(180deg, #0f172a 0%, #10231a 50%, #131f23 100%);
+  color: #d7e4dc;
+  padding: 0 8% 0;
+  overflow: hidden;
+}
+
+.growthLine {
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, #22c55e 0%, #38bdf8 40%, #60a5fa 100%);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding: 60px 0 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brandName {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.leaf {
+  font-size: 20px;
+}
+
+.tagline {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #9fb3a6;
+  max-width: 320px;
+  margin-bottom: 22px;
+}
+
+.social {
+  display: flex;
+  gap: 12px;
+}
+
+.socialIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d7e4dc;
+  font-size: 13px;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.socialIcon:hover {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.colTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 18px;
+}
+
+.linkList,
+.contactList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.linkList a {
+  color: #9fb3a6;
+  text-decoration: none;
+  font-size: 14.5px;
+  transition: 0.2s;
+}
+
+.linkList a:hover {
+  color: #16a34a;
+}
+
+.contactList li {
+  color: #9fb3a6;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.bottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+  font-size: 13px;
+  color: #7d9587;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.bottomLinks a {
+  color: #7d9587;
+  text-decoration: none;
+}
+
+.bottomLinks a:hover {
+  color: #d7e4dc;
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 0 20px;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    padding: 40px 0 30px;
+  }
+
+  .bottomBar {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+}

@@ -1,0 +1,302 @@
+.header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.container {
+  max-width: 1280px;
+  margin: auto;
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+}
+
+/* ========================= */
+/* Left - Nav */
+/* ========================= */
+
+.leftSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  justify-self: start;
+  width: min-content;
+  padding-left: 0;
+}
+
+.nav {
+  width: auto;
+  min-width: 0;
+}
+
+.nav ul {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
+  transition: .3s;
+  white-space: nowrap;
+}
+
+.nav a:hover {
+  color: #15803d;
+}
+
+/* ========================= */
+/* Center - Logo */
+/* ========================= */
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px;
+  flex-shrink: 0;
+  justify-self: center;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #15803d;
+  white-space: nowrap;
+}
+
+.subtitle {
+  margin-top: 2px;
+  color: #6b7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ========================= */
+/* Right - Search + Language */
+/* ========================= */
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  justify-self: end;
+}
+.searchBox {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f9fafb;
+  width: 260px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.searchBox:focus-within {
+  border-color: #15803d;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.1);
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px 4px 10px 14px;
+  font-size: 14px;
+  width: 100%;
+  color: #374151;
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.searchBtn {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  padding: 0 14px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.25s ease, transform 0.15s ease;
+}
+
+.searchBtn:hover {
+  color: #15803d;
+}
+
+.searchBtn:active {
+  transform: scale(0.9);
+}
+
+.searchBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.language {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Hamburger */
+
+.menuBtn {
+  display: none;
+  border: none;
+  background: transparent;
+  font-size: 30px;
+  cursor: pointer;
+  color: #15803d;
+}
+
+/* ========================= */
+/* Tablet */
+/* ========================= */
+
+@media (max-width: 992px) {
+
+  .container {
+    padding: 14px 20px;
+  }
+
+  .nav ul {
+    gap: 16px;
+  }
+
+  .logoSection {
+    padding: 0 20px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .searchInput {
+    width: 130px;
+  }
+
+}
+
+/* ========================= */
+/* Mobile */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+  .container {
+    justify-content: space-between;
+  }
+
+  .menuBtn {
+    display: block;
+    order: 3;
+  }
+
+  .logoSection {
+    padding: 0 12px;
+    order: 2;
+  }
+
+  .leftSection {
+    order: 1;
+    flex: 0;
+  }
+
+  .rightSection {
+    display: none;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #e5e7eb;
+    display: none;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav ul {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .nav li {
+    width: 100%;
+  }
+
+  .nav a {
+    display: block;
+    width: 100%;
+    padding: 6px 0;
+  }
+
+}
+
+/* ========================= */
+/* Small Mobile */
+/* ========================= */
+
+@media (max-width: 480px) {
+
+  .container {
+    padding: 12px 16px;
+  }
+
+  .logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 11px;
+  }
+
+  .menuBtn {
+    font-size: 28px;
+  }
+
+}

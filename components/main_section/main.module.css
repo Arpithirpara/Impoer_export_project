@@ -1,0 +1,70 @@
+.banner {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.image,
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video {
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+.content {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  color: white;
+  max-width: 600px;
+}
+
+.content h1 {
+  font-size: 52px;
+  font-weight: bold;
+}
+
+.content p {
+  margin-top: 15px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.button {
+  margin-top: 25px;
+  padding: 14px 35px;
+  border: none;
+  border-radius: 6px;
+  background: #1b8f3b;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #14722f;
+}
