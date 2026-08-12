@@ -1,8 +1,9 @@
 "use client";
-export const dynamic = "force-dynamic";
-import Link from "next/link"
 
-import { useState, useEffect } from "react";
+export const dynamic = "force-dynamic";
+
+import Link from "next/link";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Fraunces, Inter } from "next/font/google";
@@ -47,7 +48,6 @@ const products = [
     description: "Fresh, minimally processed green tea with a light finish.",
     image: "/product_img/green_tea.jpg",
   },
-  
 
   // Coffee
   {
@@ -92,7 +92,8 @@ const products = [
     name: "Parboiled Rice",
     category: "Rice",
     description: "Steamed and dried rice with higher nutrient retention.",
-    image: "/product_img/Parboiled Rice Processing Plant Project Report 2026.jpg",
+    image:
+      "/product_img/Parboiled Rice Processing Plant Project Report 2026.jpg",
   },
 
   // Pulses & Lentils
@@ -142,28 +143,29 @@ const products = [
   },
 ];
 
-export default function ProductsPage() {
-const searchParams = useSearchParams();
+function ProductContent() {
+  const searchParams = useSearchParams();
 
-const selectedCategory = searchParams.get("category") || "All";
+  const selectedCategory = searchParams.get("category") || "All";
 
-const [active, setActive] = useState(selectedCategory);
+  const [active, setActive] = useState(selectedCategory);
 
-useEffect(() => {
-  setActive(selectedCategory);
-}, [selectedCategory]);
-  
+  useEffect(() => {
+    setActive(selectedCategory);
+  }, [selectedCategory]);
 
   const visibleProducts =
-    active === "All" ? products : products.filter((p) => p.category === active);
+    active === "All"
+      ? products
+      : products.filter((p) => p.category === active);
 
   return (
     <main className={inter.className}>
       <section className={styles.header}>
         <h1 className={fraunces.className}>Our Products</h1>
         <p>
-          Explore our full range across six categories — sourced, graded
-          and export-ready.
+          Explore our full range across six categories — sourced, graded and
+          export-ready.
         </p>
       </section>
 
@@ -192,26 +194,36 @@ useEffect(() => {
                 className={styles.image}
                 sizes="(max-width: 768px) 100vw, 25vw"
               />
+
               <span className={styles.tag}>{p.category}</span>
             </div>
-            <div className={styles.cardBody}>
-  <h3 className={fraunces.className}>{p.name}</h3>
-  <p>{p.description}</p>
- <div className={styles.actions}>
-  <Link href={`/Details/${p.id}`} className={styles.link}>
-    View Details
-  </Link>
 
-  <Link href='/inquiry'>
-    <button className={styles.buyBtn}>
-      Buy Now
-    </button>
-  </Link>
-</div>
-</div>
+            <div className={styles.cardBody}>
+              <h3 className={fraunces.className}>{p.name}</h3>
+
+              <p>{p.description}</p>
+
+              <div className={styles.actions}>
+                <Link href={`/Details/${p.id}`} className={styles.link}>
+                  View Details
+                </Link>
+
+                <Link href="/inquiry">
+                  <button className={styles.buyBtn}>Buy Now</button>
+                </Link>
+              </div>
+            </div>
           </div>
         ))}
       </section>
     </main>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div>Loading products...</div>}>
+      <ProductContent />
+    </Suspense>
   );
 }
