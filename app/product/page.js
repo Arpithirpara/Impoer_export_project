@@ -11,28 +11,40 @@ import styles from "./product.module.css";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
 const filters = [
   "All",
+  "Spices",
+  "Grains & Cereals",
+  "Rice",
+  "Flour",
+  "Oil Seeds",
+  "Cattle Feed",
   "Tea",
   "Coffee",
-  "Rice",
   "Pulses & Lentils",
-  "Grains & Cereals",
-  "Global Sourcing",
 ];
 
 const products = [
+  // Spices
+  {
+    id: "premium-spices-mix",
+    name: "Indian Spices & Seasonings",
+    category: "Spices",
+    description: "Export-grade whole and ground authentic Indian spices.",
+    image: "/categories_img/Spices_img.png",
+  },
+
   // Tea
   {
     id: "assam-black-tea",
@@ -92,8 +104,7 @@ const products = [
     name: "Parboiled Rice",
     category: "Rice",
     description: "Steamed and dried rice with higher nutrient retention.",
-    image:
-      "/product_img/Parboiled Rice Processing Plant Project Report 2026.jpg",
+    image: "/product_img/Parboiled Rice Processing Plant Project Report 2026.jpg",
   },
 
   // Pulses & Lentils
@@ -122,30 +133,56 @@ const products = [
   // Grains & Cereals
   {
     id: "wheat",
-    name: "Wheat",
+    name: "Milling Wheat",
     category: "Grains & Cereals",
     description: "Milling-grade wheat with consistent protein content.",
     image: "/product_img/wheat.jpg",
   },
   {
     id: "barley",
-    name: "Barley",
+    name: "Robust Barley",
     category: "Grains & Cereals",
     description: "Feed and malting grade barley, cleaned and graded.",
     image: "/product_img/Robust Barley.jpg",
   },
   {
     id: "millets",
-    name: "Millets (Bajra)",
+    name: "Pearl Millets (Bajra)",
     category: "Grains & Cereals",
     description: "Nutrient-dense pearl millet for global cereal markets.",
     image: "/product_img/Bajara.jpg",
+  },
+
+  // Flour
+  {
+    id: "wheat-flour-atta",
+    name: "Flour & Agro Meals",
+    category: "Flour",
+    description: "Finely milled high-protein wheat flour for baking & bread.",
+    image: "/categories_img/Flour_img.png",
+  },
+
+  // Oil Seeds
+  {
+    id: "oil-seeds-export",
+    name: "Premium Oil Seeds",
+    category: "Oil Seeds",
+    description: "High oil yield mustard, sesame, and sunflower seeds.",
+    image: "/categories_img/Oil Seeds.png",
+  },
+
+  // Cattle Feed
+  {
+    id: "animal-cattle-feed",
+    name: "Animal & Cattle Feed",
+    category: "Cattle Feed",
+    description: "High protein meal and nutritious fodder mixes for export.",
+    image: "/categories_img/Cattle Feed_Animal Feed.png",
   },
 ];
 
 function ProductContent() {
   const searchParams = useSearchParams();
-
   const selectedCategory = searchParams.get("category") || "All";
 
   const [active, setActive] = useState(selectedCategory);
@@ -157,30 +194,44 @@ function ProductContent() {
   const visibleProducts =
     active === "All"
       ? products
-      : products.filter((p) => p.category === active);
+      : products.filter((p) => {
+          const catLower = p.category.toLowerCase();
+          const activeLower = active.toLowerCase();
+          return (
+            catLower === activeLower ||
+            catLower.includes(activeLower) ||
+            activeLower.includes(catLower)
+          );
+        });
 
   return (
     <main className={inter.className}>
       <section className={styles.header}>
         <h1 className={fraunces.className}>Our Products</h1>
         <p>
-          Explore our full range across six categories — sourced, graded and
-          export-ready.
+          Explore our full range of agricultural exports — quality certified, graded and global market ready.
         </p>
       </section>
 
-      <div className={styles.filters}>
-        {filters.map((f) => (
-          <button
-            key={f}
-            onClick={() => setActive(f)}
-            className={`${styles.filterBtn} ${
-              active === f ? styles.filterBtnActive : ""
-            }`}
-          >
-            {f}
-          </button>
-        ))}
+      <div className={styles.filtersWrapper}>
+        <div className={styles.filters}>
+          {filters.map((f) => {
+            const isSelected =
+              active === f ||
+              (f !== "All" && active.toLowerCase().includes(f.toLowerCase()));
+            return (
+              <button
+                key={f}
+                onClick={() => setActive(f)}
+                className={`${styles.filterBtn} ${
+                  isSelected ? styles.filterBtnActive : ""
+                }`}
+              >
+                {f}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <section className={styles.grid}>
@@ -191,25 +242,24 @@ function ProductContent() {
                 src={p.image}
                 alt={p.name}
                 fill
+                quality={95}
                 className={styles.image}
-                sizes="(max-width: 768px) 100vw, 25vw"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
-
               <span className={styles.tag}>{p.category}</span>
             </div>
 
             <div className={styles.cardBody}>
-              <h3 className={fraunces.className}>{p.name}</h3>
-
-              <p>{p.description}</p>
+              <h3 className={`${styles.prodTitle} ${fraunces.className}`}>{p.name}</h3>
+              <p className={styles.prodDesc}>{p.description}</p>
 
               <div className={styles.actions}>
                 <Link href={`/Details/${p.id}`} className={styles.link}>
-                  View Details
+                  Details
                 </Link>
 
-                <Link href="/inquiry">
-                  <button className={styles.buyBtn}>Buy Now</button>
+                <Link href="/inquiry" className={styles.buyBtnWrap}>
+                  <button className={styles.buyBtn}>Inquire</button>
                 </Link>
               </div>
             </div>

@@ -236,6 +236,9 @@
 @media (max-width: 900px) {
   .formSection {
     grid-template-columns: 1fr;
+    gap: 28px;
+    margin: 30px auto 60px;
+    padding: 0 5%;
   }
 
   .sideInfo {
@@ -244,15 +247,28 @@
 }
 
 @media (max-width: 600px) {
+  .header {
+    padding-top: 40px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
   .row {
     grid-template-columns: 1fr;
   }
 
-  .header h1 {
-    font-size: 30px;
+  .form {
+    padding: 24px 18px;
   }
 
-  .form {
-    padding: 24px;
+  .submitBtn {
+    width: 100%;
+    text-align: center;
   }
-}
+
+  .sideInfo {
+    padding: 24px 20px;
+  }
+}

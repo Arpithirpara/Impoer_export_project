@@ -59,7 +59,7 @@ export default async function ProductDetailPage({ params }) {
     <main className={inter.className}>
       {/* Breadcrumb */}
       <div className={styles.breadcrumb}>
-        <Link href="/products">Products</Link>
+        <Link href="/product">Products</Link>
         <span>/</span>
         <span>{product.category}</span>
         <span>/</span>
@@ -163,7 +163,7 @@ export default async function ProductDetailPage({ params }) {
             {related.map((r) => (
               <Link
                 key={r.id}
-                href={`/products/${r.id}`}
+                href={`/Details/${r.id}`}
                 className={styles.relatedCard}
               >
                 <div className={styles.relatedImageWrap}>

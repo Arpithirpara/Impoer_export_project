@@ -186,8 +186,18 @@
 
 /* Responsive */
 @media (max-width: 980px) {
+  .hero {
+    padding: 60px 5% 48px;
+  }
+
+  .wrapper {
+    padding: 0 5% 60px;
+  }
+
   .infoGrid {
     grid-template-columns: repeat(2, 1fr);
+    margin-top: -24px;
+    gap: 16px;
   }
 
   .contentGrid {
@@ -200,9 +210,18 @@
 }
 
 @media (max-width: 600px) {
+  .heroContent h1 {
+    font-size: 28px;
+  }
+
+  .heroContent p {
+    font-size: 14.5px;
+  }
+
   .infoGrid {
     grid-template-columns: 1fr;
-    margin-top: -30px;
+    margin-top: 20px;
+    margin-bottom: 32px;
   }
 
   .row {
@@ -210,10 +229,11 @@
   }
 
   .formCard {
-    padding: 26px 20px;
+    padding: 24px 18px;
   }
 
-  .heroContent h1 {
-    font-size: 30px;
+  .submitBtn {
+    width: 100%;
+    text-align: center;
   }
-}
+}

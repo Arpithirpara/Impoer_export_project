@@ -1,291 +1,412 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Fraunces, Inter } from "next/font/google";
 import styles from "./exhibition.module.css";
 
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 const exhibitions = [
+  // India Events
   {
-    title: "India Global Agri Expo",
-    location: "Ahmedabad, India",
-    date: "Sep 18 - 21, 2026",
-    category: "Agriculture & Trade",
-    image: "/mainsecton_img/image.png",
+    id: "indus-food-india",
+    title: "Indus Food India Expo 2026",
+    location: "Greater Noida, NCR, India",
+    region: "India",
+    date: "Jan 12 - 15, 2026",
+    stall: "Hall 5, Stall A-24",
     flag: "🇮🇳",
+    category: "Food Grain & Agro",
+    image: "/Hero_slider_img/Hero_img_1.png",
+    description: "Showcasing Eco Export's premium Basmati Rice, Wheat, Pulses & Spices to international buyers.",
   },
   {
-    title: "Dubai Trade Harvest",
-    location: "Dubai, UAE",
-    date: "Oct 5 - 8, 2026",
-    category: "Export & Logistics",
-    image: "/mainsecton_img/import_export_banner.png",
+    id: "agrotech-india",
+    title: "AgroTech India International",
+    location: "Chandigarh, India",
+    region: "India",
+    date: "Mar 10 - 13, 2026",
+    stall: "Hall 2, Stall C-08",
+    flag: "🇮🇳",
+    category: "Agro Commodities",
+    image: "/Hero_slider_img/Hero_img_2.png",
+    description: "Exhibiting high-protein Animal Feed, Oil Seeds, and Milling Grains direct from Indian growers.",
+  },
+  {
+    id: "kisan-agro-expo",
+    title: "National Kisan Agro Summit",
+    location: "Pune, Maharashtra, India",
+    region: "India",
+    date: "Dec 05 - 08, 2026",
+    stall: "Pavilion 3, Stall D-15",
+    flag: "🇮🇳",
+    category: "Farmer & Exporter Trade",
+    image: "/Hero_slider_img/Hero_img_3.png",
+    description: "Connecting local farming cooperatives with Eco Export's global distribution network.",
+  },
+
+  // Out of India (International Events)
+  {
+    id: "gulfood-dubai",
+    title: "Gulfood Dubai 2026",
+    location: "Dubai World Trade Centre, UAE",
+    region: "Out of India",
+    date: "Feb 17 - 21, 2026",
+    stall: "Za'abeel Hall 6, Booth Z6-E12",
     flag: "🇦🇪",
+    category: "Global Food & Beverage",
+    image: "/Hero_slider_img/Hero_img_2.png",
+    description: "The Middle East's largest food trade fair featuring Eco Export's full agricultural portfolio.",
   },
   {
-    title: "Frankfurt Agri Connect",
-    location: "Frankfurt, Germany",
-    date: "Nov 12 - 15, 2026",
-    category: "Global Sourcing",
-    image: "/mainsecton_img/image.png",
+    id: "foodex-japan",
+    title: "Foodex Japan International",
+    location: "Tokyo, Japan",
+    region: "Out of India",
+    date: "Apr 07 - 10, 2026",
+    stall: "Hall 3, Booth 3B-40",
+    flag: "🇯🇵",
+    category: "Asian Trade Fair",
+    image: "/Hero_slider_img/Hero_img_3.png",
+    description: "Presenting organic spices, specialty rice varieties, and sesame oil seeds to Asian importers.",
+  },
+  {
+    id: "anuga-germany",
+    title: "Anuga Food Fair Germany",
+    location: "Cologne, Germany",
+    region: "Out of India",
+    date: "Oct 10 - 14, 2026",
+    stall: "Hall 11.2, Stand B-050",
     flag: "🇩🇪",
-  },
-  {
-    title: "Singapore Agro Summit",
-    location: "Singapore",
-    date: "Dec 4 - 7, 2026",
-    category: "Innovation & Trade",
-    image: "/mainsecton_img/import_export_banner.png",
-    flag: "🇸🇬",
-  },
-  {
-    title: "USA Agri Expo",
-    location: "New York, USA",
-    date: "Jan 20 - 23, 2027",
-    category: "International Buyers",
-    image: "/mainsecton_img/image.png",
-    flag: "🇺🇸",
-  },
-];
-
-const galleryImages = [
-  "/mainsecton_img/import_export_banner.png",
-  "/mainsecton_img/image.png",
-  "/mainsecton_img/import_export_banner.png",
-  "/mainsecton_img/image.png",
-];
-
-const testimonials = [
-  {
-    name: "Anjali Patel",
-    role: "Founder, SpiceRoots",
-    review:
-      "The exhibition helped me connect with buyers from Europe and the Middle East. The entire event felt premium and well curated.",
-  },
-  {
-    name: "Vikram Sharma",
-    role: "Export Head, GreenGrain",
-    review:
-      "Exceptional networking opportunities across India and international markets. The registration flow was smooth and the venue experience was outstanding.",
-  },
-  {
-    name: "Lisa Chen",
-    role: "Procurement Director, Global Foods",
-    review:
-      "I found new business partners and high-quality agricultural suppliers. The events are perfect for serious exporters.",
+    category: "European Trade Summit",
+    image: "/Hero_slider_img/Hero_img_1.png",
+    description: "Connecting with European buyers for certified non-GMO grains, tea, coffee and animal feed.",
   },
 ];
 
 export default function ExhibitionPage() {
+  const [activeTab, setActiveTab] = useState("All");
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    exhibition: "Gulfood Dubai 2026 (UAE)",
+    productInterest: "All Agro Products",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const filteredEvents =
+    activeTab === "All"
+      ? exhibitions
+      : exhibitions.filter((e) => e.region === activeTab);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 5000);
+  };
+
   return (
-    <main className={styles.page}>
+    <main className={inter.className}>
+      {/* Hero Banner */}
       <section className={styles.hero}>
+        <Image
+          src="/Hero_slider_img/Hero_img_3.png"
+          alt="Eco Export Global Exhibitions"
+          fill
+          priority
+          className={styles.heroImage}
+        />
+        <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
-          <span className={styles.heroBadge}>India & International Exhibitions</span>
-          <h1>Global Agriculture Exhibitions & Trade Events</h1>
+          <div className={styles.heroBadge}>
+            <span className={styles.badgeDot}></span>
+            <span>ECO EXPORT GLOBAL EVENTS</span>
+          </div>
+          <h1 className={fraunces.className}>Trade Exhibitions & Expo Schedule</h1>
           <p>
-            Showcase rice, wheat, spices, tea, coffee, fruits and vegetables across premium trade fairs in India and worldwide.
+            Meet the Eco Export team live at major agricultural summits across <strong>India & Overseas International Fairs</strong>.
           </p>
-          <div className={styles.heroActions}>
-            <a href="/contact" className={styles.primaryButton}>
-              Register Now
-            </a>
-            <a href="#events" className={styles.secondaryButton}>
-              Explore Events
-            </a>
-          </div>
         </div>
-        <div className={styles.heroImageWrapper}>
-          <div className={styles.heroImageCard}>
-            <Image
-              src="/mainsecton_img/import_export_banner.png"
-              alt="Trade exhibition with global logistics imagery"
-              fill
-              className={styles.heroImage}
-            />
-            <div className={styles.heroGlow}></div>
+      </section>
+
+      {/* Stats Bar */}
+      <section className={styles.statsBar}>
+        <div className={styles.container}>
+          <div className={styles.statsGrid}>
+            <div className={styles.statBox}>
+              <span className={`${styles.statNum} ${fraunces.className}`}>25+</span>
+              <span className={styles.statLabel}>Exhibitions Attended</span>
+            </div>
+            <div className={styles.statBox}>
+              <span className={`${styles.statNum} ${fraunces.className}`}>15+</span>
+              <span className={styles.statLabel}>Countries Represented</span>
+            </div>
+            <div className={styles.statBox}>
+              <span className={`${styles.statNum} ${fraunces.className}`}>5000+</span>
+              <span className={styles.statLabel}>Global Buyer Meetings</span>
+            </div>
+            <div className={styles.statBox}>
+              <span className={`${styles.statNum} ${fraunces.className}`}>100%</span>
+              <span className={styles.statLabel}>Certified Quality Produce</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className={styles.events} id="events">
-        <div className={styles.sectionHeader}>
-          <p className={styles.sectionLabel}>Upcoming Exhibitions</p>
-          <h2>India to international markets — events designed for agricultural exporters.</h2>
-        </div>
-        <div className={styles.eventGrid}>
-          {exhibitions.map((event) => (
-            <article key={event.title} className={styles.eventCard}>
-              <div className={styles.eventMedia}>
-                <Image
-                  src={event.image}
-                  alt={event.title}
-                  fill
-                  className={styles.eventImage}
-                />
-              </div>
-              <div className={styles.eventBody}>
-                <div className={styles.eventMetaTop}>
-                  <span className={styles.flag}>{event.flag}</span>
-                  <span className={styles.eventCategory}>{event.category}</span>
+      {/* Main Exhibitions Grid Section */}
+      <section className={styles.eventsSection}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <div className={styles.tagBadge}>
+              <span className={styles.tagDot}></span>
+              <span>WHERE TO FIND US</span>
+            </div>
+            <h2 className={`${styles.heading} ${fraunces.className}`}>
+              Eco Export <span className={styles.highlightText}>Exhibition Schedule</span>
+            </h2>
+            <p className={styles.subHeading}>
+              We regularly participate in premier food grain and agricultural trade expos in India and worldwide.
+            </p>
+          </div>
+
+          {/* Filter Tabs (All, India, Out of India) */}
+          <div className={styles.filterTabs}>
+            {["All", "India", "Out of India"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`${styles.tabBtn} ${activeTab === tab ? styles.activeTab : ""}`}
+              >
+                {tab === "All" && "🌐 All Events"}
+                {tab === "India" && "🇮🇳 India Exhibitions"}
+                {tab === "Out of India" && "✈️ Out of India (International)"}
+              </button>
+            ))}
+          </div>
+
+          {/* Cards Grid */}
+          <div className={styles.eventsGrid}>
+            {filteredEvents.map((event) => (
+              <div key={event.id} className={styles.eventCard}>
+                <div className={styles.cardImageWrap}>
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className={styles.cardImg}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className={styles.regionTag}>
+                    <span>{event.flag}</span> {event.region}
+                  </div>
+                  <div className={styles.categoryBadge}>{event.category}</div>
                 </div>
-                <h3>{event.title}</h3>
-                <p className={styles.eventLocation}>{event.location}</p>
-                <p className={styles.eventDate}>{event.date}</p>
-                <a href="/contact" className={styles.eventLink}>
-                  Enquire Now
-                </a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
 
-      <section className={styles.mapSection}>
-        <div className={styles.mapHeader}>
-          <p className={styles.sectionLabel}>World Map</p>
-          <h2>Exhibition connections from India to Dubai, Europe, Singapore and USA.</h2>
-        </div>
-        <div className={styles.mapCard}>
-          <Image
-            src="/mainsecton_img/image.png"
-            alt="World map with connection lines"
-            fill
-            className={styles.mapImage}
-          />
-          <div className={styles.mapOverlay} />
-        </div>
-      </section>
+                <div className={styles.cardBody}>
+                  <h3 className={`${styles.eventTitle} ${fraunces.className}`}>{event.title}</h3>
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoIcon}>📍</span>
+                    <span>{event.location}</span>
+                  </div>
+                  <div className={styles.infoRow}>
+                    <span className={styles.infoIcon}>📅</span>
+                    <span>{event.date}</span>
+                  </div>
+                  <div className={styles.stallBox}>
+                    <span className={styles.stallLabel}>BOOTH / STALL:</span>
+                    <strong className={styles.stallVal}>{event.stall}</strong>
+                  </div>
 
-      <section className={styles.gallery}>
-        <div className={styles.sectionHeader}>
-          <p className={styles.sectionLabel}>Gallery</p>
-          <h2>Top exhibition halls, business meetings and product presentations.</h2>
-        </div>
-        <div className={styles.galleryGrid}>
-          {galleryImages.map((src, index) => (
-            <div key={index} className={styles.galleryCard}>
-              <Image src={src} alt={`Gallery ${index + 1}`} fill className={styles.galleryImg} />
-            </div>
-          ))}
-        </div>
-      </section>
+                  <p className={styles.eventDesc}>{event.description}</p>
 
-      <section className={styles.stats}>
-        <div className={styles.statsGrid}>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>50+</span>
-            <p>Countries</p>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>200+</span>
-            <p>Exhibitions</p>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>1000+</span>
-            <p>Business Partners</p>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>24/7</span>
-            <p>Support</p>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.whyAttend}>
-        <div className={styles.sectionHeader}>
-          <p className={styles.sectionLabel}>Why Attend</p>
-          <h2>Build global relationships and scale your agriculture business.</h2>
-        </div>
-        <div className={styles.whyGrid}>
-          {[
-            "Global networking",
-            "New business opportunities",
-            "International buyers",
-            "Product showcase",
-            "Trusted partnerships",
-          ].map((item) => (
-            <div key={item} className={styles.whyCard}>
-              <h3>{item}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.testimonials}>
-        <div className={styles.sectionHeader}>
-          <p className={styles.sectionLabel}>Testimonials</p>
-          <h2>What our event participants say.</h2>
-        </div>
-        <div className={styles.testimonialGrid}>
-          {testimonials.map((item) => (
-            <div key={item.name} className={styles.testimonialCard}>
-              <div className={styles.testimonialBody}>
-                <p>“{item.review}”</p>
-              </div>
-              <div className={styles.testimonialFooter}>
-                <div className={styles.avatar}>{item.name.charAt(0)}</div>
-                <div>
-                  <p className={styles.testimonialName}>{item.name}</p>
-                  <p className={styles.testimonialRole}>{item.role}</p>
+                  <a href="#inquiryForm" className={styles.cardCta}>
+                    Book Stall Meeting →
+                  </a>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className={styles.contact}>
-        <div className={styles.contactHeader}>
-          <p className={styles.sectionLabel}>Contact</p>
-          <h2>Register for your next exhibition opportunity.</h2>
-        </div>
-        <div className={styles.contactPanel}>
-          <form className={styles.contactForm}>
-            <div className={styles.formGrid}>
-              <label>
-                Name
-                <input type="text" placeholder="Your name" />
-              </label>
-              <label>
-                Company Name
-                <input type="text" placeholder="Company" />
-              </label>
-              <label>
-                Email
-                <input type="email" placeholder="Email address" />
-              </label>
-              <label>
-                Phone Number
-                <input type="tel" placeholder="Phone number" />
-              </label>
-              <label>
-                Country
-                <select>
-                  <option>India</option>
-                  <option>UAE</option>
-                  <option>Germany</option>
-                  <option>Singapore</option>
-                  <option>USA</option>
-                </select>
-              </label>
-              <label className={styles.fullWidth}>
-                Message
-                <textarea placeholder="Tell us about your participation needs" />
-              </label>
-            </div>
-            <button type="submit" className={styles.submitButton}>
-              Submit Registration
-            </button>
-          </form>
+      {/* Exhibition Inquiry & Meeting Form Section */}
+      <section className={styles.formSection} id="inquiryForm">
+        <div className={styles.container}>
+          <div className={styles.formGrid}>
+            {/* Left Form */}
+            <div className={styles.formCard}>
+              <div className={styles.tagBadge}>
+                <span className={styles.tagDot}></span>
+                <span>SCHEDULE A MEETING</span>
+              </div>
+              <h2 className={`${styles.formTitle} ${fraunces.className}`}>
+                Meet Eco Export at <span className={styles.highlightText}>Our Next Expo</span>
+              </h2>
+              <p className={styles.formDesc}>
+                Fill out the form below to reserve an exclusive one-on-one meeting with our export directors at any upcoming exhibition.
+              </p>
 
-          <div className={styles.contactVisual}>
-            <Image
-              src="/mainsecton_img/import_export_banner.png"
-              alt="Exhibition registration image"
-              fill
-              className={styles.contactImage}
-            />
-            <div className={styles.contactVisualOverlay} />
-            <div className={styles.contactVisualLabel}>
-              <h3>Exhibition Enquiries</h3>
-              <p>Talk to our event team and secure your premium booth today.</p>
+              {submitted && (
+                <div className={styles.successAlert}>
+                  ✓ Thank you! Your exhibition meeting request has been submitted. Our team will contact you shortly.
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className={styles.actualForm}>
+                <div className={styles.inputRow}>
+                  <div className={styles.fieldGroup}>
+                    <label>Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Rahul Sharma / John Smith"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    />
+                  </div>
+                  <div className={styles.fieldGroup}>
+                    <label>Company Name & Country *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Apex Commodities, UAE"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.inputRow}>
+                  <div className={styles.fieldGroup}>
+                    <label>Email Address *</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="name@company.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    />
+                  </div>
+                  <div className={styles.fieldGroup}>
+                    <label>Phone / WhatsApp Number *</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+91 98765 43210"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.inputRow}>
+                  <div className={styles.fieldGroup}>
+                    <label>Select Exhibition *</label>
+                    <select
+                      value={formData.exhibition}
+                      onChange={(e) => setFormData({ ...formData, exhibition: e.target.value })}
+                    >
+                      <option>Gulfood Dubai 2026 (UAE)</option>
+                      <option>Indus Food India Expo 2026 (India)</option>
+                      <option>Foodex Japan 2026 (Japan)</option>
+                      <option>AgroTech India International (India)</option>
+                      <option>Anuga Food Fair Germany (Germany)</option>
+                      <option>General International Exhibition Inquiry</option>
+                    </select>
+                  </div>
+                  <div className={styles.fieldGroup}>
+                    <label>Commodity of Interest</label>
+                    <select
+                      value={formData.productInterest}
+                      onChange={(e) => setFormData({ ...formData, productInterest: e.target.value })}
+                    >
+                      <option>All Agro Products</option>
+                      <option>Spices & Seasonings</option>
+                      <option>Basmati & Non-Basmati Rice</option>
+                      <option>Grains & Wheat</option>
+                      <option>Flour & Agro Meals</option>
+                      <option>Oil Seeds</option>
+                      <option>Animal & Cattle Feed</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className={styles.fieldGroup}>
+                  <label>Message / Specific Requirement</label>
+                  <textarea
+                    rows={4}
+                    placeholder="Let us know your meeting preferences, expected order volume, or visit schedule..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  />
+                </div>
+
+                <button type="submit" className={styles.submitBtn}>
+                  Submit Exhibition Meeting Request 🚀
+                </button>
+              </form>
+            </div>
+
+            {/* Right Visual Card */}
+            <div className={styles.rightInfoCard}>
+              <div className={styles.infoBoxWrapper}>
+                <div className={styles.badgeFloating}>
+                  <span>🤝</span> EXCLUSIVE STALL MEETINGS
+                </div>
+                <h3 className={`${styles.rightTitle} ${fraunces.className}`}>
+                  Direct Connection with Eco Export Leadership
+                </h3>
+                <p className={styles.rightText}>
+                  Whether you are visiting us at major expos in <strong>India or Internationally (Dubai, Germany, Japan, Singapore)</strong>, our export management team will be ready with product samples, lab test certifications, and container pricing.
+                </p>
+
+                <div className={styles.contactList}>
+                  <div className={styles.contactItem}>
+                    <span className={styles.contactIcon}>📧</span>
+                    <div>
+                      <strong>Exhibition Desk Email:</strong>
+                      <p>info@ecoexport.in / export@ecoexport.in</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.contactItem}>
+                    <span className={styles.contactIcon}>📞</span>
+                    <div>
+                      <strong>Direct WhatsApp / Call:</strong>
+                      <p>+91 98765 43210 / +91 79 1234 5678</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.contactItem}>
+                    <span className={styles.contactIcon}>📍</span>
+                    <div>
+                      <strong>Head Office:</strong>
+                      <p>Ahmedabad, Gujarat, India (Near Mundra & Kandla Ports)</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.bannerBadgeBox}>
+                  <span className={styles.sparkle}>✨</span>
+                  <span>Free Product Samples Available at Our Stalls!</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

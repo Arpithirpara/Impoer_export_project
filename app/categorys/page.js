@@ -1,3 +1,9 @@
+import CategoryGrid from "../../components/categories/categories";
+
 export default function CategorysPage() {
-  return <main>Categorys</main>;
+  return (
+    <main style={{ minHeight: "80vh", paddingTop: "20px" }}>
+      <CategoryGrid />
+    </main>
+  );
 }

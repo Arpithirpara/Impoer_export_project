@@ -1,86 +1,56 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import Image from "next/image";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import styles from "./main.module.css";
-import Link from "next/link";
+
+const heroBanners = [
+  {
+    id: 1,
+    image: "/Hero_slider_img/Hero_img_1.png",
+    alt: "Agricultural Export Banner 1",
+  },
+  {
+    id: 2,
+    image: "/Hero_slider_img/Hero_img_2.png",
+    alt: "Agricultural Export Banner 2",
+  },
+  {
+    id: 3,
+    image: "/Hero_slider_img/Hero_img_3.png",
+    alt: "Agricultural Export Banner 3",
+  },
+];
 
 export default function Main_section() {
   return (
     <section className={styles.banner}>
       <Swiper
-        modules={[Autoplay]}
+        modules={[Autoplay, Pagination, Navigation]}
         autoplay={{
-          delay: 5000,
+          delay: 4000,
           disableOnInteraction: false,
         }}
+        pagination={{ clickable: true }}
+        navigation={true}
         loop={true}
         className={styles.swiper}
       >
-        {/* Image Slide */}
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <Image
-              src="/mainsecton_img/import_export_banner.png"
-              alt="Banner"
-              fill
-              priority
-              className={styles.image}
-            />
-
-            <div className={styles.overlay}></div>
-
-            <div className={styles.content}>
-              <h1>Fresh Agricultural Products</h1>
-              <p>
-                Import & Export of Premium Quality Fruits, Vegetables,
-                Grains & Spices Worldwide.
-              </p>
-               
-               <Link href='/product'>
-              <button className={styles.button}>
-                Explore Products
-              </button>
-              </Link>
-            </div>
-          </div>
-        </SwiperSlide>
-
-        {/* Video Slide */}
-        <SwiperSlide>
-          <div className={styles.slide}>
-            <video
-              className={styles.video}
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source
-                src="/video/kling_20260721_VIDEO_Drone_flyi_4739_0.mp4"
-                type="video/mp4"
+        {heroBanners.map((banner) => (
+          <SwiperSlide key={banner.id}>
+            <div className={styles.slide}>
+              <img
+                src={banner.image}
+                alt={banner.alt}
+                className={styles.image}
               />
-            </video>
-
-            <div className={styles.overlay}></div>
-
-            <div className={styles.content}>
-              <h1>Fresh Agricultural Products</h1>
-              <p>
-                Import & Export of Premium Quality Fruits, Vegetables,
-                Grains & Spices Worldwide.
-              </p>
-              <Link href='/product'>
-              <button className={styles.button}>
-                Explore Products
-              </button>
-              </Link>
             </div>
-          </div>
-        </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </section>
   );
