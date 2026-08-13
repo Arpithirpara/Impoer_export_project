@@ -34,7 +34,7 @@ export default function Header() {
           />
 
           <div>
-            <h2 className={styles.title}>Eco Export</h2>
+            <h2 className={styles.title}>Ap export</h2>
             <p className={styles.subtitle}>Global Import & Export</p>
           </div>
         </div>
