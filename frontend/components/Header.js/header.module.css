@@ -1,0 +1,363 @@
+.header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.scrolled {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 12px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ========================= */
+/* Left - Logo & Brand */
+/* ========================= */
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-left: 85px;
+}
+
+.logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logoSection:hover .logo {
+  transform: scale(1.05);
+}
+
+.brandDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 800;
+  color: #15803d;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 3px 0 0 0;
+  color: #64748b;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* ========================= */
+/* Center/Right - Navigation Menu */
+/* ========================= */
+
+.nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 28px;
+}
+
+.nav ul {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #334155;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 10px;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.nav a:hover {
+  color: #15803d;
+  background: rgba(22, 163, 74, 0.08);
+}
+
+.activeLink {
+  color: #15803d !important;
+  font-weight: 700 !important;
+  background: rgba(22, 163, 74, 0.12) !important;
+}
+
+/* ========================= */
+/* Right - Search + Lang + CTA */
+/* ========================= */
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #f8fafc;
+  width: 220px;
+  height: 44px;
+  transition: all 0.25s ease;
+}
+
+.searchBox:focus-within {
+  border-color: #15803d;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.12);
+  width: 250px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 8px 8px 8px 18px;
+  font-size: 14.5px;
+  width: 100%;
+  color: #1e293b;
+}
+
+.searchInput::placeholder {
+  color: #94a3b8;
+}
+
+.searchBtn {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  padding: 0 16px;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.25s ease;
+}
+
+.searchBtn:hover {
+  color: #15803d;
+}
+
+.language {
+  padding: 0 14px;
+  height: 44px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+
+.language:hover {
+  border-color: #15803d;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 0 22px;
+  height: 44px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(21, 128, 61, 0.25);
+  white-space: nowrap;
+}
+
+.ctaBtn:hover {
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Mobile Button */
+.menuBtn {
+  display: none;
+  border: none;
+  background: transparent;
+  font-size: 30px;
+  cursor: pointer;
+  color: #15803d;
+  padding: 4px;
+}
+
+.mobileSearchBox,
+.mobileLang {
+  display: none;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+}
+
+/* Responsive Media Queries */
+
+@media (max-width: 1380px) {
+  .nav ul {
+    gap: 4px;
+  }
+  .nav a {
+    font-size: 15px;
+    padding: 8px 12px;
+  }
+  .searchBox {
+    width: 180px;
+  }
+  .searchBox:focus-within {
+    width: 200px;
+  }
+  .title {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 1140px) {
+  .container {
+    padding: 12px 24px;
+  }
+
+  .logoSection {
+    margin-left: 0;
+  }
+
+  .menuBtn {
+    display: block;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    display: none;
+    flex-direction: column;
+    padding: 20px 24px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+    z-index: 999;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav ul {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .nav li {
+    width: 100%;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .nav a {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .mobileSearchBox {
+    display: block;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .mobileSearchBox .searchBox {
+    width: 100%;
+  }
+
+  .mobileLang {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 15px;
+    color: #475569;
+  }
+
+  .rightSection {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px 16px;
+  }
+
+  .logo {
+    width: 46px;
+    height: 46px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 11px;
+  }
+}

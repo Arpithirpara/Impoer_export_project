@@ -1,0 +1,30 @@
+.banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #f8faf6;
+}
+
+.swiper {
+  width: 100%;
+  height: auto;
+  --swiper-theme-color: #22c55e;
+  --swiper-navigation-color: #ffffff;
+  --swiper-navigation-size: 26px;
+}
+
+.slide {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
