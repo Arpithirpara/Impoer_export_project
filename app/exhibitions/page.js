@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fraunces, Inter } from "next/font/google";
+import { QrCode, X, ExternalLink, Download, Printer, Send, AlertCircle } from "lucide-react";
 import styles from "./exhibition.module.css";
 
 const fraunces = Fraunces({
@@ -32,6 +33,7 @@ const exhibitions = [
     category: "Food Grain & Agro",
     image: "/Hero_slider_img/Hero_img_1.png",
     description: "Showcasing Eco Export's premium Basmati Rice, Wheat, Pulses & Spices to international buyers.",
+    status: "Active",
   },
   {
     id: "agrotech-india",
@@ -44,18 +46,7 @@ const exhibitions = [
     category: "Agro Commodities",
     image: "/Hero_slider_img/Hero_img_2.png",
     description: "Exhibiting high-protein Animal Feed, Oil Seeds, and Milling Grains direct from Indian growers.",
-  },
-  {
-    id: "kisan-agro-expo",
-    title: "National Kisan Agro Summit",
-    location: "Pune, Maharashtra, India",
-    region: "India",
-    date: "Dec 05 - 08, 2026",
-    stall: "Pavilion 3, Stall D-15",
-    flag: "🇮🇳",
-    category: "Farmer & Exporter Trade",
-    image: "/Hero_slider_img/Hero_img_3.png",
-    description: "Connecting local farming cooperatives with Eco Export's global distribution network.",
+    status: "Active",
   },
 
   // Out of India (International Events)
@@ -70,6 +61,7 @@ const exhibitions = [
     category: "Global Food & Beverage",
     image: "/Hero_slider_img/Hero_img_2.png",
     description: "The Middle East's largest food trade fair featuring Eco Export's full agricultural portfolio.",
+    status: "Active",
   },
   {
     id: "foodex-japan",
@@ -82,6 +74,7 @@ const exhibitions = [
     category: "Asian Trade Fair",
     image: "/Hero_slider_img/Hero_img_3.png",
     description: "Presenting organic spices, specialty rice varieties, and sesame oil seeds to Asian importers.",
+    status: "Active",
   },
   {
     id: "anuga-germany",
@@ -94,57 +87,86 @@ const exhibitions = [
     category: "European Trade Summit",
     image: "/Hero_slider_img/Hero_img_1.png",
     description: "Connecting with European buyers for certified non-GMO grains, tea, coffee and animal feed.",
+    status: "Active",
+  },
+  {
+    id: "sial-paris",
+    title: "SIAL Paris Food Expo",
+    location: "Paris Nord Villepinte, France",
+    region: "Out of India",
+    date: "Oct 18 - 22, 2026",
+    stall: "Hall 5A, Stand E-092",
+    flag: "🇫🇷",
+    category: "European Trade Summit",
+    image: "/Hero_slider_img/Hero_img_3.png",
+    description: "Global agro trade summit featuring grain export lines and custom packaging solutions.",
+    status: "Closed",
   },
 ];
 
 export default function ExhibitionPage() {
   const [activeTab, setActiveTab] = useState("All");
+  const [activeQrModal, setActiveQrModal] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     company: "",
+    country: "",
     email: "",
     phone: "",
-    exhibition: "Gulfood Dubai 2026 (UAE)",
-    productInterest: "All Agro Products",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errors, setErrors] = useState({});
 
   const filteredEvents =
     activeTab === "All"
       ? exhibitions
       : exhibitions.filter((e) => e.region === activeTab);
 
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Full Name is compulsory";
+    if (!formData.company.trim()) newErrors.company = "Company Name is compulsory";
+    if (!formData.country.trim()) newErrors.country = "Country is compulsory";
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone/WhatsApp is compulsory";
+    } else if (formData.phone.trim().length < 7) {
+      newErrors.phone = "Min 7 digits required";
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is compulsory";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Valid email required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrorMessage("");
+
+    if (!validateForm()) {
+      setErrorMessage("⚠️ Please complete all compulsory fields before submitting.");
+      return;
+    }
+
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setTimeout(() => {
+      setSubmitted(false);
+      setErrors({});
+    }, 5000);
+  };
+
+  const getQrUrl = (id) => {
+    const publicUrl = `http://localhost:3001/exhibition/${id}`;
+    return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(publicUrl)}`;
   };
 
   return (
     <main className={inter.className}>
-      {/* Hero Banner */}
-      <section className={styles.hero}>
-        <Image
-          src="/Hero_slider_img/Hero_img_3.png"
-          alt="Eco Export Global Exhibitions"
-          fill
-          priority
-          className={styles.heroImage}
-        />
-        <div className={styles.heroOverlay}></div>
-        <div className={styles.heroContent}>
-          <div className={styles.heroBadge}>
-            <span className={styles.badgeDot}></span>
-            <span>ECO EXPORT GLOBAL EVENTS</span>
-          </div>
-          <h1 className={fraunces.className}>Trade Exhibitions & Expo Schedule</h1>
-          <p>
-            Meet the Eco Export team live at major agricultural summits across <strong>India & Overseas International Fairs</strong>.
-          </p>
-        </div>
-      </section>
-
       {/* Stats Bar */}
       <section className={styles.statsBar}>
         <div className={styles.container}>
@@ -181,7 +203,7 @@ export default function ExhibitionPage() {
               Eco Export <span className={styles.highlightText}>Exhibition Schedule</span>
             </h2>
             <p className={styles.subHeading}>
-              We regularly participate in premier food grain and agricultural trade expos in India and worldwide.
+              We regularly participate in premier food grain and agricultural trade expos in India and worldwide. Scan QR Code or submit inquiry online.
             </p>
           </div>
 
@@ -235,9 +257,38 @@ export default function ExhibitionPage() {
 
                   <p className={styles.eventDesc}>{event.description}</p>
 
-                  <a href="#inquiryForm" className={styles.cardCta}>
-                    Book Stall Meeting →
-                  </a>
+                  {/* Dual Action Buttons: Submit Inquiry + Scan QR Code */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 16 }}>
+                    <Link
+                      href={`/exhibition/${event.id}`}
+                      className={styles.cardCta}
+                      style={{ textDecoration: "none", textAlign: "center", display: "block" }}
+                    >
+                      Submit Inquiry (Online Form) →
+                    </Link>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveQrModal(event)}
+                      style={{
+                        padding: "10px",
+                        background: "#f1f5f9",
+                        color: "#000000",
+                        border: "1.5px solid #cbd5e1",
+                        borderRadius: "10px",
+                        fontWeight: 700,
+                        fontSize: "0.85rem",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 6,
+                      }}
+                    >
+                      <QrCode size={16} />
+                      <span>Scan Stall Mobile QR Code</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -245,7 +296,109 @@ export default function ExhibitionPage() {
         </div>
       </section>
 
-      {/* Exhibition Inquiry & Meeting Form Section */}
+      {/* QR CODE POPUP MODAL FOR VISITORS */}
+      {activeQrModal && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.75)",
+            backdropFilter: "blur(6px)",
+            zIndex: 1000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "440px",
+              background: "#ffffff",
+              borderRadius: "24px",
+              padding: "32px 24px",
+              position: "relative",
+              boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)",
+              textAlign: "center",
+              border: "3px solid #143528",
+            }}
+          >
+            <button
+              onClick={() => setActiveQrModal(null)}
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                background: "#f1f5f9",
+                border: "none",
+                borderRadius: "50%",
+                width: "36px",
+                height: "36px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                color: "#000000",
+              }}
+            >
+              <X size={20} />
+            </button>
+
+            <h2 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#143528", margin: "0 0 4px", fontFamily: "Georgia, serif" }}>
+              Scan Mobile QR Code
+            </h2>
+            <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0 0 20px" }}>
+              {activeQrModal.flag} {activeQrModal.title} • {activeQrModal.stall}
+            </p>
+
+            {/* Generated Unique QR Code */}
+            <div
+              style={{
+                width: "220px",
+                height: "220px",
+                margin: "0 auto 16px",
+                padding: "14px",
+                background: "#ffffff",
+                border: "2.5px solid #000000",
+                borderRadius: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+              }}
+            >
+              <img
+                src={getQrUrl(activeQrModal.id)}
+                alt={`QR Code for ${activeQrModal.title}`}
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
+            </div>
+
+            <p style={{ fontSize: "0.82rem", color: "#334155", margin: "0 0 20px", lineHeight: 1.5 }}>
+              Scan with your smartphone camera to open the official Eco Export Stall Visitor Form directly!
+            </p>
+
+            <Link
+              href={`/exhibition/${activeQrModal.id}`}
+              style={{
+                display: "block",
+                padding: "12px",
+                background: "#143528",
+                color: "#ffffff",
+                borderRadius: "12px",
+                fontWeight: 800,
+                fontSize: "0.9rem",
+                textDecoration: "none",
+              }}
+            >
+              Open Form Direct On Web →
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Clean Visitor Contact Form Section */}
       <section className={styles.formSection} id="inquiryForm">
         <div className={styles.container}>
           <div className={styles.formGrid}>
@@ -256,109 +409,115 @@ export default function ExhibitionPage() {
                 <span>SCHEDULE A MEETING</span>
               </div>
               <h2 className={`${styles.formTitle} ${fraunces.className}`}>
-                Meet Eco Export at <span className={styles.highlightText}>Our Next Expo</span>
+                Connect With <span className={styles.highlightText}>Eco Export</span>
               </h2>
               <p className={styles.formDesc}>
-                Fill out the form below to reserve an exclusive one-on-one meeting with our export directors at any upcoming exhibition.
+                Fill out your contact details below and our export management team will reach out to you immediately.
               </p>
 
               {submitted && (
                 <div className={styles.successAlert}>
-                  ✓ Thank you! Your exhibition meeting request has been submitted. Our team will contact you shortly.
+                  ✓ Thank you! Your contact inquiry has been submitted. Our team will reach out shortly.
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className={styles.actualForm}>
+              {errorMessage && (
+                <div style={{ background: "#fef2f2", border: "1.5px solid #ef4444", borderRadius: "12px", padding: "12px 14px", color: "#dc2626", fontSize: "0.85rem", fontWeight: 700, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <AlertCircle size={18} />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} noValidate className={styles.actualForm}>
                 <div className={styles.inputRow}>
                   <div className={styles.fieldGroup}>
-                    <label>Full Name *</label>
+                    <label>Full Name <span style={{ color: "#ef4444" }}>*</span></label>
                     <input
                       type="text"
-                      required
-                      placeholder="e.g. Rahul Sharma / John Smith"
+                      placeholder="e.g. Ahmed Al-Hashimi / John Smith"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value });
+                        if (errors.name) setErrors({ ...errors, name: "" });
+                      }}
+                      style={{ border: errors.name ? "2px solid #ef4444" : undefined }}
                     />
+                    {errors.name && <span style={{ fontSize: "0.75rem", color: "#ef4444", fontWeight: 700, marginTop: 4, display: "block" }}>{errors.name}</span>}
                   </div>
                   <div className={styles.fieldGroup}>
-                    <label>Company Name & Country *</label>
+                    <label>Company Name <span style={{ color: "#ef4444" }}>*</span></label>
                     <input
                       type="text"
-                      required
-                      placeholder="e.g. Apex Commodities, UAE"
+                      placeholder="e.g. Apex Commodities"
                       value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, company: e.target.value });
+                        if (errors.company) setErrors({ ...errors, company: "" });
+                      }}
+                      style={{ border: errors.company ? "2px solid #ef4444" : undefined }}
                     />
+                    {errors.company && <span style={{ fontSize: "0.75rem", color: "#ef4444", fontWeight: 700, marginTop: 4, display: "block" }}>{errors.company}</span>}
                   </div>
                 </div>
 
                 <div className={styles.inputRow}>
                   <div className={styles.fieldGroup}>
-                    <label>Email Address *</label>
+                    <label>Country / City <span style={{ color: "#ef4444" }}>*</span></label>
                     <input
-                      type="email"
-                      required
-                      placeholder="name@company.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      type="text"
+                      placeholder="e.g. Dubai, UAE"
+                      value={formData.country}
+                      onChange={(e) => {
+                        setFormData({ ...formData, country: e.target.value });
+                        if (errors.country) setErrors({ ...errors, country: "" });
+                      }}
+                      style={{ border: errors.country ? "2px solid #ef4444" : undefined }}
                     />
+                    {errors.country && <span style={{ fontSize: "0.75rem", color: "#ef4444", fontWeight: 700, marginTop: 4, display: "block" }}>{errors.country}</span>}
                   </div>
                   <div className={styles.fieldGroup}>
-                    <label>Phone / WhatsApp Number *</label>
+                    <label>Phone / WhatsApp <span style={{ color: "#ef4444" }}>*</span></label>
                     <input
                       type="tel"
-                      required
-                      placeholder="+91 98765 43210"
+                      placeholder="+971 50 123 4567"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, phone: e.target.value });
+                        if (errors.phone) setErrors({ ...errors, phone: "" });
+                      }}
+                      style={{ border: errors.phone ? "2px solid #ef4444" : undefined }}
                     />
-                  </div>
-                </div>
-
-                <div className={styles.inputRow}>
-                  <div className={styles.fieldGroup}>
-                    <label>Select Exhibition *</label>
-                    <select
-                      value={formData.exhibition}
-                      onChange={(e) => setFormData({ ...formData, exhibition: e.target.value })}
-                    >
-                      <option>Gulfood Dubai 2026 (UAE)</option>
-                      <option>Indus Food India Expo 2026 (India)</option>
-                      <option>Foodex Japan 2026 (Japan)</option>
-                      <option>AgroTech India International (India)</option>
-                      <option>Anuga Food Fair Germany (Germany)</option>
-                      <option>General International Exhibition Inquiry</option>
-                    </select>
-                  </div>
-                  <div className={styles.fieldGroup}>
-                    <label>Commodity of Interest</label>
-                    <select
-                      value={formData.productInterest}
-                      onChange={(e) => setFormData({ ...formData, productInterest: e.target.value })}
-                    >
-                      <option>All Agro Products</option>
-                      <option>Spices & Seasonings</option>
-                      <option>Basmati & Non-Basmati Rice</option>
-                      <option>Grains & Wheat</option>
-                      <option>Flour & Agro Meals</option>
-                      <option>Oil Seeds</option>
-                      <option>Animal & Cattle Feed</option>
-                    </select>
+                    {errors.phone && <span style={{ fontSize: "0.75rem", color: "#ef4444", fontWeight: 700, marginTop: 4, display: "block" }}>{errors.phone}</span>}
                   </div>
                 </div>
 
                 <div className={styles.fieldGroup}>
-                  <label>Message / Specific Requirement</label>
+                  <label>Email Address <span style={{ color: "#ef4444" }}>*</span></label>
+                  <input
+                    type="email"
+                    placeholder="buyer@domain.com"
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (errors.email) setErrors({ ...errors, email: "" });
+                    }}
+                    style={{ border: errors.email ? "2px solid #ef4444" : undefined }}
+                  />
+                  {errors.email && <span style={{ fontSize: "0.75rem", color: "#ef4444", fontWeight: 700, marginTop: 4, display: "block" }}>{errors.email}</span>}
+                </div>
+
+                <div className={styles.fieldGroup}>
+                  <label>Message / Inquiry Details (Optional)</label>
                   <textarea
                     rows={4}
-                    placeholder="Let us know your meeting preferences, expected order volume, or visit schedule..."
+                    placeholder="Mention target commodities, order requirements, or notes..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
 
                 <button type="submit" className={styles.submitBtn}>
-                  Submit Exhibition Meeting Request 🚀
+                  Submit Inquiry
                 </button>
               </form>
             </div>
@@ -367,13 +526,13 @@ export default function ExhibitionPage() {
             <div className={styles.rightInfoCard}>
               <div className={styles.infoBoxWrapper}>
                 <div className={styles.badgeFloating}>
-                  <span>🤝</span> EXCLUSIVE STALL MEETINGS
+                  <span>🤝</span> DIRECT EXPORT CONNECTION
                 </div>
                 <h3 className={`${styles.rightTitle} ${fraunces.className}`}>
                   Direct Connection with Eco Export Leadership
                 </h3>
                 <p className={styles.rightText}>
-                  Whether you are visiting us at major expos in <strong>India or Internationally (Dubai, Germany, Japan, Singapore)</strong>, our export management team will be ready with product samples, lab test certifications, and container pricing.
+                  Whether you are visiting us at major expos in <strong>India or Overseas (Dubai, Germany, Japan, France)</strong>, our export management team will be ready with product samples, lab test certifications, and container pricing.
                 </p>
 
                 <div className={styles.contactList}>

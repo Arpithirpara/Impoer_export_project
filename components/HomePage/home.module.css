@@ -1,6 +1,6 @@
 .homeSection {
   position: relative;
-  padding: 72px 6%;
+  padding: 72px 4%;
   background: radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.12), transparent 40%),
     radial-gradient(circle at 15% 75%, rgba(14, 165, 233, 0.1), transparent 35%),
     linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
@@ -9,8 +9,8 @@
 
 .hero {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 56px;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 36px;
   align-items: center;
   margin-bottom: 60px;
 }
@@ -252,24 +252,38 @@
 .heroImageWrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+  background: linear-gradient(145deg, rgba(22, 163, 74, 0.12) 0%, rgba(15, 23, 42, 0.06) 100%);
+  border: 1.5px solid rgba(22, 163, 74, 0.25);
+  border-radius: 40px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(10px);
 }
 
 .heroImageCard {
   position: relative;
   width: 100%;
-  max-width: 650px;
+  max-width: 100%;
   border-radius: 32px;
   overflow: visible;
 }
 
 .heroImage {
   width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 540px;
+  max-height: 640px;
   display: block;
+  object-fit: cover;
+  object-position: center;
   border-radius: 28px;
-  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.14);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .floatingBadgeTop {

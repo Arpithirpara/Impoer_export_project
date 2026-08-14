@@ -72,28 +72,6 @@ export default function CountriesPage() {
 
   return (
     <main className={inter.className}>
-      {/* Hero Banner */}
-      <section className={styles.hero}>
-        <Image
-          src="/Hero_slider_img/Hero_img_2.png"
-          alt="Global Export Logistics"
-          fill
-          priority
-          className={styles.heroImage}
-        />
-        <div className={styles.heroOverlay}></div>
-        <div className={styles.heroContent}>
-          <div className={styles.heroBadge}>
-            <span className={styles.badgeDot}></span>
-            <span>ECO EXPORT GLOBAL NETWORK</span>
-          </div>
-          <h1 className={fraunces.className}>Countries We Export To</h1>
-          <p>
-            Delivering 100% certified Indian agro commodities to buyers across <strong>30+ countries & 5 continents</strong>.
-          </p>
-        </div>
-      </section>
-
       {/* Stats Bar */}
       <section className={styles.statsBar}>
         <div className={styles.container}>

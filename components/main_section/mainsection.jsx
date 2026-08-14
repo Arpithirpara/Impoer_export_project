@@ -11,16 +11,26 @@ import styles from "./main.module.css";
 const heroBanners = [
   {
     id: 1,
+    image: "/Hero_slider_img/image copy.png",
+    alt: "Agricultural Export & Import Solutions",
+  },
+  {
+    id: 2,
+    image: "/Hero_slider_img/image.png",
+    alt: "Agricultural Export & Import Solutions",
+  },
+  {
+    id: 3,
     image: "/Hero_slider_img/Hero_img_1.png",
     alt: "Agricultural Export Banner 1",
   },
   {
-    id: 2,
+    id: 4,
     image: "/Hero_slider_img/Hero_img_2.png",
     alt: "Agricultural Export Banner 2",
   },
   {
-    id: 3,
+    id: 5,
     image: "/Hero_slider_img/Hero_img_3.png",
     alt: "Agricultural Export Banner 3",
   },

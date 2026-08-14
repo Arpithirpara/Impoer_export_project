@@ -2,12 +2,13 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 240px;
   overflow: hidden;
+  background: #f8faf6;
 }
 
 .heroImage {
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -32,13 +33,14 @@
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 56px;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* Left Text Column */
 .leftCol {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .tagBadge {
@@ -130,30 +132,36 @@
   margin: 0;
 }
 
-/* Right Image Column (Showcase Image Best Style) */
+/* Right Image Column (Full Height Cover Showcase) */
 .rightCol {
   position: relative;
   width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .mainImageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 100%;
+  min-height: 520px;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .showcaseImage {
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover !important;
+  object-position: center !important;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   image-rendering: -webkit-optimize-contrast;
 }
@@ -345,6 +353,10 @@
   .aboutGrid {
     grid-template-columns: 1fr;
     gap: 48px;
+  }
+
+  .mainImageContainer {
+    min-height: 360px;
   }
 
   .vmGrid {
