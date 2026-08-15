@@ -2,21 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Fraunces, Inter } from "next/font/google";
+import { fraunces, inter } from "../fonts";
 import styles from "./gallery.module.css";
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 const categoryList = [
   { id: "All", label: "All Showcase", icon: "✨" },

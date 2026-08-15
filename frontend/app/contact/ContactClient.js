@@ -1,21 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Fraunces, Inter } from "next/font/google";
+import { fraunces, inter } from "../fonts";
 import styles from "./contact.module.css";
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
 
 const initialForm = {
   name: "",
