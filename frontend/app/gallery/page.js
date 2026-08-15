@@ -8,59 +8,95 @@ import styles from "./gallery.module.css";
 const categoryList = [
   { id: "All", label: "All Showcase", icon: "✨" },
   { id: "Grains & Wheat", label: "Grains & Wheat", icon: "🌾" },
-  { id: "Spices & Seeds", label: "Spices & Seeds", icon: "🌶️" },
   { id: "Rice Varieties", label: "Rice Varieties", icon: "🍚" },
-  { id: "Processing & Ports", label: "Processing & Port Logistics", icon: "⚓" },
+  { id: "Pulses & Lentils", label: "Pulses & Lentils", icon: "🫘" },
+  { id: "Tea & Coffee", label: "Tea & Coffee", icon: "☕" },
 ];
 
 const items = [
   {
     id: "g1",
-    title: "Durum Wheat & Grain Milling Facility",
-    category: "Grains & Wheat",
-    image: "/Hero_slider_img/Hero_img_2.png",
+    title: "Premium Basmati Rice Export Sorting",
+    category: "Rice Varieties",
+    image: "/product_img/Basmat_rice.png",
   },
   {
     id: "g2",
-    title: "Export Grade Indian Spices & Turmeric Processing",
-    category: "Spices & Seeds",
-    image: "/categories_img/Spices_img.png",
+    title: "Assam Black Tea Leaves Harvest",
+    category: "Tea & Coffee",
+    image: "/product_img/asam_black-tea.png",
   },
   {
     id: "g3",
-    title: "Premium Basmati Rice Quality Sorting",
-    category: "Rice Varieties",
-    image: "/categories_img/rice.png",
+    title: "Robusta Coffee Beans Processing",
+    category: "Tea & Coffee",
+    image: "/product_img/Robusta Coffee.jpg",
   },
   {
     id: "g4",
-    title: "Oil Seeds & Cattle Feed Packaging",
+    title: "Golden Durum Milling Wheat Grains",
     category: "Grains & Wheat",
-    image: "/categories_img/Grains_img.png",
+    image: "/product_img/wheat.jpg",
   },
   {
     id: "g5",
-    title: "Mundra Port Container Loading & Dispatch",
-    category: "Processing & Ports",
-    image: "/Hero_slider_img/Hero_img_1.png",
+    title: "Natural Green Gram (Moong) Pulses",
+    category: "Pulses & Lentils",
+    image: "/product_img/Green gram.jpg",
   },
   {
     id: "g6",
-    title: "Gulfood Dubai International Stall Showcase",
-    category: "Processing & Ports",
-    image: "/Hero_slider_img/Hero_img_3.png",
+    title: "Pearl Millet (Bajra) Grain Processing",
+    category: "Grains & Wheat",
+    image: "/product_img/Bajara.jpg",
   },
   {
     id: "g7",
-    title: "Natural Sesame & Mustard Seed Storage",
-    category: "Spices & Seeds",
-    image: "/categories_img/mix_img.png",
+    title: "Export Grade Kabuli Chana (Chickpeas)",
+    category: "Pulses & Lentils",
+    image: "/product_img/kabuli_chana.jpg",
   },
   {
     id: "g8",
-    title: "Non-Basmati Long Grain Rice Export Bags",
+    title: "Parboiled Rice Steam Processing Plant",
     category: "Rice Varieties",
-    image: "/categories_img/Pulses & Lentils.png",
+    image: "/product_img/Parboiled Rice Processing Plant Project Report 2026.jpg",
+  },
+  {
+    id: "g9",
+    title: "Robust Barley Grains & Malting Facility",
+    category: "Grains & Wheat",
+    image: "/product_img/Robust Barley.jpg",
+  },
+  {
+    id: "g10",
+    title: "Arabica Coffee Roast & Blend",
+    category: "Tea & Coffee",
+    image: "/product_img/coffee.jpg",
+  },
+  {
+    id: "g11",
+    title: "Freeze-Dried Instant Coffee Powder",
+    category: "Tea & Coffee",
+    image: "/product_img/coffee_powder.jpg",
+  },
+  {
+    id: "g12",
+    title: "Organic Green Tea Processing",
+    category: "Tea & Coffee",
+    image: "/product_img/green_tea.jpg",
+  },
+  {
+    id: "g13",
+    title: "Split Red Lentils (Masoor Dal)",
+    category: "Pulses & Lentils",
+    image: "/product_img/musoor_dal.jpg",
+  },
+  {
+    id: "g14",
+    title: "Non-Basmati Long Grain Rice Shipment",
+    category: "Rice Varieties",
+    image: "/product_img/non-Basmati_rice.jpg",
   },
 ];
 
@@ -77,7 +113,7 @@ export default function GalleryPage() {
 
   return (
     <main className={`${styles.page} ${inter.className}`}>
-      {/* Clean Header (No Banner Image as requested) */}
+      {/* Clean Header */}
       <section className={styles.cleanHeader}>
         <div className={styles.container}>
           <div className={styles.tagBadge}>
@@ -135,12 +171,6 @@ export default function GalleryPage() {
                     className={styles.image}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <div className={styles.overlay}>
-                    <span className={styles.categoryTag}>{item.category}</span>
-                    <h3 className={`${styles.cardTitle} ${fraunces.className}`}>
-                      {item.title}
-                    </h3>
-                  </div>
                 </div>
               </div>
             ))}
@@ -150,4 +180,3 @@ export default function GalleryPage() {
     </main>
   );
 }
-

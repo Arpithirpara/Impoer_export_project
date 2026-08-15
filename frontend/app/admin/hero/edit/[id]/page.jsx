@@ -243,37 +243,19 @@ export default function EditHeroBannerPage({ params }) {
           />
         </div>
 
-        {/* Row: Image URL & Status */}
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 20 }}>
-          <div>
-            <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
-              Banner Image URL / File Path
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.image}
-              onChange={(e) => {
-                setFormData({ ...formData, image: e.target.value });
-                setPreviewUrl(e.target.value);
-              }}
-              style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }}
-            />
-          </div>
-
-          <div>
-            <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
-              Publish Status
-            </label>
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem", fontWeight: 700 }}
-            >
-              <option value="Active">Active (Live on Slider)</option>
-              <option value="Draft">Draft (Hidden)</option>
-            </select>
-          </div>
+        {/* Publish Status */}
+        <div>
+          <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
+            Publish Status
+          </label>
+          <select
+            value={formData.status}
+            onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+            style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem", fontWeight: 700 }}
+          >
+            <option value="Active">Active (Live on Slider)</option>
+            <option value="Draft">Draft (Hidden)</option>
+          </select>
         </div>
 
       </div>

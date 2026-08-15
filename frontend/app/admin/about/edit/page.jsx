@@ -158,44 +158,56 @@ export default function EditAboutPage() {
           </div>
         </div>
 
-        {/* SECTION 5: HERO & SHOWCASE IMAGES */}
+        {/* SECTION 5: HERO & SHOWCASE IMAGES (DRAG & DROP) */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-          {/* Top Hero Banner Selector */}
+          {/* Top Hero Banner Drag & Drop */}
           <div>
             <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 8, textTransform: "uppercase", fontFamily: "monospace" }}>
-              Top Banner Image URL
+              Top Banner Image (Drag & Drop or Upload) *
             </label>
-            <div style={{ position: "relative", width: "100%", height: 160, borderRadius: 12, overflow: "hidden", border: "1.5px solid #cbd5e1", marginBottom: 10 }}>
+            <div style={{ position: "relative", width: "100%", height: 180, borderRadius: 16, overflow: "hidden", border: "2px dashed #94a3b8", background: "#f8fafc" }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    const url = URL.createObjectURL(e.target.files[0]);
+                    setHeroPreviewUrl(url);
+                    setFormData({ ...formData, heroImage: url });
+                  }
+                }}
+                style={{ position: "absolute", inset: 0, opacity: 0, cursor: "pointer", zIndex: 10 }}
+              />
               <Image src={heroPreviewUrl} alt="Hero Banner Preview" fill style={{ objectFit: "cover" }} />
+              <div style={{ position: "absolute", bottom: 10, right: 10, background: "#000000", color: "#ffffff", padding: "6px 12px", borderRadius: 8, fontSize: "0.78rem", fontWeight: 800 }}>
+                Click / Drop To Replace
+              </div>
             </div>
-            <input
-              type="text"
-              value={formData.heroImage}
-              onChange={(e) => {
-                setFormData({ ...formData, heroImage: e.target.value });
-                setHeroPreviewUrl(e.target.value);
-              }}
-              style={{ width: "100%", padding: "10px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.85rem" }}
-            />
           </div>
 
-          {/* Right Showcase Image Selector */}
+          {/* Right Showcase Image Drag & Drop */}
           <div>
             <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 8, textTransform: "uppercase", fontFamily: "monospace" }}>
-              Right Column Showcase Image URL
+              Right Showcase Image (Drag & Drop or Upload) *
             </label>
-            <div style={{ position: "relative", width: "100%", height: 160, borderRadius: 12, overflow: "hidden", border: "1.5px solid #cbd5e1", marginBottom: 10 }}>
-              <Image src={showcasePreviewUrl} alt="Showcase Preview" fill style={{ objectFit: "cover" }} />
+            <div style={{ position: "relative", width: "100%", height: 180, borderRadius: 16, overflow: "hidden", border: "2px dashed #94a3b8", background: "#f8fafc" }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    const url = URL.createObjectURL(e.target.files[0]);
+                    setShowcasePreviewUrl(url);
+                    setFormData({ ...formData, showcaseImage: url });
+                  }
+                }}
+                style={{ position: "absolute", inset: 0, opacity: 0, cursor: "pointer", zIndex: 10 }}
+              />
+              <Image src={showcasePreviewUrl} alt="Showcase Preview" fill style={{ objectFit: "contain" }} />
+              <div style={{ position: "absolute", bottom: 10, right: 10, background: "#000000", color: "#ffffff", padding: "6px 12px", borderRadius: 8, fontSize: "0.78rem", fontWeight: 800 }}>
+                Click / Drop To Replace
+              </div>
             </div>
-            <input
-              type="text"
-              value={formData.showcaseImage}
-              onChange={(e) => {
-                setFormData({ ...formData, showcaseImage: e.target.value });
-                setShowcasePreviewUrl(e.target.value);
-              }}
-              style={{ width: "100%", padding: "10px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.85rem" }}
-            />
           </div>
         </div>
 

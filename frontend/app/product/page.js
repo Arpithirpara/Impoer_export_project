@@ -91,7 +91,7 @@ const products = [
     name: "Parboiled Rice",
     category: "Rice",
     description: "Steamed and dried rice with higher nutrient retention.",
-    image: "/product_img/Parboiled Rice Processing Plant Project Report 2026.jpg",
+    image: "/product_img/Parboiled Rice Processing Plant Report 2026.jpg",
   },
 
   // Pulses & Lentils
@@ -192,61 +192,71 @@ function ProductContent() {
         });
 
   return (
-    <main className={inter.className}>
+    <main className={inter.className} style={{ background: "#fbfbf8", minHeight: "80vh" }}>
+      {/* Header */}
       <section className={styles.header}>
-        <h1 className={fraunces.className}>Our Products</h1>
+        <div className={styles.tagBadge}>
+          <span className={styles.tagDot}></span>
+          <span>EXPORT PRODUCT CATALOGUE</span>
+        </div>
+        <h1 className={fraunces.className}>
+          Explore Our <span className={styles.highlightText}>Agro Products</span>
+        </h1>
         <p>
-          Explore our full range of agricultural exports — quality certified, graded and global market ready.
+          High quality agricultural commodities grown, processed, and packaged
+          to meet international standards.
         </p>
       </section>
 
+      {/* Category Filter Pills */}
       <div className={styles.filtersWrapper}>
         <div className={styles.filters}>
-          {filters.map((f) => {
-            const isSelected =
-              active === f ||
-              (f !== "All" && active.toLowerCase().includes(f.toLowerCase()));
-            return (
-              <button
-                key={f}
-                onClick={() => setActive(f)}
-                className={`${styles.filterBtn} ${
-                  isSelected ? styles.filterBtnActive : ""
-                }`}
-              >
-                {f}
-              </button>
-            );
-          })}
+          {filters.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActive(category)}
+              className={`${styles.filterBtn} ${
+                active.toLowerCase() === category.toLowerCase()
+                  ? styles.filterBtnActive
+                  : ""
+              }`}
+            >
+              {category}
+            </button>
+          ))}
         </div>
       </div>
 
+      {/* Products Grid */}
       <section className={styles.grid}>
-        {visibleProducts.map((p) => (
-          <div className={styles.card} key={p.id}>
+        {visibleProducts.map((prod) => (
+          <div key={prod.id} className={styles.card}>
             <div className={styles.imageWrap}>
               <Image
-                src={p.image}
-                alt={p.name}
+                src={prod.image}
+                alt={prod.name}
                 fill
                 quality={95}
                 className={styles.image}
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
               />
-              <span className={styles.tag}>{p.category}</span>
+              <span className={styles.tag}>{prod.category}</span>
             </div>
 
             <div className={styles.cardBody}>
-              <h3 className={`${styles.prodTitle} ${fraunces.className}`}>{p.name}</h3>
-              <p className={styles.prodDesc}>{p.description}</p>
-
+              <h3 className={`${styles.prodTitle} ${fraunces.className}`}>
+                {prod.name}
+              </h3>
+              <p className={styles.prodDesc}>{prod.description}</p>
               <div className={styles.actions}>
-                <Link href={`/Details/${p.id}`} className={styles.link}>
+                <Link href={`/product/${prod.id}`} className={styles.link}>
                   Details
                 </Link>
-
-                <Link href="/inquiry" className={styles.buyBtnWrap}>
-                  <button className={styles.buyBtn}>Inquire</button>
+                <Link
+                  href={`/inquiry?product=${encodeURIComponent(prod.name)}`}
+                  className={styles.buyBtnWrap}
+                >
+                  <button className={styles.buyBtn}>Inquire Now</button>
                 </Link>
               </div>
             </div>
@@ -257,9 +267,9 @@ function ProductContent() {
   );
 }
 
-export default function ProductsPage() {
+export default function ProductPage() {
   return (
-    <Suspense fallback={<div>Loading products...</div>}>
+    <Suspense fallback={<div style={{ padding: "60px 20px", textAlign: "center" }}>Loading Products...</div>}>
       <ProductContent />
     </Suspense>
   );

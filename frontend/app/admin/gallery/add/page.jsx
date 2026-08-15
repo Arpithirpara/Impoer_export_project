@@ -269,22 +269,6 @@ export default function AddGalleryPhotoPage() {
           </div>
         </div>
 
-        {/* Image Path Input */}
-        <div>
-          <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
-            Photo Path / URL *
-          </label>
-          <input
-            type="text"
-            required
-            value={formData.image}
-            onChange={(e) => {
-              setFormData({ ...formData, image: e.target.value });
-              setPreviewUrl(e.target.value);
-            }}
-            style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }}
-          />
-        </div>
       </div>
     </AdminFormLayout>
   );

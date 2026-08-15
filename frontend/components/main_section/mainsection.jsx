@@ -18,13 +18,7 @@ const heroBanners = [
     id: 3,
     image: "/Hero_slider_img/Hero_img_3.png",
     alt: "Strategic Port Proximity & Overseas Logistics",
-  },
-  // {
-  //   id: 2,
-  //   image: "/Hero_slider_img/Hero_img_2.png",
-  //   alt: "Strategic Port Proximity & Overseas Logistics",
-  // },
-
+  },  
   {
     id: 4,
     image: "/Hero_slider_img/image.png",

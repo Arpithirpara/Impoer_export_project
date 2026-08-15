@@ -292,34 +292,17 @@ export default function EditProductPage({ params }) {
           </div>
         </div>
 
-        {/* Row 3: Product Image URL & Specs */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-          <div>
-            <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
-              Cover Image URL / Path
-            </label>
-            <input
-              type="text"
-              value={formData.image}
-              onChange={(e) => {
-                setFormData({ ...formData, image: e.target.value });
-                setPreviewUrl(e.target.value);
-              }}
-              style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }}
-            />
-          </div>
-
-          <div>
-            <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
-              Quality Specifications
-            </label>
-            <input
-              type="text"
-              value={formData.specs}
-              onChange={(e) => setFormData({ ...formData, specs: e.target.value })}
-              style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }}
-            />
-          </div>
+        {/* Specs */}
+        <div>
+          <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
+            Quality Specifications
+          </label>
+          <input
+            type="text"
+            value={formData.specs}
+            onChange={(e) => setFormData({ ...formData, specs: e.target.value })}
+            style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }}
+          />
         </div>
 
         {/* Row 4: Description */}

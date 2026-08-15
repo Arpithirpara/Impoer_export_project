@@ -52,34 +52,23 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Right Image Column */}
+            {/* Right Image Column (Showcase Image Best Style) */}
             <div className={styles.rightCol}>
               <div className={styles.imageWrapper}>
+                {/* Ambient Soft Green Glow */}
+                <div className={styles.imageGlowBg}></div>
+
                 <div className={styles.mainImageContainer}>
                   <Image
-                    src="/Hero_slider_img/Hero_img_2.png"
+                    src="/Hero_slider_img/Hero_img_3.png"
                     alt="Eco Export Agro Commodity Processing & Overseas Shipping"
                     fill
                     quality={95}
                     className={styles.showcaseImage}
-                    sizes="(max-width: 900px) 100vw, 50vw"
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                    priority
                   />
                   <div className={styles.imageOverlayGradient}></div>
-                </div>
-
-                {/* Floating Port Access Badge */}
-                <div className={styles.floatingPortBadge}>
-                  <div className={styles.badgeIcon}>⚓</div>
-                  <div>
-                    <h4 className={fraunces.className}>Strategic Port Access</h4>
-                    <p>Mundra • Kandla • Pipavav</p>
-                  </div>
-                </div>
-
-                {/* Floating Quality Badge */}
-                <div className={styles.floatingQualityBadge}>
-                  <span className={styles.checkIcon}>✓</span>
-                  <span>100% Stringent Quality Checked</span>
                 </div>
               </div>
             </div>

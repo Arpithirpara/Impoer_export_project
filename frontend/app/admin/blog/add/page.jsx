@@ -259,21 +259,6 @@ export default function AddBlogArticlePage() {
           </div>
         </div>
 
-        {/* Cover Image Path Input */}
-        <div>
-          <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 800, color: "#000000", marginBottom: 6, textTransform: "uppercase", fontFamily: "monospace" }}>
-            Cover Image Path / URL
-          </label>
-          <input
-            type="text"
-            value={formData.image}
-            onChange={(e) => {
-              setFormData({ ...formData, image: e.target.value });
-              setPreviewUrl(e.target.value);
-            }}
-            style={{ width: "100%", padding: "12px 14px", background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }}
-          />
-        </div>
 
         {/* Content */}
         <div>
