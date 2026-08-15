@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, CheckCircle2 } from "lucide-react";
 import Sidebar from "./Sidebar";
 import TopHeader from "./TopHeader";
@@ -10,11 +11,12 @@ import styles from "../admin.module.css";
 export default function AdminFormLayout({
   title,
   subtitle,
-  backUrl,
+  backUrl = "/admin",
   onSubmit,
   isEdit = false,
   children,
 }) {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [savedSuccess, setSavedSuccess] = useState(false);
 
@@ -22,7 +24,11 @@ export default function AdminFormLayout({
     e.preventDefault();
     if (onSubmit) onSubmit(e);
     setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+    setTimeout(() => {
+      if (backUrl) {
+        router.push(backUrl);
+      }
+    }, 600);
   };
 
   return (
