@@ -123,23 +123,15 @@ export default function ExhibitionPage() {
 
   return (
     <main className={inter.className}>
-      {/* Hero Banner */}
-      <section className={styles.hero}>
-        <Image
-          src="/Hero_slider_img/Hero_img_3.png"
-          alt="Eco Export Global Exhibitions"
-          fill
-          priority
-          className={styles.heroImage}
-        />
-        <div className={styles.heroOverlay}></div>
-        <div className={styles.heroContent}>
-          <div className={styles.heroBadge}>
-            <span className={styles.badgeDot}></span>
+      {/* Clean Text Header (No Banner Image) */}
+      <section style={{ background: "#F8FAFC", padding: "48px 24px 32px", textAlign: "center", borderBottom: "1px solid #E2E8F0" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#F0FDF4", border: "1px solid #BBF7D0", padding: "6px 14px", borderRadius: 999, fontSize: "0.78rem", fontWeight: 800, color: "#16A34A", letterSpacing: "0.08em", marginBottom: 12 }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#16A34A" }}></span>
             <span>ECO EXPORT GLOBAL EVENTS</span>
           </div>
-          <h1 className={fraunces.className}>Trade Exhibitions & Expo Schedule</h1>
-          <p>
+          <h1 className={fraunces.className} style={{ fontSize: "2.4rem", fontWeight: 800, color: "#0B192C", margin: "0 0 10px" }}>Trade Exhibitions & Expo Schedule</h1>
+          <p style={{ color: "#64748B", fontSize: "1.05rem", maxWidth: 700, margin: "0 auto" }}>
             Meet the Eco Export team live at major agricultural summits across <strong>India & Overseas International Fairs</strong>.
           </p>
         </div>

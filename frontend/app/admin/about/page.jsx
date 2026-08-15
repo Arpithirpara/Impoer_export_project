@@ -1,112 +1,157 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Sidebar from "../components/Sidebar";
 import TopHeader from "../components/TopHeader";
-import { Plus, Edit, Trash2, CheckCircle, Save } from "lucide-react";
+import { Plus, Edit, Trash2, CheckCircle } from "lucide-react";
 import styles from "../admin.module.css";
 
-const portsList = [
-  { id: "p-1", name: "Mundra Port (Gujarat)", distance: "Proximity from Ahmedabad HQ", capacity: "Deep Water Container Terminal", status: "Primary Hub" },
-  { id: "p-2", name: "Kandla Port (Gujarat)", distance: "Direct Container Logistics", capacity: "Bulk Agro Freight Loading", status: "Active Hub" },
-  { id: "p-3", name: "Pipavav Port (Gujarat)", distance: "APM Terminals Access", capacity: "Reefer & Dry Cargo Berth", status: "Active Hub" },
+const aboutSectionsList = [
+  {
+    id: "a1",
+    name: "Why Eco Export? (Company Overview)",
+    category: "Main Story",
+    details: "Full agro produce growing, processing & export packaging in India.",
+    image: "/Hero_slider_img/Hero_img_1.png",
+    status: "Active",
+  },
+  {
+    id: "a2",
+    name: "Location Advantage & Port Logistics",
+    category: "Logistics Access",
+    details: "Proximity to Mundra, Kandla & Pipavav ports for ocean freight.",
+    image: "/Hero_slider_img/Hero_img_2.png",
+    status: "Active",
+  },
+  {
+    id: "a3",
+    name: "Our Vision Statement",
+    category: "Corporate Vision",
+    details: "Becoming India's leading quality food grain & commodity exporter.",
+    image: "/Hero_slider_img/Hero_img_3.png",
+    status: "Active",
+  },
+  {
+    id: "a4",
+    name: "Our Mission Statement",
+    category: "Quality Mission",
+    details: "100% quality checked products, research innovation & environment care.",
+    image: "/home_Page_img/image.png",
+    status: "Active",
+  },
 ];
 
 export default function AdminAboutPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [searchFilter, setSearchFilter] = useState("");
+  const [activeTab, setActiveTab] = useState("All");
+
+  const filtered = aboutSectionsList.filter((item) => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      item.details.toLowerCase().includes(searchFilter.toLowerCase());
+    if (activeTab === "All") return matchesSearch;
+    return matchesSearch && item.status === activeTab;
+  });
 
   return (
     <div className={styles.adminLayout}>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className={`${styles.mainWrapper} ${!sidebarOpen ? styles.mainWrapperFull : ""}`}>
-        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+        <TopHeader
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          searchFilter={searchFilter}
+          setSearchFilter={setSearchFilter}
+        />
         <main className={styles.mainContent}>
           {/* Header Action Section */}
           <div className={styles.moduleHeader}>
             <div>
-              <h1>About Company & Port Logistics Manager</h1>
-              <p>Manage corporate mission/vision statements and strategic Indian port access details.</p>
+              <h1>About & Logistics Manager</h1>
+              <p>Manage About Us page sections, location advantage, vision, mission, and showcase imagery in table view.</p>
             </div>
-            <button className={styles.primaryActionBtn}>
-              <Plus size={18} />
-              <span>Add New Strategic Port</span>
+            <Link href="/admin/about/edit" className={styles.primaryActionBtn} style={{ textDecoration: "none" }}>
+              <Edit size={18} />
+              <span>Edit About Page Content</span>
+            </Link>
+          </div>
+
+          {/* Status Filter Badges (Matching All Admin Pages) */}
+          <div className={styles.filterBar}>
+            <button
+              onClick={() => setActiveTab("All")}
+              className={`${styles.filterPill} ${activeTab === "All" ? styles.activeFilterPill : ""}`}
+            >
+              All ({aboutSectionsList.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("Active")}
+              className={`${styles.filterPill} ${activeTab === "Active" ? styles.activeFilterPill : ""}`}
+            >
+              Active ({aboutSectionsList.filter((item) => item.status === "Active").length})
+            </button>
+            <button
+              onClick={() => setActiveTab("Inactive")}
+              className={`${styles.filterPill} ${activeTab === "Inactive" ? styles.activeFilterPill : ""}`}
+            >
+              Inactive (0)
+            </button>
+            <button
+              onClick={() => setActiveTab("Draft")}
+              className={`${styles.filterPill} ${activeTab === "Draft" ? styles.activeFilterPill : ""}`}
+            >
+              Draft (0)
             </button>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            {/* Strategic Ports Table Box */}
-            <div className={styles.cardBox}>
-              <div className={styles.cardTitleBar}>
-                <h3>Strategic Indian Export Sea Ports</h3>
-              </div>
-
-              <div className={styles.tableContainer}>
-                <table className={styles.dataTable}>
-                  <thead>
-                    <tr>
-                      <th>Port Name</th>
-                      <th>Logistics Distance</th>
-                      <th>Terminal Capacity</th>
-                      <th>Status</th>
-                      <th>Action</th>
+          {/* Table Container */}
+          <div className={styles.cardBox}>
+            <div className={styles.tableContainer}>
+              <table className={styles.dataTable}>
+                <thead>
+                  <tr>
+                    <th>Cover</th>
+                    <th>Section Title</th>
+                    <th>Category</th>
+                    <th>Details Summary</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((item) => (
+                    <tr key={item.id}>
+                      <td>
+                        <div style={{ position: "relative", width: 56, height: 44, borderRadius: 8, overflow: "hidden", background: "#ffffff", border: "1px solid #cbd5e1" }}>
+                          <Image src={item.image} alt={item.name} fill style={{ objectFit: "cover" }} />
+                        </div>
+                      </td>
+                      <td style={{ fontWeight: 800, color: "#0B192C" }}>{item.name}</td>
+                      <td>{item.category}</td>
+                      <td style={{ color: "#475569" }}>{item.details}</td>
+                      <td>
+                        <span className={`${styles.statusBadge} ${styles.statusActive}`}>
+                          <CheckCircle size={12} /> {item.status}
+                        </span>
+                      </td>
+                      <td>
+                        <div className={styles.actionRow}>
+                          <Link href="/admin/about/edit" className={styles.editBtn} style={{ textDecoration: "none" }}>
+                            <Edit size={14} /> Edit
+                          </Link>
+                          <button className={styles.deleteBtn}>
+                            <Trash2 size={14} /> Delete
+                          </button>
+                        </div>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {portsList.map((p) => (
-                      <tr key={p.id}>
-                        <td style={{ fontWeight: 800, color: "#000000" }}>⚓ {p.name}</td>
-                        <td>{p.distance}</td>
-                        <td>{p.capacity}</td>
-                        <td>
-                          <span className={`${styles.statusBadge} ${styles.statusActive}`}>
-                            <CheckCircle size={12} /> {p.status}
-                          </span>
-                        </td>
-                        <td>
-                          <div className={styles.actionRow}>
-                            <button className={styles.editBtn}>
-                              <Edit size={14} /> Edit
-                            </button>
-                            <button className={styles.deleteBtn}>
-                              <Trash2 size={14} /> Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Corporate Info Fields */}
-            <div className={styles.cardBox}>
-              <div className={styles.cardTitleBar}>
-                <h3>Corporate Overview & Vision Statements</h3>
-                <button className={styles.primaryActionBtn} style={{ padding: "8px 16px", fontSize: "0.82rem" }}>
-                  <Save size={16} />
-                  <span>Save Corporate Info</span>
-                </button>
-              </div>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <div>
-                  <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 6 }}>Company Introduction</label>
-                  <textarea rows={4} defaultValue="Based in India, we handle the entire production process right from growing produce to processing and packaging it for overseas markets..." style={{ width: "100%", padding: 14, background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 12, color: "#000000", fontSize: "0.9rem" }} />
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                  <div>
-                    <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 6 }}>Corporate Vision</label>
-                    <textarea rows={3} defaultValue="To become one of the leading Agro Commodity & Food Grain exporters from India..." style={{ width: "100%", padding: 14, background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 12, color: "#000000", fontSize: "0.9rem" }} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 6 }}>Corporate Mission</label>
-                    <textarea rows={3} defaultValue="For us quality is the biggest mission. We wish to export the best & healthy quality of products..." style={{ width: "100%", padding: 14, background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 12, color: "#000000", fontSize: "0.9rem" }} />
-                  </div>
-                </div>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </main>

@@ -18,17 +18,7 @@ const inter = Inter({
 export default function AboutPage() {
   return (
     <main className={inter.className}>
-      {/* Hero Banner without text overlay */}
-      <section className={styles.hero}>
-        <Image
-          src="/Hero_slider_img/Hero_img_1.png"
-          alt="Eco Export Agricultural Banner"
-          fill
-          priority
-          className={styles.heroImage}
-        />
-        <div className={styles.heroOverlay}></div>
-      </section>
+      {/* Main Content Section */}
 
       {/* Main Content Section (Text Left + Right Showcase Image) */}
       <section className={styles.mainSection}>
