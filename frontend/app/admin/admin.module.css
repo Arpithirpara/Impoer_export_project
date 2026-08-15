@@ -1,6 +1,15 @@
 /* Admin Panel - Deep Navy Blue, Agro Green & Pure White Theme */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.adminLayout, .adminLayout * {
+  box-sizing: border-box;
+}
+
 .adminLayout {
   display: flex;
   min-height: 100vh;
@@ -8,11 +17,15 @@
   color: #0B192C;
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
+  /* Fluid base font-size: shrinks proportionally on laptop/smaller screens
+     instead of every element being fixed-px and looking oversized */
+  font-size: clamp(13px, 0.95vw, 15px);
 }
 
 /* Sidebar Styles - Deep Navy Blue (#0B192C) */
 .sidebar {
   width: 280px;
+  height: 100vh;
   background: #0B192C;
   border-right: 1px solid #1E293B;
   display: flex;
@@ -22,6 +35,7 @@
   bottom: 0;
   left: 0;
   z-index: 50;
+  overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
@@ -31,6 +45,7 @@
 }
 
 .sidebarBrand {
+  flex-shrink: 0;
   padding: 24px 20px;
   display: flex;
   align-items: center;
@@ -96,11 +111,20 @@
 
 .sidebarNav {
   flex: 1;
+  min-height: 0; /* fixes flexbox overflow bug that causes unwanted scrollbars on laptop screens */
   padding: 24px 16px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  /* hide scrollbar visually while keeping scroll functional if content overflows */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.sidebarNav::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Edge */
 }
 
 .navGroupLabel {
@@ -170,6 +194,7 @@
 }
 
 .sidebarFooter {
+  flex-shrink: 0;
   padding: 16px;
   border-top: 1px solid #1E293B;
   background: #070F1E;
@@ -236,14 +261,14 @@
 /* Main Content Wrapper - Light Crisp Canvas (#F8FAFC) */
 .mainWrapper {
   flex: 1;
-  margin-left: 260px;
+  margin-left: 280px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background: #F8FAFC;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Plus Jakarta Sans', sans-serif;
-  width: calc(100% - 260px);
+  width: calc(100% - 280px);
 }
 
 .mainWrapperFull {
@@ -293,7 +318,7 @@
 }
 
 .pageTitleBox h2 {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #0B192C;
   margin: 0;
@@ -455,7 +480,7 @@
 }
 
 .moduleHeader h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 800;
   margin: 0 0 6px;
   color: #0B192C;
@@ -464,7 +489,7 @@
 
 .moduleHeader p {
   color: #64748B;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin: 0;
   font-weight: 500;
 }
@@ -476,9 +501,9 @@
   background: #16A34A;
   color: #FFFFFF;
   border: 1px solid #16A34A;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  padding: 11px 20px;
+  padding: 9px 16px;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -504,7 +529,7 @@
 .filterPill {
   padding: 7px 18px;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   border: 1.5px solid #E2E8F0;
   background: #FFFFFF;
@@ -538,7 +563,7 @@
   background: #FFFFFF;
   border: 1.5px solid #E2E8F0;
   border-radius: 16px;
-  padding: 22px;
+  padding: 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(11, 25, 44, 0.03);
@@ -552,8 +577,8 @@
 }
 
 .statIconWrap {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
   background: #0B192C;
   color: #22C55E;
@@ -563,7 +588,7 @@
 }
 
 .statTrend {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
   color: #16A34A;
   background: #F0FDF4;
@@ -573,7 +598,7 @@
 }
 
 .statValue {
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   font-weight: 800;
   color: #0B192C;
   margin: 0 0 4px;
@@ -581,7 +606,7 @@
 }
 
 .statTitle {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: #64748B;
   margin: 0;
   font-weight: 600;
@@ -598,7 +623,7 @@
   background: #FFFFFF;
   border: 1.5px solid #E2E8F0;
   border-radius: 18px;
-  padding: 24px;
+  padding: 22px;
   box-shadow: 0 4px 20px rgba(11, 25, 44, 0.03);
 }
 
@@ -606,13 +631,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   padding-bottom: 14px;
   border-bottom: 1.5px solid #E2E8F0;
 }
 
 .cardTitleBar h3 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #0B192C;
   margin: 0;
@@ -654,22 +679,24 @@
 .dataTable th {
   background: #2563EB !important;
   color: #FFFFFF !important;
-  padding: 14px 18px;
-  font-size: 0.82rem;
+  padding: 12px 14px;
+  font-size: 0.74rem;
   font-weight: 800;
   font-family: 'Plus Jakarta Sans', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   border-bottom: 2px solid #1D4ED8;
+  white-space: nowrap;
 }
 
 .dataTable td {
-  padding: 14px 18px;
-  font-size: 0.92rem;
+  padding: 11px 14px;
+  font-size: 0.84rem;
   color: #0B192C;
   border-bottom: 1px solid #E2E8F0;
   vertical-align: middle;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .dataTable tbody tr:hover {
@@ -682,7 +709,7 @@
   gap: 6px;
   padding: 4px 12px;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
   font-family: 'Plus Jakarta Sans', monospace, sans-serif;
   text-transform: uppercase;
@@ -713,9 +740,9 @@
   background: #2563EB !important;
   border: 1.5px solid #1D4ED8 !important;
   color: #FFFFFF !important;
-  font-size: 0.82rem !important;
+  font-size: 0.78rem !important;
   font-weight: 700 !important;
-  padding: 6px 14px !important;
+  padding: 5px 12px !important;
   border-radius: 8px !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
@@ -741,9 +768,9 @@
   background: #DC2626 !important;
   border: 1.5px solid #B91C1C !important;
   color: #FFFFFF !important;
-  font-size: 0.82rem !important;
+  font-size: 0.78rem !important;
   font-weight: 800 !important;
-  padding: 6px 14px !important;
+  padding: 5px 12px !important;
   border-radius: 8px !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
@@ -762,41 +789,154 @@
   transform: translateY(-1px) !important;
 }
 
+/* ===================== DAIRY ADMIN ADD-ON CLASSES ===================== */
+/* These reuse the same theme colors already defined above (navy #0B192C,
+   green #16A34A, blue #2563EB, red #DC2626) — nothing new introduced. */
+
+.customerCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.customerAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #E2E8F0;
+  color: #0B192C;
+  font-weight: 800;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.customerName {
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: #0B192C;
+}
+
+.customerEmail {
+  font-size: 0.76rem;
+  color: #64748B;
+}
+
+.statusDelivered {
+  background: #F0FDF4;
+  color: #16A34A;
+}
+
+.statusProcessing {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.statusCancelled {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.paymentSuccess {
+  color: #16A34A;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.paymentPending {
+  color: #D97706;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.viewBtn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: #2563EB !important;
+  border: 1.5px solid #1D4ED8 !important;
+  color: #FFFFFF !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25) !important;
+}
+
+.viewBtn * {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+
+.viewBtn:hover {
+  background: #1D4ED8 !important;
+  border-color: #1E40AF !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+}
+
 /* Device Screen Specific Media Queries for Laptop/PC Compatibility */
-@media (max-width: 1400px) {
+@media (max-width: 1440px) {
+  .adminLayout {
+    font-size: 13px;
+  }
+
   .sidebar {
-    width: 250px;
+    width: 220px;
   }
   .mainWrapper {
-    margin-left: 250px;
-    width: calc(100% - 250px);
+    margin-left: 220px;
+    width: calc(100% - 220px);
   }
+
   .mainContent {
-    padding: 24px;
+    padding: 18px;
   }
+
+  .navItem {
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+
+  .dataTable th {
+    padding: 10px 12px;
+    font-size: 0.7rem;
+  }
+  .dataTable td {
+    padding: 9px 12px;
+    font-size: 0.8rem;
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 1400px) {
   .statsGrid {
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
   .statCard {
-    padding: 18px;
-  }
-  .statValue {
-    font-size: 1.6rem;
+    padding: 16px;
   }
 }
 
 /* Laptop Screens (Lenovo IdeaPad 1366x768 / 15.6" Laptops) */
 @media (max-width: 1200px) {
   .sidebar {
-    width: 240px;
+    width: 210px;
   }
   .mainWrapper {
-    margin-left: 240px;
-    width: calc(100% - 240px);
+    margin-left: 210px;
+    width: calc(100% - 210px);
   }
   .mainContent {
-    padding: 20px;
+    padding: 16px;
   }
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
@@ -809,6 +949,10 @@
 
 /* Tablet & Smaller Laptops (under 1024px) */
 @media (max-width: 1024px) {
+  .adminLayout {
+    font-size: 14px;
+  }
+
   .sidebar {
     width: 260px;
     transform: translateX(-100%);
@@ -863,4 +1007,29 @@
   .searchBox {
     display: none;
   }
+}
+
+
+
+.statCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;        /* important: flex child ko shrink karne deta hai */
+}
+
+.statIconWrap {
+  flex-shrink: 0;       /* icon ko squeeze hone se rokta hai */
+}
+
+.statDetails {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;          /* text ko overflow/side-shift se rokta hai */
+  flex: 1;
+}
+
+.statNumber {
+  white-space: normal;   /* agar text ek line me overflow ho raha hai */
+  word-break: break-word;
 }
