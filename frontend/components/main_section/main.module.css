@@ -10,7 +10,7 @@
   height: auto;
   --swiper-theme-color: #22c55e;
   --swiper-navigation-color: #ffffff;
-  --swiper-navigation-size: 26px;
+  --swiper-navigation-size: 28px;
 }
 
 .slide {
@@ -25,6 +25,7 @@
 .image {
   width: 100%;
   height: auto;
-  display: block;
   object-fit: contain;
+  object-position: center;
+  display: block;
 }

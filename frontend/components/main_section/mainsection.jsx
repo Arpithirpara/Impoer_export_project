@@ -12,17 +12,22 @@ const heroBanners = [
   {
     id: 1,
     image: "/Hero_slider_img/Hero_img_1.png",
-    alt: "Agricultural Export Banner 1",
+    alt: "Agricultural Export & Import Solutions",
   },
   {
     id: 2,
     image: "/Hero_slider_img/Hero_img_2.png",
-    alt: "Agricultural Export Banner 2",
+    alt: "Strategic Port Proximity & Overseas Logistics",
   },
   {
     id: 3,
     image: "/Hero_slider_img/Hero_img_3.png",
-    alt: "Agricultural Export Banner 3",
+    alt: "100% Certified Premium Agro Products",
+  },
+  {
+    id: 4,
+    image: "/Hero_slider_img/image.png",
+    alt: "Global Agro Commodity Trading",
   },
 ];
 

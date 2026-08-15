@@ -57,16 +57,16 @@ export default function Header() {
         <Link href="/" className={styles.logoSection}>
           <img
             src="/header/CompanyLogo.png"
-            alt="AP Export Logo"
+            alt="Eco Export Logo"
             className={styles.logo}
           />
           <div className={styles.brandDetails}>
-            <h2 className={styles.title}>Ap export</h2>
+            <h2 className={styles.title}>ECO EXPORT</h2>
             <p className={styles.subtitle}>Global Import & Export</p>
           </div>
         </Link>
 
-        {/* Center - Navigation Menu */}
+        {/* Center - Desktop Navigation Menu */}
         <nav className={`${styles.nav} ${menuOpen ? styles.active : ""}`}>
           {/* Mobile Search inside drawer */}
           <div className={styles.mobileSearchBox}>
@@ -114,16 +114,25 @@ export default function Header() {
             })}
           </ul>
 
-          <div className={styles.mobileLang}>
-            <label htmlFor="mobileLangSelect">Language: </label>
-            <select id="mobileLangSelect" className={styles.language}>
-              <option>EN</option>
-              <option>HI</option>
-            </select>
+          <div className={styles.mobileActionBox}>
+            <Link
+              href="/inquiry"
+              className={styles.mobileCtaBtn}
+              onClick={() => setMenuOpen(false)}
+            >
+              Get Quote
+            </Link>
+            <div className={styles.mobileLang}>
+              <label htmlFor="mobileLangSelect">Language: </label>
+              <select id="mobileLangSelect" className={styles.language}>
+                <option>EN</option>
+                <option>HI</option>
+              </select>
+            </div>
           </div>
         </nav>
 
-        {/* Right - Search + Language + Quote Button */}
+        {/* Right - Desktop Search + Language + Quote Button */}
         <div className={styles.rightSection}>
           <form onSubmit={handleSearch} className={styles.searchBox}>
             <input
@@ -161,14 +170,20 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          className={styles.menuBtn}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? "✕" : "☰"}
-        </button>
+        {/* Mobile Header Right Controls: Compact Quote CTA + Hamburger */}
+        <div className={styles.mobileHeaderRight}>
+          <Link href="/inquiry" className={styles.mobileHeaderCta}>
+            Get Quote
+          </Link>
+
+          <button
+            className={styles.menuBtn}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

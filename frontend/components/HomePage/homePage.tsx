@@ -316,8 +316,8 @@ export default function Homesection() {
           <div className={styles.heroImageWrapper}>
             <div className={styles.heroImageCard}>
               <Image
-                src="/Hero_slider_img/Hero_img_1.png"
-                alt="Import Export Banner"
+                src="/home_Page_img/image.png"
+                alt="Import Export Agricultural Commodities"
                 width={700}
                 height={520}
                 className={styles.heroImage}
