@@ -8,6 +8,7 @@ import styles from "./header.module.css";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -45,9 +46,13 @@ export default function Header() {
     if (searchQuery.trim()) {
       router.push(`/product?category=${encodeURIComponent(searchQuery.trim())}`);
       setMenuOpen(false);
-    } else {
+      setSearchOpen(false);
+    } else if (searchOpen) {
       router.push("/product");
       setMenuOpen(false);
+      setSearchOpen(false);
+    } else {
+      setSearchOpen(true);
     }
   };
 
@@ -65,21 +70,20 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.container}>
-        {/* Left - Logo & Brand */}
-        <Link href="/" className={styles.logoSection}>
-          <img
-            src="/header/CompanyLogo.png"
-            alt="Eco Export Logo"
-            className={styles.logo}
-          />
-          <div className={styles.brandDetails}>
-            <h2 className={styles.title}>ECO EXPORT</h2>
-            <p className={styles.subtitle}>Global Import & Export</p>
-          </div>
-        </Link>
+        {/* Left Group - Logo & Navigation Links */}
+        <div className={styles.headerLeftGroup}>
+          <Link href="/" className={styles.logoSection}>
+            <img
+              src="/header/CompanyLogo.png"
+              alt="Eco Export Logo"
+              className={styles.logo}
+            />
+            <div className={styles.brandDetails}>
+              <h2 className={styles.title}>ECO EXPORT</h2>
+              <p className={styles.subtitle}>Global Import & Export</p>
+            </div>
+          </Link>
 
-        {/* Right Group - Navigation Links + Search + Language + Quote Button */}
-        <div className={styles.headerRightGroup}>
           <nav className={styles.desktopNav}>
             <ul>
               {navLinks.map((link) => {
@@ -97,43 +101,60 @@ export default function Header() {
               })}
             </ul>
           </nav>
+        </div>
 
-          <div className={styles.rightSection}>
-            <form onSubmit={handleSearch} className={styles.searchBox}>
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={styles.searchInput}
-              />
-              <button type="submit" className={styles.searchBtn} aria-label="Search">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-              </button>
-            </form>
+        {/* Right Section - Search Icon + Language + Quote Button */}
+        <div className={styles.rightSection}>
+          <form
+            onSubmit={handleSearch}
+            className={`${styles.searchBox} ${searchOpen ? styles.searchBoxExpanded : ""}`}
+          >
+            <button
+              type="submit"
+              onClick={() => {
+                if (!searchOpen) setSearchOpen(true);
+              }}
+              className={styles.searchBtn}
+              aria-label="Search"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setSearchOpen(true)}
+              onBlur={() => {
+                if (!searchQuery.trim()) {
+                  setTimeout(() => setSearchOpen(false), 200);
+                }
+              }}
+              className={styles.searchInput}
+            />
+          </form>
 
-            <select className={styles.language} aria-label="Language selector">
-              <option>EN</option>
-              <option>HI</option>
-            </select>
+          <select className={styles.language} aria-label="Language selector">
+            <option>EN</option>
+            <option>HI</option>
+          </select>
 
-            <Link href="/inquiry" className={styles.ctaBtn}>
-              Get Quote
-            </Link>
-          </div>
+          <Link href="/inquiry" className={styles.ctaBtn}>
+            Get Quote
+          </Link>
         </div>
 
         {/* Mobile Header Controls */}
@@ -178,13 +199,6 @@ export default function Header() {
           <div className={styles.mobileOverlayBody}>
             {/* Mobile Search Box */}
             <form onSubmit={handleSearch} className={styles.mobileSearchForm}>
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={styles.mobileSearchInput}
-              />
               <button type="submit" className={styles.mobileSearchSubmitBtn} aria-label="Search">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -201,6 +215,13 @@ export default function Header() {
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
               </button>
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.mobileSearchInput}
+              />
             </form>
 
             {/* Navigation Links */}
