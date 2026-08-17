@@ -10,8 +10,20 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedLang, setSelectedLang] = useState("en");
   const router = useRouter();
   const pathname = usePathname();
+
+  const languages = [
+    { code: "en", label: "EN - English", flag: "🇬🇧" },
+    { code: "hi", label: "HI - हिंदी", flag: "🇮🇳" },
+    { code: "es", label: "ES - Español", flag: "🇪🇸" },
+    { code: "fr", label: "FR - Français", flag: "🇫🇷" },
+    { code: "de", label: "DE - Deutsch", flag: "🇩🇪" },
+    { code: "ar", label: "AR - العربية", flag: "🇦🇪" },
+    { code: "zh-CN", label: "ZH - 中文", flag: "🇨🇳" },
+    { code: "gu", label: "GU - ગુજરાતી", flag: "🇮🇳" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +48,94 @@ export default function Header() {
       document.body.style.overflow = "unset";
     };
   }, [menuOpen]);
+
+  // Google Translate initialization & restore saved language
+  useEffect(() => {
+    // Keep resetting body top to 0px so Google Translate bar never shifts the layout
+    const preventBodyShift = () => {
+      if (document.body) {
+        document.body.style.top = "0px";
+        document.body.style.position = "static";
+        document.body.style.marginTop = "0px";
+      }
+      if (document.documentElement) {
+        document.documentElement.style.top = "0px";
+        document.documentElement.style.marginTop = "0px";
+      }
+    };
+    preventBodyShift();
+    const interval = setInterval(preventBodyShift, 250);
+
+    const getCookie = (name) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(";").shift();
+      return null;
+    };
+
+    const googtrans = getCookie("googtrans");
+    if (googtrans) {
+      const code = googtrans.split("/").pop();
+      if (code && code !== "en") setSelectedLang(code);
+    } else {
+      const saved = localStorage.getItem("app_language");
+      if (saved) setSelectedLang(saved);
+    }
+
+    window.googleTranslateElementInit = () => {
+      if (window.google && window.google.translate) {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,hi,es,fr,de,ar,zh-CN,gu",
+            autoDisplay: false,
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          "google_translate_element"
+        );
+      }
+    };
+
+    if (!document.getElementById("google-translate-script")) {
+      const addScript = document.createElement("script");
+      addScript.id = "google-translate-script";
+      addScript.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      addScript.async = true;
+      document.body.appendChild(addScript);
+    }
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleLanguageChange = (e) => {
+    const lang = e.target.value;
+    setSelectedLang(lang);
+    localStorage.setItem("app_language", lang);
+
+    const domain = window.location.hostname;
+
+    if (lang === "en") {
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain};`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${domain};`;
+      document.cookie = "googtrans=/en/en; path=/;";
+    } else {
+      document.cookie = `googtrans=/en/${lang}; path=/;`;
+      document.cookie = `googtrans=/en/${lang}; path=/; domain=${domain};`;
+      document.cookie = `googtrans=/en/${lang}; path=/; domain=.${domain};`;
+    }
+
+    const combo = document.querySelector(".goog-te-combo");
+    if (combo) {
+      combo.value = lang;
+      combo.dispatchEvent(new Event("change"));
+    }
+
+    // Smooth page reload to apply translation cleanly to all DOM elements
+    setTimeout(() => {
+      window.location.reload();
+    }, 150);
+  };
 
   if (pathname && pathname.startsWith("/admin")) {
     return null;
@@ -69,6 +169,9 @@ export default function Header() {
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+      {/* Hidden Google Translate container */}
+      <div id="google_translate_element" style={{ display: "none" }}></div>
+
       <div className={styles.container}>
         {/* Left Group - Logo & Navigation Links */}
         <div className={styles.headerLeftGroup}>
@@ -147,9 +250,17 @@ export default function Header() {
             />
           </form>
 
-          <select className={styles.language} aria-label="Language selector">
-            <option>EN</option>
-            <option>HI</option>
+          <select
+            className={styles.language}
+            aria-label="Language selector"
+            value={selectedLang}
+            onChange={handleLanguageChange}
+          >
+            {languages.map((l) => (
+              <option key={l.code} value={l.code}>
+                {l.flag} {l.label}
+              </option>
+            ))}
           </select>
 
           <Link href="/inquiry" className={styles.ctaBtn}>
@@ -241,6 +352,23 @@ export default function Header() {
                 );
               })}
             </ul>
+
+            {/* Mobile Language Selector */}
+            <div className={styles.mobileLanguageWrap} style={{ margin: "16px 0", width: "100%", maxWidth: "280px" }}>
+              <select
+                className={styles.language}
+                style={{ width: "100%", padding: "10px 14px", fontSize: "14px" }}
+                aria-label="Mobile language selector"
+                value={selectedLang}
+                onChange={handleLanguageChange}
+              >
+                {languages.map((l) => (
+                  <option key={l.code} value={l.code}>
+                    {l.flag} {l.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* Divider Line */}
             <div className={styles.mobileDivider}></div>
