@@ -28,7 +28,7 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     setTimeout(() => {
-      if (email.trim() === "admin@ap.com" && password === "admin@ap123") {
+      if (email.trim() === "admin@eco.com" && password === "admin@321") {
         // Set Auth Cookie and LocalStorage
         document.cookie = "eco_admin_auth=true; path=/; max-age=86400";
         if (typeof window !== "undefined") {

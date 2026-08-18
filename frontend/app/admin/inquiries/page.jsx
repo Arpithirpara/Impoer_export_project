@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Sidebar from "../components/Sidebar";
 import TopHeader from "../components/TopHeader";
-import { Plus, CheckCircle, Clock, Edit, Trash2 } from "lucide-react";
+import { Plus, CheckCircle, Clock, Edit, Trash2, Search, Filter } from "lucide-react";
 import styles from "../admin.module.css";
 
 const inquiriesList = [
@@ -16,13 +16,26 @@ const inquiriesList = [
 
 export default function AdminInquiriesPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [searchFilter, setSearchFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  const filtered = inquiriesList.filter((i) => {
+    const matchesSearch =
+      i.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      i.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      i.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      i.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      i.product.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesStatus = statusFilter === "All" || i.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className={styles.adminLayout}>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className={`${styles.mainWrapper} ${!sidebarOpen ? styles.mainWrapperFull : ""}`}>
-        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className={styles.mainContent}>
           {/* Header Action Section */}
           <div className={styles.moduleHeader}>
@@ -36,8 +49,55 @@ export default function AdminInquiriesPage() {
             </Link>
           </div>
 
-          {/* Table Container */}
+          {/* Table Container Box */}
           <div className={styles.cardBox}>
+            {/* Table Search & Filter Toolbar */}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 18 }}>
+              <div style={{ position: "relative", flex: 1, minWidth: 240, maxWidth: 400 }}>
+                <Search size={18} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#64748B" }} />
+                <input
+                  type="text"
+                  placeholder="Search by RFQ ID, Buyer name, company, product..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "9px 14px 9px 38px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#F8FAFC",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "#0B192C",
+                    outline: "none",
+                  }}
+                />
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Filter size={16} style={{ color: "#64748B" }} />
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  style={{
+                    padding: "9px 14px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#FFFFFF",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: "#0B192C",
+                    outline: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  <option value="All">All Lead Statuses</option>
+                  <option value="Active">Active Leads</option>
+                  <option value="Pending">Pending Review</option>
+                </select>
+              </div>
+            </div>
+
             <div className={styles.tableContainer}>
               <table className={styles.dataTable}>
                 <thead>
@@ -52,39 +112,47 @@ export default function AdminInquiriesPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {inquiriesList.map((i) => (
-                    <tr key={i.id}>
-                      <td style={{ fontWeight: 800, color: "#000000" }}>{i.id}</td>
-                      <td>
-                        <strong style={{ color: "#0f172a", display: "block" }}>{i.name}</strong>
-                        <span style={{ fontSize: "0.8rem", color: "#64748b" }}>{i.company}</span>
-                      </td>
-                      <td>
-                        <span style={{ display: "block", fontSize: "0.82rem", color: "#334155" }}>✉️ {i.email}</span>
-                        <span style={{ display: "block", fontSize: "0.82rem", color: "#64748b" }}>📞 {i.phone}</span>
-                      </td>
-                      <td>{i.country}</td>
-                      <td>
-                        <strong style={{ color: "#0f172a", display: "block" }}>{i.product}</strong>
-                        <span style={{ fontSize: "0.8rem", color: "#000000", fontWeight: 800 }}>{i.qty}</span>
-                      </td>
-                      <td>
-                        <span className={`${styles.statusBadge} ${i.status === "Active" ? styles.statusActive : styles.statusPending}`}>
-                          {i.status === "Active" ? <CheckCircle size={12} /> : <Clock size={12} />} {i.status}
-                        </span>
-                      </td>
-                      <td>
-                        <div className={styles.actionRow}>
-                          <Link href={`/admin/inquiries/edit/${i.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
-                            <Edit size={14} /> View/Edit
-                          </Link>
-                          <button className={styles.deleteBtn}>
-                            <Trash2 size={14} /> Delete
-                          </button>
-                        </div>
+                  {filtered.length > 0 ? (
+                    filtered.map((i) => (
+                      <tr key={i.id}>
+                        <td style={{ fontWeight: 800, color: "#000000" }}>{i.id}</td>
+                        <td>
+                          <strong style={{ color: "#0f172a", display: "block" }}>{i.name}</strong>
+                          <span style={{ fontSize: "0.8rem", color: "#64748b" }}>{i.company}</span>
+                        </td>
+                        <td>
+                          <span style={{ display: "block", fontSize: "0.82rem", color: "#334155" }}>✉️ {i.email}</span>
+                          <span style={{ display: "block", fontSize: "0.82rem", color: "#64748b" }}>📞 {i.phone}</span>
+                        </td>
+                        <td>{i.country}</td>
+                        <td>
+                          <strong style={{ color: "#0f172a", display: "block" }}>{i.product}</strong>
+                          <span style={{ fontSize: "0.8rem", color: "#000000", fontWeight: 800 }}>{i.qty}</span>
+                        </td>
+                        <td>
+                          <span className={`${styles.statusBadge} ${i.status === "Active" ? styles.statusActive : styles.statusPending}`}>
+                            {i.status === "Active" ? <CheckCircle size={12} /> : <Clock size={12} />} {i.status}
+                          </span>
+                        </td>
+                        <td>
+                          <div className={styles.actionRow}>
+                            <Link href={`/admin/inquiries/edit/${i.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
+                              <Edit size={14} /> View/Edit
+                            </Link>
+                            <button className={styles.deleteBtn}>
+                              <Trash2 size={14} /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} style={{ textAlign: "center", padding: "24px", color: "#64748B", fontWeight: 600 }}>
+                        No buyer inquiries match your search/filter criteria.
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>

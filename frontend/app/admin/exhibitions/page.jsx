@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Sidebar from "../components/Sidebar";
 import TopHeader from "../components/TopHeader";
-import { Plus, Edit, Trash2, CheckCircle, QrCode, ExternalLink, X, Printer, Download, ToggleLeft, ToggleRight } from "lucide-react";
+import { Plus, Edit, Trash2, CheckCircle, QrCode, ExternalLink, X, Printer, Download, Search, Filter } from "lucide-react";
 import styles from "../admin.module.css";
 
 const initialExhibitions = [
@@ -17,7 +17,8 @@ const initialExhibitions = [
 
 export default function AdminExhibitionsPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [searchFilter, setSearchFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [exhibitions, setExhibitions] = useState(initialExhibitions);
   const [activeQrModal, setActiveQrModal] = useState(null);
 
@@ -34,11 +35,20 @@ export default function AdminExhibitionsPage() {
     return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(publicUrl)}`;
   };
 
+  const filtered = exhibitions.filter((ex) => {
+    const matchesSearch =
+      ex.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ex.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ex.stallNo.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === "All" || ex.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div className={styles.adminLayout}>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className={`${styles.mainWrapper} ${!sidebarOpen ? styles.mainWrapperFull : ""}`}>
-        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className={styles.mainContent}>
           
           {/* Header Action Section */}
@@ -55,6 +65,53 @@ export default function AdminExhibitionsPage() {
 
           {/* Data Table Container */}
           <div className={styles.cardBox}>
+            {/* Table Search & Filter Toolbar */}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 18 }}>
+              <div style={{ position: "relative", flex: 1, minWidth: 240, maxWidth: 400 }}>
+                <Search size={18} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#64748B" }} />
+                <input
+                  type="text"
+                  placeholder="Search by expo name, location, stall no..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "9px 14px 9px 38px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#F8FAFC",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "#0B192C",
+                    outline: "none",
+                  }}
+                />
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Filter size={16} style={{ color: "#64748B" }} />
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  style={{
+                    padding: "9px 14px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#FFFFFF",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: "#0B192C",
+                    outline: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  <option value="All">All Event Statuses</option>
+                  <option value="Active">Open (Live)</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+            </div>
+
             <div className={styles.tableContainer}>
               <table className={styles.dataTable}>
                 <thead>
@@ -69,74 +126,82 @@ export default function AdminExhibitionsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {exhibitions.map((ex) => (
-                    <tr key={ex.id}>
-                      <td>
-                        <button
-                          type="button"
-                          onClick={() => setActiveQrModal(ex)}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 6,
-                            padding: "6px 12px",
-                            background: "#000000",
-                            color: "#ffffff",
-                            border: "none",
-                            borderRadius: 8,
-                            fontSize: "0.78rem",
-                            fontWeight: 800,
-                            cursor: "pointer",
-                          }}
-                        >
-                          <QrCode size={16} />
-                          <span>View QR</span>
-                        </button>
-                      </td>
-                      <td style={{ fontWeight: 800, color: "#000000" }}>
-                        <span style={{ fontSize: "1.2rem", marginRight: 6 }}>{ex.flag}</span>
-                        <span>{ex.name}</span>
-                      </td>
-                      <td style={{ fontWeight: 700 }}>📅 {ex.date}</td>
-                      <td>{ex.location}</td>
-                      <td style={{ fontWeight: 800, color: "#000000" }}>⛺ {ex.stallNo}</td>
-                      <td>
-                        <button
-                          type="button"
-                          onClick={() => toggleStatus(ex.id)}
-                          style={{
-                            background: "none",
-                            border: "none",
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 6,
-                          }}
-                        >
-                          <span
-                            className={`${styles.statusBadge} ${
-                              ex.status === "Active" ? styles.statusActive : styles.statusPending
-                            }`}
+                  {filtered.length > 0 ? (
+                    filtered.map((ex) => (
+                      <tr key={ex.id}>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => setActiveQrModal(ex)}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 6,
+                              padding: "6px 12px",
+                              background: "#000000",
+                              color: "#ffffff",
+                              border: "none",
+                              borderRadius: 8,
+                              fontSize: "0.78rem",
+                              fontWeight: 800,
+                              cursor: "pointer",
+                            }}
                           >
-                            <CheckCircle size={12} /> {ex.status === "Active" ? "Open (Live)" : "Closed"}
-                          </span>
-                        </button>
-                      </td>
-                      <td>
-                        <div className={styles.actionRow}>
-                          <Link href={`/exhibition/${ex.id}`} target="_blank" className={styles.editBtn} style={{ textDecoration: "none", background: "#0284c7", borderColor: "#0369a1", color: "#ffffff" }}>
-                            <ExternalLink size={14} /> Test Form
-                          </Link>
-                          <Link href={`/admin/exhibitions/edit/${ex.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
-                            <Edit size={14} /> Edit
-                          </Link>
-                          <button className={styles.deleteBtn}>
-                            <Trash2 size={14} /> Delete
+                            <QrCode size={16} />
+                            <span>View QR</span>
                           </button>
-                        </div>
+                        </td>
+                        <td style={{ fontWeight: 800, color: "#000000" }}>
+                          <span style={{ fontSize: "1.2rem", marginRight: 6 }}>{ex.flag}</span>
+                          <span>{ex.name}</span>
+                        </td>
+                        <td style={{ fontWeight: 700 }}>📅 {ex.date}</td>
+                        <td>{ex.location}</td>
+                        <td style={{ fontWeight: 800, color: "#000000" }}>⛺ {ex.stallNo}</td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => toggleStatus(ex.id)}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 6,
+                            }}
+                          >
+                            <span
+                              className={`${styles.statusBadge} ${
+                                ex.status === "Active" ? styles.statusActive : styles.statusPending
+                              }`}
+                            >
+                              <CheckCircle size={12} /> {ex.status === "Active" ? "Open (Live)" : "Closed"}
+                            </span>
+                          </button>
+                        </td>
+                        <td>
+                          <div className={styles.actionRow}>
+                            <Link href={`/exhibition/${ex.id}`} target="_blank" className={styles.editBtn} style={{ textDecoration: "none", background: "#0284c7", borderColor: "#0369a1", color: "#ffffff" }}>
+                              <ExternalLink size={14} /> Test Form
+                            </Link>
+                            <Link href={`/admin/exhibitions/edit/${ex.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
+                              <Edit size={14} /> Edit
+                            </Link>
+                            <button className={styles.deleteBtn}>
+                              <Trash2 size={14} /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} style={{ textAlign: "center", padding: "24px", color: "#64748B", fontWeight: 600 }}>
+                        No exhibition events match your search/filter criteria.
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
@@ -198,7 +263,6 @@ export default function AdminExhibitionsPage() {
                   {activeQrModal.flag} {activeQrModal.name} • {activeQrModal.stallNo}
                 </p>
 
-                {/* Generated QR Code Box */}
                 <div
                   style={{
                     width: "220px",
@@ -225,7 +289,6 @@ export default function AdminExhibitionsPage() {
                   URL: http://localhost:3001/exhibition/{activeQrModal.id}
                 </p>
 
-                {/* Action Buttons */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                   <a
                     href={getQrUrl(activeQrModal.id)}
