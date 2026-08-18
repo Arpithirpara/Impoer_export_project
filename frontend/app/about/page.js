@@ -2,6 +2,17 @@ import Image from "next/image";
 import { fraunces, inter } from "../fonts";
 import styles from "./about.module.css";
 
+export const metadata = {
+  title: "About Us & Port Logistics",
+  description:
+    "Learn why Eco Export is India's premier B2B agro commodity exporter with strategic proximity to Mundra, Kandla & Pipavav ports.",
+  openGraph: {
+    title: "About Us & Port Logistics | ECO EXPORT",
+    description:
+      "India's premier B2B exporter of Basmati Rice, Spices, Milling Wheat, Pulses & Oil Seeds with direct ocean port dispatch.",
+  },
+};
+
 export default function AboutPage() {
   return (
     <main className={inter.className}>
