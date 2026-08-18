@@ -45,7 +45,7 @@ export default function AdminSettingsPage() {
                 </div>
                 <div>
                   <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 6 }}>Contact Phone / WhatsApp</label>
-                  <input type="text" defaultValue="+91 98765 43210" style={{ width: "100%", padding: 12, background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }} />
+                  <input type="text" defaultValue="+91 92650 XXXXX" style={{ width: "100%", padding: 12, background: "#f8fafc", border: "1.5px solid #cbd5e1", borderRadius: 10, color: "#000000", fontSize: "0.95rem" }} />
                 </div>
               </div>
 

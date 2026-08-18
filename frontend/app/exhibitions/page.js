@@ -287,7 +287,7 @@ export default function ExhibitionPage() {
                     <input
                       type="tel"
                       required
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 92650 XXXXX"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
@@ -368,7 +368,7 @@ export default function ExhibitionPage() {
                     <span className={styles.contactIcon}>📞</span>
                     <div>
                       <strong>Direct WhatsApp / Call:</strong>
-                      <p>+91 98765 43210 / +91 79 1234 5678</p>
+                      <p>+91 92650 XXXXX</p>
                     </div>
                   </div>
 

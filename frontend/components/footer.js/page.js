@@ -49,11 +49,11 @@ export default function Footer() {
 
           {/* Quick Contact Action Buttons for Mobile Phone */}
           <div className={styles.mobileQuickActions}>
-            <a href="tel:+919876543210" className={styles.mobileActionBtn}>
+            <a href="tel:+919265000000" className={styles.mobileActionBtn}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               <span>Call Us</span>
             </a>
-            <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className={`${styles.mobileActionBtn} ${styles.whatsappBtn}`}>
+            <a href="#" className={`${styles.mobileActionBtn} ${styles.whatsappBtn}`}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
               <span>WhatsApp</span>
             </a>
@@ -70,7 +70,7 @@ export default function Footer() {
             <a href="#" aria-label="LinkedIn" className={styles.socialIcon}>
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
-            <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className={styles.socialIcon}>
+            <a href="#" aria-label="WhatsApp" className={styles.socialIcon}>
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.573-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
             </a>
           </div>
@@ -128,9 +128,7 @@ export default function Footer() {
               <li>
                 <svg className={styles.contactIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                 <div className={styles.contactPhoneGroup}>
-                  <a href="tel:+919876543210">+91 98765 43210</a>
-                  <span className={styles.slash}>/</span>
-                  <a href="tel:+917912345678">+91 79 1234 5678</a>
+                  <a href="tel:+919265000000">+91 92650 XXXXX</a>
                 </div>
               </li>
               <li>
@@ -140,50 +138,6 @@ export default function Footer() {
                 </div>
               </li>
             </ul>
-
-            {/* Interactive Luxury Google Map Embed */}
-            <div className={styles.footerMapBox}>
-              <div className={styles.mapBadgeRow}>
-                <div className={styles.mapPinHeader}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
-                  <span>Ahmedabad HQ Location</span>
-                </div>
-                <a
-                  href="https://maps.google.com/?q=Ahmedabad,Gujarat,India"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.mapDirectLink}
-                >
-                  <span>Open Maps</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                </a>
-              </div>
-
-              <div className={styles.iframeWrapper}>
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235014.29966395982!2d72.41492983794303!3d23.020181762100806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-                  width="100%"
-                  height="125"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Eco Export Office Location"
-                  className={styles.mapIframe}
-                ></iframe>
-              </div>
-            </div>
-
-            {/* Certifications Badge Pills */}
-            <div className={styles.certPills}>
-              <span className={styles.certPill}>ISO 9001:2015</span>
-              <span className={styles.certPill}>APEDA</span>
-              <span className={styles.certPill}>FIEO</span>
-              <span className={styles.certPill}>FSSAI</span>
-            </div>
           </div>
         </div>
       </div>
@@ -192,23 +146,22 @@ export default function Footer() {
       <div className={styles.bottomBar}>
         <div className={styles.bottomContainer}>
           <p className={styles.copyright}>
-            &copy; {new Date().getFullYear()} <strong>ECO EXPORT</strong>. All rights reserved.
+            © {new Date().getFullYear()} Eco Export. All rights reserved. Premium Agricultural Exporter from India.
           </p>
 
-          <div className={styles.bottomLinks}>
-            <Link href="/contact">Privacy Policy</Link>
-            <span className={styles.dot}>•</span>
-            <Link href="/contact">Terms of Service</Link>
-            <span className={styles.dot}>•</span>
-            <Link href="/contact">Sitemap</Link>
+          <div className={styles.certPills}>
+            <span className={styles.certPill}>ISO 9001:2015</span>
+            <span className={styles.certPill}>APEDA</span>
+            <span className={styles.certPill}>SPICES BOARD</span>
+            <span className={styles.certPill}>FSSAI</span>
+            <span className={styles.certPill}>IOPEPC</span>
           </div>
 
           <button onClick={scrollToTop} className={styles.scrollTopBtn} aria-label="Scroll to top">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+            ↑
           </button>
         </div>
       </div>
     </footer>
   );
 }
-

@@ -137,7 +137,7 @@ export const products = [
     description: "Steamed and dried rice with higher nutrient retention.",
     longDescription:
       "Processed using traditional parboiling methods, this rice retains more nutrients and holds its shape well during cooking — a preferred choice across African and Middle Eastern markets.",
-    image: "/product_img/Parboiled Rice Processing Plant Project Report 2026.jpg",
+    image: "/product_img/Basmat_rice.png",
     origin: "Andhra Pradesh, India",
     packaging: "25kg / 50kg PP bags",
     moq: "10 Metric Tons",

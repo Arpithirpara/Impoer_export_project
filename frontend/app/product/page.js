@@ -91,7 +91,7 @@ const products = [
     name: "Parboiled Rice",
     category: "Rice",
     description: "Steamed and dried rice with higher nutrient retention.",
-    image: "/product_img/Parboiled Rice Processing Plant Report 2026.jpg",
+    image: "/product_img/Basmat_rice.png",
   },
 
   // Pulses & Lentils
@@ -232,14 +232,21 @@ function ProductContent() {
         {visibleProducts.map((prod) => (
           <div key={prod.id} className={styles.card}>
             <div className={styles.imageWrap}>
-              <Image
-                src={prod.image}
-                alt={prod.name}
-                fill
-                quality={95}
-                className={styles.image}
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-              />
+              {prod.image ? (
+                <Image
+                  src={prod.image}
+                  alt={prod.name}
+                  fill
+                  quality={95}
+                  className={styles.image}
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                />
+              ) : (
+                <div style={{ width: "100%", height: "100%", background: "#f1f5f9", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#94a3b8", fontSize: "0.85rem", fontWeight: 600 }}>
+                  <span style={{ fontSize: "1.8rem", marginBottom: "4px" }}>🌾</span>
+                  <span>{prod.name}</span>
+                </div>
+              )}
               <span className={styles.tag}>{prod.category}</span>
             </div>
 

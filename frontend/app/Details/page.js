@@ -10,7 +10,7 @@ import { fraunces, inter } from "../fonts";
 import { products } from "../data/products";
 import styles from "./[id]/productDetail.module.css";
 
-const WHATSAPP_NUMBER = "919876543210";
+const WHATSAPP_NUMBER = "919265000000";
 
 function DetailsContent() {
   const searchParams = useSearchParams();
@@ -46,7 +46,7 @@ function DetailsContent() {
     `Hi Eco Export Team, I am interested in inquiring about "${selectedProduct.name}". Please provide export price, packaging details, and ocean freight shipment schedule.`
   );
 
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const whatsappLink = "#";
   const inquiryLink = `/inquiry?product=${encodeURIComponent(
     selectedProduct.name
   )}`;
@@ -99,14 +99,21 @@ function DetailsContent() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.imageWrap}>
-          <Image
-            src={selectedProduct.image}
-            alt={selectedProduct.name}
-            fill
-            className={styles.image}
-            sizes="(max-width:768px) 100vw, 45vw"
-            priority
-          />
+          {selectedProduct.image ? (
+            <Image
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              fill
+              className={styles.image}
+              sizes="(max-width:768px) 100vw, 45vw"
+              priority
+            />
+          ) : (
+            <div style={{ width: "100%", height: "100%", background: "#f1f5f9", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#94a3b8", fontSize: "1rem", fontWeight: 600 }}>
+              <span style={{ fontSize: "2.5rem", marginBottom: "8px" }}>🌾</span>
+              <span>{selectedProduct.name}</span>
+            </div>
+          )}
           <span className={styles.tag}>{selectedProduct.category}</span>
         </div>
 

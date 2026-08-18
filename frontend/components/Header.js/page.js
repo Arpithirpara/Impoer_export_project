@@ -11,18 +11,19 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [selectedLang, setSelectedLang] = useState("en");
+
   const router = useRouter();
   const pathname = usePathname();
 
   const languages = [
     { code: "en", label: "EN - English", flag: "🇬🇧" },
     { code: "hi", label: "HI - हिंदी", flag: "🇮🇳" },
+    { code: "gu", label: "GU - ગુજરાતી", flag: "🇮🇳" },
     { code: "es", label: "ES - Español", flag: "🇪🇸" },
     { code: "fr", label: "FR - Français", flag: "🇫🇷" },
     { code: "de", label: "DE - Deutsch", flag: "🇩🇪" },
     { code: "ar", label: "AR - العربية", flag: "🇦🇪" },
-    { code: "zh-CN", label: "ZH - 中文", flag: "🇨🇳" },
-    { code: "gu", label: "GU - ગુજરાતી", flag: "🇮🇳" },
+    { code: "zh", label: "ZH - 中文", flag: "🇨🇳" },
   ];
 
   useEffect(() => {
@@ -49,94 +50,6 @@ export default function Header() {
     };
   }, [menuOpen]);
 
-  // Google Translate initialization & restore saved language
-  useEffect(() => {
-    // Keep resetting body top to 0px so Google Translate bar never shifts the layout
-    const preventBodyShift = () => {
-      if (document.body) {
-        document.body.style.top = "0px";
-        document.body.style.position = "static";
-        document.body.style.marginTop = "0px";
-      }
-      if (document.documentElement) {
-        document.documentElement.style.top = "0px";
-        document.documentElement.style.marginTop = "0px";
-      }
-    };
-    preventBodyShift();
-    const interval = setInterval(preventBodyShift, 250);
-
-    const getCookie = (name) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(";").shift();
-      return null;
-    };
-
-    const googtrans = getCookie("googtrans");
-    if (googtrans) {
-      const code = googtrans.split("/").pop();
-      if (code && code !== "en") setSelectedLang(code);
-    } else {
-      const saved = localStorage.getItem("app_language");
-      if (saved) setSelectedLang(saved);
-    }
-
-    window.googleTranslateElementInit = () => {
-      if (window.google && window.google.translate) {
-        new window.google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "en,hi,es,fr,de,ar,zh-CN,gu",
-            autoDisplay: false,
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          },
-          "google_translate_element"
-        );
-      }
-    };
-
-    if (!document.getElementById("google-translate-script")) {
-      const addScript = document.createElement("script");
-      addScript.id = "google-translate-script";
-      addScript.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      addScript.async = true;
-      document.body.appendChild(addScript);
-    }
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleLanguageChange = (e) => {
-    const lang = e.target.value;
-    setSelectedLang(lang);
-    localStorage.setItem("app_language", lang);
-
-    const domain = window.location.hostname;
-
-    if (lang === "en") {
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain};`;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${domain};`;
-      document.cookie = "googtrans=/en/en; path=/;";
-    } else {
-      document.cookie = `googtrans=/en/${lang}; path=/;`;
-      document.cookie = `googtrans=/en/${lang}; path=/; domain=${domain};`;
-      document.cookie = `googtrans=/en/${lang}; path=/; domain=.${domain};`;
-    }
-
-    const combo = document.querySelector(".goog-te-combo");
-    if (combo) {
-      combo.value = lang;
-      combo.dispatchEvent(new Event("change"));
-    }
-
-    // Smooth page reload to apply translation cleanly to all DOM elements
-    setTimeout(() => {
-      window.location.reload();
-    }, 150);
-  };
-
   if (pathname && pathname.startsWith("/admin")) {
     return null;
   }
@@ -144,7 +57,7 @@ export default function Header() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/product?category=${encodeURIComponent(searchQuery.trim())}`);
+      router.push(`/product?query=${encodeURIComponent(searchQuery.trim())}`);
       setMenuOpen(false);
       setSearchOpen(false);
     } else if (searchOpen) {
@@ -163,15 +76,11 @@ export default function Header() {
     { name: "Exhibitions", path: "/exhibitions" },
     { name: "Countries", path: "/contry" },
     { name: "Gallery", path: "/gallery" },
-    { name: "Blog", path: "/blog" },
     { name: "Contact", path: "/contact" },
   ];
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
-      {/* Hidden Google Translate container */}
-      <div id="google_translate_element" style={{ display: "none" }}></div>
-
       <div className={styles.container}>
         {/* Left Group - Logo & Navigation Links */}
         <div className={styles.headerLeftGroup}>
@@ -206,7 +115,7 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* Right Section - Search Icon + Language + Quote Button */}
+        {/* Right Section - Search Icon + Static Language Select + Quote Button */}
         <div className={styles.rightSection}>
           <form
             onSubmit={handleSearch}
@@ -250,11 +159,12 @@ export default function Header() {
             />
           </form>
 
+          {/* Static Language Selector */}
           <select
             className={styles.language}
             aria-label="Language selector"
             value={selectedLang}
-            onChange={handleLanguageChange}
+            onChange={(e) => setSelectedLang(e.target.value)}
           >
             {languages.map((l) => (
               <option key={l.code} value={l.code}>
@@ -284,7 +194,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* FULL SCREEN MOBILE OVERLAY MENU (LUXURY OFF-WHITE THEME) */}
+      {/* FULL SCREEN MOBILE OVERLAY MENU */}
       {menuOpen && (
         <div className={styles.mobileMenuOverlay}>
           {/* Header Row in Overlay with Close Button */}
@@ -353,14 +263,14 @@ export default function Header() {
               })}
             </ul>
 
-            {/* Mobile Language Selector */}
+            {/* Mobile Static Language Selector */}
             <div className={styles.mobileLanguageWrap} style={{ margin: "16px 0", width: "100%", maxWidth: "280px" }}>
               <select
                 className={styles.language}
                 style={{ width: "100%", padding: "10px 14px", fontSize: "14px" }}
                 aria-label="Mobile language selector"
                 value={selectedLang}
-                onChange={handleLanguageChange}
+                onChange={(e) => setSelectedLang(e.target.value)}
               >
                 {languages.map((l) => (
                   <option key={l.code} value={l.code}>
@@ -376,8 +286,8 @@ export default function Header() {
             {/* Contact Us Section */}
             <div className={styles.mobileContactSection}>
               <span className={styles.contactLabel}>CONTACT US</span>
-              <a href="tel:+919876543210" className={styles.contactPhone}>
-                +91 98765 43210
+              <a href="tel:+919265000000" className={styles.contactPhone}>
+                +91 92650 XXXXX
               </a>
               <a href="mailto:info@ecoexport.in" className={styles.contactEmail}>
                 info@ecoexport.in
@@ -394,7 +304,7 @@ export default function Header() {
                 <a href="#" aria-label="LinkedIn" className={styles.mobileSocialChip}>
                   <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                 </a>
-                <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className={styles.mobileSocialChip}>
+                <a href="#" aria-label="WhatsApp" className={styles.mobileSocialChip}>
                   <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.573-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
                 </a>
               </div>
