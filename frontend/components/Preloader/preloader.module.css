@@ -176,6 +176,7 @@
 .brandTitleGreen {
   color: #15803d;
   background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
