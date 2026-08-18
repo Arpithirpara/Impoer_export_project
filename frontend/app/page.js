@@ -9,7 +9,6 @@ export default function Home() {
       <Main_section />
       <CategoryGrid />
       <Homesection />
-      
     </>
   )
 }
