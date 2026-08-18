@@ -9,6 +9,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [selectedLang, setSelectedLang] = useState("en");
 
@@ -60,10 +61,12 @@ export default function Header() {
       router.push(`/product?query=${encodeURIComponent(searchQuery.trim())}`);
       setMenuOpen(false);
       setSearchOpen(false);
-    } else if (searchOpen) {
+      setMobileSearchOpen(false);
+    } else if (searchOpen || mobileSearchOpen) {
       router.push("/product");
       setMenuOpen(false);
       setSearchOpen(false);
+      setMobileSearchOpen(false);
     } else {
       setSearchOpen(true);
     }
@@ -180,6 +183,27 @@ export default function Header() {
 
         {/* Mobile Header Controls */}
         <div className={styles.mobileHeaderRight}>
+          <button
+            className={`${styles.mobileSearchToggleBtn} ${mobileSearchOpen ? styles.activeSearchBtn : ""}`}
+            onClick={() => setMobileSearchOpen((prev) => !prev)}
+            aria-label="Toggle Search"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+
           <Link href="/inquiry" className={styles.mobileHeaderCta}>
             Get Quote
           </Link>
@@ -193,6 +217,52 @@ export default function Header() {
           </button>
         </div>
       </div>
+
+      {/* Expandable Mobile Search Bar (Directly below main header bar) */}
+      {mobileSearchOpen && (
+        <div className={styles.mobileTopSearchContainer}>
+          <form onSubmit={handleSearch} className={styles.mobileTopSearchForm}>
+            <div className={styles.mobileTopSearchInputWrap}>
+              <svg
+                className={styles.mobileTopSearchIcon}
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+                className={styles.mobileTopSearchInput}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  className={styles.mobileTopSearchClear}
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear text"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+            <button type="submit" className={styles.mobileTopSearchSubmit}>
+              Search
+            </button>
+          </form>
+        </div>
+      )}
 
       {/* FULL SCREEN MOBILE OVERLAY MENU */}
       {menuOpen && (
