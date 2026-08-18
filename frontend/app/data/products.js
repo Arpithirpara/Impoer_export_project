@@ -1,4 +1,24 @@
 export const products = [
+  // Spices
+  {
+    id: "premium-spices-mix",
+    name: "Indian Spices & Seasonings",
+    category: "Spices",
+    description: "Export-grade whole and ground authentic Indian spices.",
+    longDescription:
+      "Our authentic Indian spices are sourced directly from premier spice-growing regions across India. From high-curcumin turmeric to fragrant green cardamom and pungent red chillies, we supply whole, crushed, and finely ground spices processed under strict ISO & HACCP quality standards.",
+    image: "/categories_img/Spices_img.png",
+    origin: "Kerala & Rajasthan, India",
+    packaging: "25kg / 50kg PP & Jute bags, Vacuum seal packing available",
+    moq: "1 Metric Ton",
+    specs: [
+      { label: "Purity", value: "99% Min" },
+      { label: "Moisture", value: "≤ 10%" },
+      { label: "Admixture", value: "≤ 1%" },
+      { label: "Quality Standard", value: "ASTA / ISO Grade A+" },
+    ],
+  },
+
   // Tea
   {
     id: "assam-black-tea",
@@ -208,7 +228,7 @@ export const products = [
   // Grains & Cereals
   {
     id: "wheat",
-    name: "Wheat",
+    name: "Milling Wheat",
     category: "Grains & Cereals",
     description: "Milling-grade wheat with consistent protein content.",
     longDescription:
@@ -226,7 +246,7 @@ export const products = [
   },
   {
     id: "barley",
-    name: "Barley",
+    name: "Robust Barley",
     category: "Grains & Cereals",
     description: "Feed and malting grade barley, cleaned and graded.",
     longDescription:
@@ -244,7 +264,7 @@ export const products = [
   },
   {
     id: "millets",
-    name: "Millets (Bajra)",
+    name: "Pearl Millets (Bajra)",
     category: "Grains & Cereals",
     description: "Nutrient-dense pearl millet for global cereal markets.",
     longDescription:
@@ -258,6 +278,66 @@ export const products = [
       { label: "Moisture", value: "≤ 12%" },
       { label: "Purity", value: "98%" },
       { label: "Gluten", value: "Free" },
+    ],
+  },
+
+  // Flour
+  {
+    id: "wheat-flour-atta",
+    name: "Flour & Agro Meals",
+    category: "Flour",
+    description: "Finely milled high-protein wheat flour for baking & bread.",
+    longDescription:
+      "Finely milled wheat flour (Atta / Maida) produced from high-protein wheat grains. Processed without artificial bleaches to maintain natural aroma, dough elasticity, and baking quality for export markets.",
+    image: "/categories_img/Flour_img.png",
+    origin: "Madhya Pradesh, India",
+    packaging: "10kg / 25kg / 50kg PP Bags",
+    moq: "10 Metric Tons",
+    specs: [
+      { label: "Protein Content", value: "11.5% - 13%" },
+      { label: "Moisture", value: "≤ 12%" },
+      { label: "Ash Content", value: "≤ 0.55%" },
+      { label: "Shelf Life", value: "12 months" },
+    ],
+  },
+
+  // Oil Seeds
+  {
+    id: "oil-seeds-export",
+    name: "Premium Oil Seeds",
+    category: "Oil Seeds",
+    description: "High oil yield mustard, sesame, and sunflower seeds.",
+    longDescription:
+      "Export quality oil seeds including natural white sesame seeds, hulled sesame, and high-oil content mustard seeds. Sorted with optical laser sorters to achieve maximum purity for crushing and bakery use.",
+    image: "/categories_img/Oil Seeds.png",
+    origin: "Gujarat & Rajasthan, India",
+    packaging: "25kg / 50kg PP & Paper bags",
+    moq: "5 Metric Tons",
+    specs: [
+      { label: "Oil Content", value: "≥ 48%" },
+      { label: "Purity", value: "99.9% Sortex Cleaned" },
+      { label: "FFA", value: "≤ 1.5%" },
+      { label: "Moisture", value: "≤ 6%" },
+    ],
+  },
+
+  // Cattle Feed
+  {
+    id: "animal-cattle-feed",
+    name: "Animal & Cattle Feed",
+    category: "Cattle Feed",
+    description: "High protein meal and nutritious fodder mixes for export.",
+    longDescription:
+      "Nutritious agro by-products including soybean meal, rapeseed meal, cottonseed cake, and de-oiled rice bran. Sourced directly from modern solvent extraction plants for livestock and dairy farming.",
+    image: "/categories_img/Cattle Feed_Animal Feed.png",
+    origin: "Gujarat & Madhya Pradesh, India",
+    packaging: "50kg HDPE bags, Jumbo tote bags",
+    moq: "20 Metric Tons",
+    specs: [
+      { label: "Crude Protein", value: "44% - 48% Min" },
+      { label: "Moisture", value: "≤ 11%" },
+      { label: "Crude Fibre", value: "≤ 6%" },
+      { label: "Aflatoxin", value: "≤ 20 PPB" },
     ],
   },
 ];
