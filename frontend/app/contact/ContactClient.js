@@ -76,7 +76,7 @@ export default function ContactClient() {
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>📞</span>
             <h3>Call Us</h3>
-            <p>+91 98765 43210</p>
+            <p>+91 92650 XXXXX</p>
           </div>
           <div className={styles.infoCard}>
             <span className={styles.infoIcon}>✉️</span>
@@ -133,7 +133,7 @@ export default function ContactClient() {
                     type="tel"
                     value={form.phone}
                     onChange={handleChange}
-                    placeholder="+91 00000 00000"
+                    placeholder="+91 92650 XXXXX"
                   />
                 </div>
                 <div className={styles.field}>

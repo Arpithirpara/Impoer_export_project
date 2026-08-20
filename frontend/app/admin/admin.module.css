@@ -203,16 +203,18 @@ html, body {
 .userCard {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 16px;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
   background: #0B192C;
   border: 1px solid #1E293B;
+  width: 100%;
 }
 
 .userAvatar {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #16A34A;
   border: 1.5px solid #FFFFFF;
@@ -221,41 +223,68 @@ html, body {
   justify-content: center;
   font-weight: 800;
   color: #FFFFFF;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  flex-shrink: 0;
 }
 
 .userInfo {
   flex: 1;
-  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .userName {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 800;
   color: #FFFFFF;
   margin: 0;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: visible;
   font-family: 'Plus Jakarta Sans', Georgia, serif;
+  line-height: 1.2;
 }
 
 .userRole {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: #22C55E;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .logoutBtn {
-  color: #94A3B8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease;
+  color: #EF4444 !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  border: 1.5px solid rgba(239, 68, 68, 0.3) !important;
+  padding: 6px 8px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  font-size: 0.74rem !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.logoutBtn * {
+  color: #EF4444 !important;
+  stroke: #EF4444 !important;
 }
 
 .logoutBtn:hover {
-  color: #FFFFFF;
+  background: #EF4444 !important;
+  border-color: #EF4444 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4) !important;
+}
+
+.logoutBtn:hover * {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
 }
 
 /* Main Content Wrapper - Light Crisp Canvas (#F8FAFC) */
@@ -555,7 +584,7 @@ html, body {
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 16px;
   margin-bottom: 32px;
 }
 
@@ -563,17 +592,29 @@ html, body {
   background: #FFFFFF;
   border: 1.5px solid #E2E8F0;
   border-radius: 16px;
-  padding: 20px;
+  padding: 18px 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(11, 25, 44, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 24px rgba(11, 25, 44, 0.08);
 }
 
 .statCardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   margin-bottom: 14px;
+  width: 100%;
 }
 
 .statIconWrap {
@@ -585,31 +626,43 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .statTrend {
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: #16A34A;
   background: #F0FDF4;
   border: 1px solid #BBF7D0;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 999px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 65%;
+  flex-shrink: 1;
+  text-align: right;
+  line-height: 1.25;
 }
 
 .statValue {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: #0B192C;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .statTitle {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: #64748B;
   margin: 0;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Cards & Content Grid */
@@ -619,12 +672,14 @@ html, body {
   gap: 28px;
 }
 
-.cardBox {
+.cardBox,
+.fullWidthCardBox {
   background: #FFFFFF;
   border: 1.5px solid #E2E8F0;
   border-radius: 18px;
   padding: 22px;
   box-shadow: 0 4px 20px rgba(11, 25, 44, 0.03);
+  width: 100%;
 }
 
 .cardTitleBar {
@@ -918,7 +973,7 @@ html, body {
 
 @media (max-width: 1400px) {
   .statsGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
   .statCard {

@@ -129,9 +129,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             onClick={handleLogout}
             title="Logout Admin Session"
             className={styles.logoutBtn}
-            style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}
           >
-            <LogOut size={17} />
+            <LogOut size={16} />
+            <span>Logout</span>
           </button>
         </div>
       </div>

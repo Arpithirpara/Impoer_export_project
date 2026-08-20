@@ -297,7 +297,7 @@ const certifications = [
     badgeText: "Govt. of India Registered",
     description:
       "Registered exporter for premium quality grains, rice, fruits, and processed agro commodities.",
-    logo: "/home_page_cartificateslogo/apeda_logo.png",
+    logo: "/home_page_cartificateslogo/Apeda.png",
   },
   {
     code: "FSSAI",
@@ -305,7 +305,7 @@ const certifications = [
     badgeText: "Food Safety Certified",
     description:
       "100% compliant with strict hygienic storage, handling, packaging, and food quality safety standards.",
-    logo: "/home_page_cartificateslogo/Fssai_logo.png",
+    logo: "/home_page_cartificateslogo/Fssai.png",
   },
   {
     code: "ISO 22000",
@@ -313,7 +313,7 @@ const certifications = [
     badgeText: "Global Quality Standard",
     description:
       "Certified food safety management system ensuring international hazard analysis and quality assurance.",
-    logo: "/home_page_cartificateslogo/iso_logo.png",
+    logo: "/home_page_cartificateslogo/Iso.png",
   },
   {
     code: "SPICES BOARD",

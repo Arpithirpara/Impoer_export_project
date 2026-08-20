@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Save, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Save, CheckCircle2, X } from "lucide-react";
 import Sidebar from "./Sidebar";
 import TopHeader from "./TopHeader";
 import styles from "../admin.module.css";
@@ -133,6 +133,55 @@ export default function AdminFormLayout({
               }}
             >
               {children}
+
+              {/* Form Bottom Action Bar (Cancel + Add / Update Button) */}
+              <div
+                style={{
+                  marginTop: 32,
+                  paddingTop: 24,
+                  borderTop: "1.5px solid #E2E8F0",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  gap: 12,
+                }}
+              >
+                <Link
+                  href={backUrl}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    padding: "11px 22px",
+                    borderRadius: 12,
+                    border: "1.5px solid #CBD5E1",
+                    background: "#FFFFFF",
+                    color: "#0B192C",
+                    fontWeight: 700,
+                    fontSize: "0.9rem",
+                    textDecoration: "none",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <X size={16} />
+                  <span>Cancel</span>
+                </Link>
+
+                <button
+                  type="submit"
+                  className={styles.primaryActionBtn}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: "11px 24px",
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  <Save size={18} />
+                  <span>{isEdit ? "Update Changes" : "Add New Item"}</span>
+                </button>
+              </div>
             </div>
           </form>
         </main>

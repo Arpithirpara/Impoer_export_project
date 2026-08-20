@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Sidebar from "../components/Sidebar";
 import TopHeader from "../components/TopHeader";
-import { Plus, Edit, Trash2, CheckCircle } from "lucide-react";
+import { Plus, Edit, Trash2, Search, Filter } from "lucide-react";
 import styles from "../admin.module.css";
 
 const productsList = [
@@ -19,22 +19,28 @@ const productsList = [
 
 export default function AdminProductsPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [searchFilter, setSearchFilter] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categories = ["All", "Spices", "Tea", "Rice", "Grains & Cereals", "Pulses & Lentils"];
 
   const filtered = productsList.filter((p) => {
     const matchesSearch =
-      p.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchFilter.toLowerCase());
-    if (activeTab === "All") return matchesSearch;
-    return matchesSearch && p.status === activeTab;
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.origin.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === "All" || p.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
   });
 
   return (
     <div className={styles.adminLayout}>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className={`${styles.mainWrapper} ${!sidebarOpen ? styles.mainWrapperFull : ""}`}>
-        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className={styles.mainContent}>
           {/* Header Action Section */}
           <div className={styles.moduleHeader}>
@@ -48,36 +54,59 @@ export default function AdminProductsPage() {
             </Link>
           </div>
 
-          {/* Status Filter Badges (Matching Dairy Admin reference design) */}
-          <div className={styles.filterBar}>
-            <button
-              onClick={() => setActiveTab("All")}
-              className={`${styles.filterPill} ${activeTab === "All" ? styles.activeFilterPill : ""}`}
-            >
-              All ({productsList.length})
-            </button>
-            <button
-              onClick={() => setActiveTab("Active")}
-              className={`${styles.filterPill} ${activeTab === "Active" ? styles.activeFilterPill : ""}`}
-            >
-              Active ({productsList.filter((p) => p.status === "Active").length})
-            </button>
-            <button
-              onClick={() => setActiveTab("Inactive")}
-              className={`${styles.filterPill} ${activeTab === "Inactive" ? styles.activeFilterPill : ""}`}
-            >
-              Inactive (0)
-            </button>
-            <button
-              onClick={() => setActiveTab("Draft")}
-              className={`${styles.filterPill} ${activeTab === "Draft" ? styles.activeFilterPill : ""}`}
-            >
-              Draft (0)
-            </button>
-          </div>
-
-          {/* Table Container */}
+          {/* Table Container Box */}
           <div className={styles.cardBox}>
+            {/* Table Search & Category Filter Bar */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 18, flexWrap: "wrap" }}>
+              {/* Search Bar */}
+              <div style={{ position: "relative", flex: 1, minWidth: 240, maxWidth: 380 }}>
+                <Search size={18} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#64748B" }} />
+                <input
+                  type="text"
+                  placeholder="Search products by name, category, origin..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "9px 14px 9px 38px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#F8FAFC",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "#0B192C",
+                    outline: "none",
+                  }}
+                />
+              </div>
+
+              {/* Category Dropdown Filter */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Filter size={16} style={{ color: "#64748B" }} />
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  style={{
+                    padding: "9px 14px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#FFFFFF",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: "#0B192C",
+                    outline: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat === "All" ? "All Categories" : cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <div className={styles.tableContainer}>
               <table className={styles.dataTable}>
                 <thead>
@@ -92,30 +121,38 @@ export default function AdminProductsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filtered.map((p) => (
-                    <tr key={p.id}>
-                      <td>
-                        <div style={{ position: "relative", width: 48, height: 44, borderRadius: 8, overflow: "hidden", background: "#ffffff", border: "1px solid #cbd5e1" }}>
-                          <Image src={p.image} alt={p.name} fill style={{ objectFit: "cover" }} />
-                        </div>
-                      </td>
-                      <td style={{ fontWeight: 800, color: "#0B192C" }}>{p.name}</td>
-                      <td>{p.category}</td>
-                      <td style={{ fontWeight: 700, color: "#16A34A" }}>{p.price}</td>
-                      <td>{p.stock}</td>
-                      <td>{p.weight}</td>
-                      <td>
-                        <div className={styles.actionRow}>
-                          <Link href={`/admin/products/edit/${p.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
-                            <Edit size={14} /> Edit
-                          </Link>
-                          <button className={styles.deleteBtn}>
-                            <Trash2 size={14} /> Delete
-                          </button>
-                        </div>
+                  {filtered.length > 0 ? (
+                    filtered.map((p) => (
+                      <tr key={p.id}>
+                        <td>
+                          <div style={{ position: "relative", width: 48, height: 44, borderRadius: 8, overflow: "hidden", background: "#ffffff", border: "1px solid #cbd5e1" }}>
+                            <Image src={p.image} alt={p.name} fill style={{ objectFit: "cover" }} />
+                          </div>
+                        </td>
+                        <td style={{ fontWeight: 800, color: "#0B192C" }}>{p.name}</td>
+                        <td>{p.category}</td>
+                        <td style={{ fontWeight: 700, color: "#16A34A" }}>{p.price}</td>
+                        <td>{p.stock}</td>
+                        <td>{p.weight}</td>
+                        <td>
+                          <div className={styles.actionRow}>
+                            <Link href={`/admin/products/edit/${p.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
+                              <Edit size={14} /> Edit
+                            </Link>
+                            <button className={styles.deleteBtn}>
+                              <Trash2 size={14} /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} style={{ textAlign: "center", padding: "24px", color: "#64748B", fontWeight: 600 }}>
+                        No products match your search/filter criteria.
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>

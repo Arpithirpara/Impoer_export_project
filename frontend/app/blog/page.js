@@ -3,6 +3,17 @@ import Image from "next/image";
 import { fraunces, inter } from "../fonts";
 import styles from "./blog.module.css";
 
+export const metadata = {
+  title: "Agro Export Blog & Market Insights",
+  description:
+    "Latest industry news, ocean freight updates, quality standards, and global commodity trends from Eco Export experts.",
+  openGraph: {
+    title: "Agro Export Blog & Market Insights | ECO EXPORT",
+    description:
+      "Stay updated with agricultural export standards, Mundra/Kandla port logistics, and international commodity market demand.",
+  },
+};
+
 const posts = [
   {
     id: "blog-1",

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Sidebar from "../components/Sidebar";
 import TopHeader from "../components/TopHeader";
-import { Plus, Edit, Trash2, CheckCircle, Eye, Globe, Users, Clock, Activity } from "lucide-react";
+import { Plus, Edit, Trash2, CheckCircle, Eye, Globe, Users, Clock, Activity, Search, Filter } from "lucide-react";
 import styles from "../admin.module.css";
 
 const visitorsList = [
@@ -17,19 +17,25 @@ const visitorsList = [
 
 export default function AdminVisitorsPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [searchFilter, setSearchFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
 
-  const filtered = visitorsList.filter((v) =>
-    v.country.toLowerCase().includes(searchFilter.toLowerCase()) ||
-    v.ip.includes(searchFilter) ||
-    v.page.toLowerCase().includes(searchFilter.toLowerCase())
-  );
+  const filtered = visitorsList.filter((v) => {
+    const matchesSearch =
+      v.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.ip.includes(searchQuery) ||
+      v.page.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === "All" || v.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className={styles.adminLayout}>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className={`${styles.mainWrapper} ${!sidebarOpen ? styles.mainWrapperFull : ""}`}>
-        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className={styles.mainContent}>
           {/* Header Action Section */}
           <div className={styles.moduleHeader}>
@@ -47,7 +53,7 @@ export default function AdminVisitorsPage() {
           <div className={styles.statsGrid}>
             <div className={styles.statCard}>
               <div className={styles.statCardHeader}>
-                <div className={styles.statIconWrap}><Users size={22} /></div>
+                <div className={styles.statIconWrap}><Users size={20} /></div>
                 <span className={styles.statTrend}>+12.4% this week</span>
               </div>
               <h3 className={styles.statValue}>12,450</h3>
@@ -56,7 +62,7 @@ export default function AdminVisitorsPage() {
 
             <div className={styles.statCard}>
               <div className={styles.statCardHeader}>
-                <div className={styles.statIconWrap} style={{ background: "#0B192C" }}><Activity size={22} /></div>
+                <div className={styles.statIconWrap} style={{ background: "#0B192C" }}><Activity size={20} /></div>
                 <span className={styles.statTrend}>Live Now</span>
               </div>
               <h3 className={styles.statValue}>18</h3>
@@ -65,7 +71,7 @@ export default function AdminVisitorsPage() {
 
             <div className={styles.statCard}>
               <div className={styles.statCardHeader}>
-                <div className={styles.statIconWrap}><Globe size={22} /></div>
+                <div className={styles.statIconWrap}><Globe size={20} /></div>
                 <span className={styles.statTrend}>30+ Ports</span>
               </div>
               <h3 className={styles.statValue}>42</h3>
@@ -74,7 +80,7 @@ export default function AdminVisitorsPage() {
 
             <div className={styles.statCard}>
               <div className={styles.statCardHeader}>
-                <div className={styles.statIconWrap}><Clock size={22} /></div>
+                <div className={styles.statIconWrap}><Clock size={20} /></div>
                 <span className={styles.statTrend}>Avg Session</span>
               </div>
               <h3 className={styles.statValue}>4m 42s</h3>
@@ -84,6 +90,53 @@ export default function AdminVisitorsPage() {
 
           {/* Data Table Container */}
           <div className={styles.cardBox}>
+            {/* Table Search & Status Filter Toolbar */}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 18 }}>
+              <div style={{ position: "relative", flex: 1, minWidth: 240, maxWidth: 400 }}>
+                <Search size={18} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#64748B" }} />
+                <input
+                  type="text"
+                  placeholder="Search by Visitor ID, country, IP, landed page..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "9px 14px 9px 38px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#F8FAFC",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "#0B192C",
+                    outline: "none",
+                  }}
+                />
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Filter size={16} style={{ color: "#64748B" }} />
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  style={{
+                    padding: "9px 14px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#FFFFFF",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: "#0B192C",
+                    outline: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  <option value="All">All Session Statuses</option>
+                  <option value="Active">Active Online</option>
+                  <option value="Completed">Completed Session</option>
+                </select>
+              </div>
+            </div>
+
             <div className={styles.tableContainer}>
               <table className={styles.dataTable}>
                 <thead>
@@ -99,36 +152,44 @@ export default function AdminVisitorsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filtered.map((v) => (
-                    <tr key={v.id}>
-                      <td style={{ fontWeight: 800, color: "#0B192C" }}>{v.id}</td>
-                      <td style={{ fontFamily: "monospace", fontWeight: 700 }}>{v.ip}</td>
-                      <td>
-                        <strong style={{ color: "#0B192C", display: "flex", alignItems: "center", gap: 6 }}>
-                          <span style={{ fontSize: "1.2rem" }}>{v.flag}</span> {v.country}
-                        </strong>
-                        <span style={{ fontSize: "0.8rem", color: "#64748B" }}>{v.city}</span>
-                      </td>
-                      <td style={{ fontFamily: "monospace", color: "#0B192C" }}>{v.page}</td>
-                      <td style={{ fontWeight: 700 }}>⏱️ {v.duration}</td>
-                      <td style={{ fontSize: "0.85rem", color: "#64748B" }}>{v.time}</td>
-                      <td>
-                        <span className={`${styles.statusBadge} ${v.status === "Active" ? styles.statusActive : styles.statusPending}`}>
-                          <CheckCircle size={12} /> {v.status}
-                        </span>
-                      </td>
-                      <td>
-                        <div className={styles.actionRow}>
-                          <Link href={`/admin/visitors/edit/${v.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
-                            <Edit size={14} /> Edit
-                          </Link>
-                          <button className={styles.deleteBtn}>
-                            <Trash2 size={14} /> Delete
-                          </button>
-                        </div>
+                  {filtered.length > 0 ? (
+                    filtered.map((v) => (
+                      <tr key={v.id}>
+                        <td style={{ fontWeight: 800, color: "#0B192C" }}>{v.id}</td>
+                        <td style={{ fontFamily: "monospace", fontWeight: 700 }}>{v.ip}</td>
+                        <td>
+                          <strong style={{ color: "#0B192C", display: "flex", alignItems: "center", gap: 6 }}>
+                            <span style={{ fontSize: "1.2rem" }}>{v.flag}</span> {v.country}
+                          </strong>
+                          <span style={{ fontSize: "0.8rem", color: "#64748B" }}>{v.city}</span>
+                        </td>
+                        <td style={{ fontFamily: "monospace", color: "#0B192C" }}>{v.page}</td>
+                        <td style={{ fontWeight: 700 }}>⏱️ {v.duration}</td>
+                        <td style={{ fontSize: "0.85rem", color: "#64748B" }}>{v.time}</td>
+                        <td>
+                          <span className={`${styles.statusBadge} ${v.status === "Active" ? styles.statusActive : styles.statusPending}`}>
+                            <CheckCircle size={12} /> {v.status}
+                          </span>
+                        </td>
+                        <td>
+                          <div className={styles.actionRow}>
+                            <Link href={`/admin/visitors/edit/${v.id}`} className={styles.editBtn} style={{ textDecoration: "none" }}>
+                              <Edit size={14} /> Edit
+                            </Link>
+                            <button className={styles.deleteBtn}>
+                              <Trash2 size={14} /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={8} style={{ textAlign: "center", padding: "24px", color: "#64748B", fontWeight: 600 }}>
+                        No visitor records match your search/filter criteria.
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>

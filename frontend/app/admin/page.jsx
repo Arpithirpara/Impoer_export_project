@@ -77,121 +77,79 @@ export default function AdminDashboardPage() {
             {overviewStats.map((stat, idx) => {
               const Icon = stat.icon;
               return (
-                <div key={idx} className={styles.statCard}>
+                <Link key={idx} href={stat.link} className={styles.statCard} style={{ textDecoration: "none" }}>
                   <div className={styles.statCardHeader}>
                     <div className={styles.statIconWrap}>
-                      <Icon size={22} />
+                      <Icon size={20} />
                     </div>
                     <span className={styles.statTrend}>{stat.trend}</span>
                   </div>
-                  <h3 className={styles.statValue}>{stat.value}</h3>
-                  <p className={styles.statTitle}>{stat.title}</p>
-                </div>
+                  <div>
+                    <h3 className={styles.statValue}>{stat.value}</h3>
+                    <p className={styles.statTitle}>{stat.title}</p>
+                  </div>
+                </Link>
               );
             })}
           </div>
 
-          {/* Main Grid Content */}
-          <div className={styles.contentGrid}>
-            {/* Left: Recent Inquiries Table */}
-            <div className={styles.cardBox}>
-              <div className={styles.cardTitleBar}>
-                <h3>Recent Buyer Inquiries & RFQs</h3>
-                <Link href="/admin/inquiries" style={{ color: "#000000", fontSize: "0.88rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}>
-                  <span>View All Leads</span>
-                  <ArrowUpRight size={16} />
-                </Link>
-              </div>
-
-              <div className={styles.tableContainer}>
-                <table className={styles.dataTable}>
-                  <thead>
-                    <tr>
-                      <th>RFQ ID</th>
-                      <th>Client Name</th>
-                      <th>Country</th>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recentInquiries.map((row) => (
-                      <tr key={row.id}>
-                        <td style={{ fontWeight: 800, color: "#000000" }}>{row.id}</td>
-                        <td style={{ fontWeight: 700, color: "#0f172a" }}>{row.client}</td>
-                        <td>{row.country}</td>
-                        <td>{row.product}</td>
-                        <td>{row.qty}</td>
-                        <td>
-                          <span
-                            className={`${styles.statusBadge} ${
-                              row.status === "Active"
-                                ? styles.statusActive
-                                : styles.statusPending
-                            }`}
-                          >
-                            {row.status === "Active" ? <CheckCircle size={12} /> : <Clock size={12} />}
-                            {row.status}
-                          </span>
-                        </td>
-                        <td>
-                          <div className={styles.actionRow}>
-                            <button className={styles.editBtn}>
-                              <Edit size={14} /> Edit
-                            </button>
-                            <button className={styles.deleteBtn}>
-                              <Trash2 size={14} /> Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+          {/* Main Content Area */}
+          <div className={styles.fullWidthCardBox}>
+            <div className={styles.cardTitleBar}>
+              <h3>Recent Buyer Inquiries & RFQs</h3>
+              <Link href="/admin/inquiries" style={{ color: "#000000", fontSize: "0.88rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}>
+                <span>View All Leads</span>
+                <ArrowUpRight size={16} />
+              </Link>
             </div>
 
-            {/* Right: Quick Module Links */}
-            <div className={styles.cardBox}>
-              <div className={styles.cardTitleBar}>
-                <h3>Quick Management Modules</h3>
-              </div>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {quickModules.map((m, idx) => {
-                  const Icon = m.icon;
-                  return (
-                    <Link
-                      key={idx}
-                      href={m.href}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        padding: "14px 16px",
-                        background: "#f8fafc",
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "12px",
-                        textDecoration: "none",
-                        transition: "all 0.2s ease",
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <div style={{ width: 36, height: 36, borderRadius: 10, background: "#000000", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff" }}>
-                          <Icon size={20} />
+            <div className={styles.tableContainer}>
+              <table className={styles.dataTable}>
+                <thead>
+                  <tr>
+                    <th>RFQ ID</th>
+                    <th>Client Name</th>
+                    <th>Country</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentInquiries.map((row) => (
+                    <tr key={row.id}>
+                      <td style={{ fontWeight: 800, color: "#000000" }}>{row.id}</td>
+                      <td style={{ fontWeight: 700, color: "#0f172a" }}>{row.client}</td>
+                      <td>{row.country}</td>
+                      <td>{row.product}</td>
+                      <td>{row.qty}</td>
+                      <td>
+                        <span
+                          className={`${styles.statusBadge} ${
+                            row.status === "Active"
+                              ? styles.statusActive
+                              : styles.statusPending
+                          }`}
+                        >
+                          {row.status === "Active" ? <CheckCircle size={12} /> : <Clock size={12} />}
+                          {row.status}
+                        </span>
+                      </td>
+                      <td>
+                        <div className={styles.actionRow}>
+                          <button className={styles.editBtn}>
+                            <Edit size={14} /> Edit
+                          </button>
+                          <button className={styles.deleteBtn}>
+                            <Trash2 size={14} /> Delete
+                          </button>
                         </div>
-                        <div>
-                          <p style={{ margin: 0, fontWeight: 700, fontSize: "0.92rem", color: "#000000" }}>{m.label}</p>
-                          <span style={{ fontSize: "0.78rem", color: "#64748b" }}>{m.count}</span>
-                        </div>
-                      </div>
-                      <ArrowUpRight size={18} style={{ color: "#000000" }} />
-                    </Link>
-                  );
-                })}
-              </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </main>

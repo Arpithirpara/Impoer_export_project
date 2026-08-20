@@ -199,7 +199,7 @@ export default function InquiryPage() {
           <div className={styles.divider} />
           <h3 className={fraunces.className}>Direct Contact</h3>
           <p className={styles.contactLine}>export@yourcompany.com</p>
-          <p className={styles.contactLine}>+91 98765 43210</p>
+          <p className={styles.contactLine}>+91 92650 XXXXX</p>
         </aside>
       </section>
     </main>

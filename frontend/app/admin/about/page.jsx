@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Sidebar from "../components/Sidebar";
 import TopHeader from "../components/TopHeader";
-import { Plus, Edit, Trash2, CheckCircle } from "lucide-react";
+import { Edit, Trash2, CheckCircle, Search, Filter } from "lucide-react";
 import styles from "../admin.module.css";
 
 const aboutSectionsList = [
@@ -45,28 +45,28 @@ const aboutSectionsList = [
 
 export default function AdminAboutPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [searchFilter, setSearchFilter] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All");
+
+  const categories = ["All", "Main Story", "Logistics Access", "Corporate Vision", "Quality Mission"];
 
   const filtered = aboutSectionsList.filter((item) => {
     const matchesSearch =
-      item.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchFilter.toLowerCase()) ||
-      item.details.toLowerCase().includes(searchFilter.toLowerCase());
-    if (activeTab === "All") return matchesSearch;
-    return matchesSearch && item.status === activeTab;
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.details.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesCategory =
+      categoryFilter === "All" || item.category === categoryFilter;
+
+    return matchesSearch && matchesCategory;
   });
 
   return (
     <div className={styles.adminLayout}>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className={`${styles.mainWrapper} ${!sidebarOpen ? styles.mainWrapperFull : ""}`}>
-        <TopHeader
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-          searchFilter={searchFilter}
-          setSearchFilter={setSearchFilter}
-        />
+        <TopHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className={styles.mainContent}>
           {/* Header Action Section */}
           <div className={styles.moduleHeader}>
@@ -80,36 +80,57 @@ export default function AdminAboutPage() {
             </Link>
           </div>
 
-          {/* Status Filter Badges (Matching All Admin Pages) */}
-          <div className={styles.filterBar}>
-            <button
-              onClick={() => setActiveTab("All")}
-              className={`${styles.filterPill} ${activeTab === "All" ? styles.activeFilterPill : ""}`}
-            >
-              All ({aboutSectionsList.length})
-            </button>
-            <button
-              onClick={() => setActiveTab("Active")}
-              className={`${styles.filterPill} ${activeTab === "Active" ? styles.activeFilterPill : ""}`}
-            >
-              Active ({aboutSectionsList.filter((item) => item.status === "Active").length})
-            </button>
-            <button
-              onClick={() => setActiveTab("Inactive")}
-              className={`${styles.filterPill} ${activeTab === "Inactive" ? styles.activeFilterPill : ""}`}
-            >
-              Inactive (0)
-            </button>
-            <button
-              onClick={() => setActiveTab("Draft")}
-              className={`${styles.filterPill} ${activeTab === "Draft" ? styles.activeFilterPill : ""}`}
-            >
-              Draft (0)
-            </button>
-          </div>
-
-          {/* Table Container */}
+          {/* Table Container Box */}
           <div className={styles.cardBox}>
+            {/* Table Search & Category Filter Toolbar */}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 18 }}>
+              <div style={{ position: "relative", flex: 1, minWidth: 240, maxWidth: 400 }}>
+                <Search size={18} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#64748B" }} />
+                <input
+                  type="text"
+                  placeholder="Search section title, category, or details..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "9px 14px 9px 38px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#F8FAFC",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "#0B192C",
+                    outline: "none",
+                  }}
+                />
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Filter size={16} style={{ color: "#64748B" }} />
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  style={{
+                    padding: "9px 14px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #CBD5E1",
+                    background: "#FFFFFF",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: "#0B192C",
+                    outline: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat === "All" ? "All Section Categories" : cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <div className={styles.tableContainer}>
               <table className={styles.dataTable}>
                 <thead>
@@ -123,33 +144,41 @@ export default function AdminAboutPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filtered.map((item) => (
-                    <tr key={item.id}>
-                      <td>
-                        <div style={{ position: "relative", width: 56, height: 44, borderRadius: 8, overflow: "hidden", background: "#ffffff", border: "1px solid #cbd5e1" }}>
-                          <Image src={item.image} alt={item.name} fill style={{ objectFit: "cover" }} />
-                        </div>
-                      </td>
-                      <td style={{ fontWeight: 800, color: "#0B192C" }}>{item.name}</td>
-                      <td>{item.category}</td>
-                      <td style={{ color: "#475569" }}>{item.details}</td>
-                      <td>
-                        <span className={`${styles.statusBadge} ${styles.statusActive}`}>
-                          <CheckCircle size={12} /> {item.status}
-                        </span>
-                      </td>
-                      <td>
-                        <div className={styles.actionRow}>
-                          <Link href="/admin/about/edit" className={styles.editBtn} style={{ textDecoration: "none" }}>
-                            <Edit size={14} /> Edit
-                          </Link>
-                          <button className={styles.deleteBtn}>
-                            <Trash2 size={14} /> Delete
-                          </button>
-                        </div>
+                  {filtered.length > 0 ? (
+                    filtered.map((item) => (
+                      <tr key={item.id}>
+                        <td>
+                          <div style={{ position: "relative", width: 56, height: 44, borderRadius: 8, overflow: "hidden", background: "#ffffff", border: "1px solid #cbd5e1" }}>
+                            <Image src={item.image} alt={item.name} fill style={{ objectFit: "cover" }} />
+                          </div>
+                        </td>
+                        <td style={{ fontWeight: 800, color: "#0B192C" }}>{item.name}</td>
+                        <td>{item.category}</td>
+                        <td style={{ color: "#475569" }}>{item.details}</td>
+                        <td>
+                          <span className={`${styles.statusBadge} ${styles.statusActive}`}>
+                            <CheckCircle size={12} /> {item.status}
+                          </span>
+                        </td>
+                        <td>
+                          <div className={styles.actionRow}>
+                            <Link href="/admin/about/edit" className={styles.editBtn} style={{ textDecoration: "none" }}>
+                              <Edit size={14} /> Edit
+                            </Link>
+                            <button className={styles.deleteBtn}>
+                              <Trash2 size={14} /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={6} style={{ textAlign: "center", padding: "24px", color: "#64748B", fontWeight: 600 }}>
+                        No about sections match your search/filter criteria.
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
