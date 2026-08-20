@@ -68,7 +68,7 @@ export default function Header() {
         {/* Left - Logo & Brand */}
         <Link href="/" className={styles.logoSection}>
           <img
-            src="/header/CompanyLogo.png"
+            src="/header/Eco_Logo.png"
             alt="Eco Export Logo"
             className={styles.logo}
           />
