@@ -44,7 +44,7 @@ export default function Preloader() {
         <div className={styles.logoWrapper}>
           <div className={styles.logoGlowRing}></div>
           <img
-            src="/header/logo.png"
+            src="/header/Eco_Logo.png"
             alt="Eco Export Logo"
             className={styles.logoImg}
           />

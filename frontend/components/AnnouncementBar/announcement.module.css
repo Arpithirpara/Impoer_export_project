@@ -1,9 +1,25 @@
 /* =========================================================
-   ECO EXPORT WELCOME ANNOUNCEMENT MODAL & ROTATING TICKER STYLES
+   ECO EXPORT WELCOME ANNOUNCEMENT MODAL — IMAGE ONLY
    100% Mobile & Desktop Responsive - Fixed Viewport Portal
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* Extra safety net: hide the native page scrollbar (right edge) whenever
+   the modal's own scroll-lock is active, so no scrollbar line shows
+   through in any browser, including older IE/Edge. */
+:global(html.no-scroll),
+:global(body.no-scroll) {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(html.no-scroll)::-webkit-scrollbar,
+:global(body.no-scroll)::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
 
 /* Floating Re-Open Badge (When Modal is Closed) */
 .floatingChip {
@@ -59,15 +75,6 @@
   color: #ffffff;
 }
 
-.chipTimeBadge {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 3px 9px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #86efac;
-}
-
 /* =========================================================
    AUTO OPEN ANNOUNCEMENT MODAL (VIEWPORT PORTAL FIXED CENTERING)
    ========================================================= */
@@ -89,8 +96,14 @@
   justify-content: center;
   padding: 16px;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   animation: fadeInModal 0.25s ease-out;
   font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif !important;
+}
+
+.modalOverlay::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes fadeInModal {
@@ -98,7 +111,7 @@
   to { opacity: 1; }
 }
 
-/* Poster Card Container (Fits 100% inside Viewport) */
+/* Poster Card Container (Fits 100% inside Viewport) — image only */
 .posterModalCard {
   position: relative;
   background: #062314;
@@ -107,11 +120,16 @@
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 0 0 0 1.5px rgba(255, 255, 255, 0.15);
   max-width: 530px;
   width: 100%;
-  max-height: 88vh;
-  display: flex;
-  flex-direction: column;
+  max-height: 92vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   margin: auto;
   animation: zoomInModal 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.posterModalCard::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes zoomInModal {
@@ -125,7 +143,7 @@
   }
 }
 
-/* Red Top Close Button Overlay (Matching User's Reference Screenshot) */
+/* Red Top Close (Cross) Button Overlay */
 .posterCloseBtn {
   position: absolute;
   top: 0;
@@ -150,233 +168,16 @@
   transform: scale(1.06);
 }
 
-/* WELCOME BANNER HEADER */
-.welcomeBannerBar {
-  background: linear-gradient(135deg, #092e1b 0%, #15803d 100%);
-  padding: 12px 50px 12px 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  flex-shrink: 0;
-}
-
-.welcomeHandEmoji {
-  font-size: 24px;
-  animation: waveHand 2s infinite ease-in-out;
-  display: inline-block;
-  transform-origin: 70% 70%;
-}
-
-@keyframes waveHand {
-  0%, 100% { transform: rotate(0deg); }
-  20% { transform: rotate(14deg); }
-  40% { transform: rotate(-8deg); }
-  60% { transform: rotate(14deg); }
-  80% { transform: rotate(-4deg); }
-}
-
-.welcomeTitle {
-  margin: 0;
-  font-size: 16.5px;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-  font-family: 'Outfit', sans-serif !important;
-}
-
-.welcomeSubtitle {
-  margin: 2px 0 0 0;
-  font-size: 11.5px;
-  color: #bbf7d0;
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
-}
-
-/* User Session Audit Bar (Entry & Refresh Timestamps Header) */
-.timestampBadgeBar {
-  background: rgba(15, 23, 42, 0.6);
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  flex-wrap: wrap;
-  flex-shrink: 0;
-}
-
-.tsBadgeItem {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11.5px;
-  color: #cbd5e1;
-}
-
-.tsClickable {
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.tsClickable:hover {
-  opacity: 0.85;
-}
-
-.tsIcon {
-  color: #4ade80;
-}
-
-.tsBadgeItem strong {
-  color: #ffffff;
-  font-weight: 700;
-  font-family: monospace, 'Plus Jakarta Sans';
-}
-
-/* AUTO-ROTATING ECO EXPORT TICKER BAR */
-.rotatingTickerWrap {
-  background: linear-gradient(90deg, #092e1b 0%, #0f172a 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.tickerBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(22, 163, 74, 0.25);
-  border: 1px solid rgba(74, 222, 128, 0.4);
-  color: #86efac;
-  font-size: 10.5px;
-  font-weight: 800;
-  padding: 2.5px 8px;
-  border-radius: 6px;
-  letter-spacing: 0.04em;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.tickerTextSlide {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  animation: slideFadeIn 0.5s ease-out forwards;
-}
-
-@keyframes slideFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.sparkleIcon {
-  color: #fde047;
-  flex-shrink: 0;
-}
-
 /* Single Announcement Image Poster Frame */
 .posterImageWrap {
   width: 100%;
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fdfbf7;
-  padding: 0;
+  line-height: 0;
 }
 
 .singlePosterImg {
   width: 100%;
   height: auto;
-  max-height: 52vh;
-  object-fit: contain;
   display: block;
-}
-
-/* Poster Modal Footer Bar */
-.posterFooterBar {
-  background: #092e1b;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-}
-
-.liveClockText {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-.liveClockText strong {
-  color: #4ade80;
-  font-family: monospace;
-}
-
-.footerActionBtns {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-}
-
-.inquiryBtn {
-  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
-  color: #ffffff;
-  padding: 8.5px 16px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.3);
-}
-
-.inquiryBtn:hover {
-  background: #22c55e;
-  transform: translateY(-1px);
-}
-
-.continueBtn {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  padding: 8.5px 14px;
-  border-radius: 10px;
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.continueBtn:hover {
-  background: rgba(255, 255, 255, 0.22);
 }
 
 /* =========================================================
@@ -389,73 +190,8 @@
 
   .posterModalCard {
     max-width: 100%;
-    max-height: 90vh;
+    max-height: 92vh;
     border-radius: 16px;
-  }
-
-  .welcomeBannerBar {
-    padding: 10px 46px 10px 12px;
-  }
-
-  .welcomeTitle {
-    font-size: 14.5px;
-  }
-
-  .welcomeSubtitle {
-    font-size: 10.5px;
-  }
-
-  .timestampBadgeBar {
-    padding: 6px 12px;
-    gap: 8px;
-  }
-
-  .tsBadgeItem {
-    font-size: 10px;
-  }
-
-  .rotatingTickerWrap {
-    padding: 6px 12px;
-    gap: 6px;
-  }
-
-  .tickerBadge {
-    font-size: 9.5px;
-    padding: 2px 6px;
-  }
-
-  .tickerTextSlide {
-    font-size: 11px;
-  }
-
-  .singlePosterImg {
-    max-height: 48vh;
-  }
-
-  .posterFooterBar {
-    padding: 10px 12px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .liveClockText {
-    justify-content: center;
-  }
-
-  .footerActionBtns {
-    width: 100%;
-    margin-left: 0;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .inquiryBtn, .continueBtn {
-    flex: 1;
-    justify-content: center;
-    text-align: center;
-    font-size: 12px;
-    padding: 9px 10px;
   }
 
   .floatingChip {
