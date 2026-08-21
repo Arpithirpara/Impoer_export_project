@@ -3,6 +3,7 @@ import Header from "../components/Header.js/page";
 import Footer from "../components/footer.js/page";
 import Preloader from "../components/Preloader/Preloader";
 import AnnouncementBar from "../components/AnnouncementBar/AnnouncementBar";
+import WhatsAppWidget from "../components/WhatsAppWidget/WhatsAppWidget";
 
 export const metadata = {
   metadataBase: new URL("https://www.ecoexport.in"),
@@ -118,6 +119,7 @@ export default function RootElement({ children }) {
         <Header />
         {children}
         <Footer />
+        <WhatsAppWidget />
       </body>
     </html>
   );

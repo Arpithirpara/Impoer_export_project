@@ -6,7 +6,9 @@ import Link from "next/link";
 import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { Search, X, SlidersHorizontal, PackageSearch } from "lucide-react";
 import { fraunces, inter } from "../fonts";
+import QuickRfqModal from "../../components/QuickRfqModal/QuickRfqModal";
 import styles from "./product.module.css";
 
 const filters = [
@@ -170,26 +172,48 @@ const products = [
 
 function ProductContent() {
   const searchParams = useSearchParams();
-  const selectedCategory = searchParams.get("category") || "All";
+  const initialCategory = searchParams.get("category") || "All";
+  const initialQuery = searchParams.get("query") || "";
 
-  const [active, setActive] = useState(selectedCategory);
+  const [active, setActive] = useState(initialCategory);
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const [rfqModalOpen, setRfqModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("");
 
   useEffect(() => {
-    setActive(selectedCategory);
-  }, [selectedCategory]);
+    if (searchParams.get("category")) {
+      setActive(searchParams.get("category"));
+    }
+    if (searchParams.get("query")) {
+      setSearchQuery(searchParams.get("query"));
+    }
+  }, [searchParams]);
 
-  const visibleProducts =
-    active === "All"
-      ? products
-      : products.filter((p) => {
-          const catLower = p.category.toLowerCase();
-          const activeLower = active.toLowerCase();
-          return (
-            catLower === activeLower ||
-            catLower.includes(activeLower) ||
-            activeLower.includes(catLower)
-          );
-        });
+  const openRfqModal = (prodName) => {
+    setSelectedProduct(prodName);
+    setRfqModalOpen(true);
+  };
+
+  const visibleProducts = products.filter((p) => {
+    const matchesCategory =
+      active === "All" ||
+      p.category.toLowerCase() === active.toLowerCase() ||
+      p.category.toLowerCase().includes(active.toLowerCase()) ||
+      active.toLowerCase().includes(p.category.toLowerCase());
+
+    const matchesQuery =
+      !searchQuery.trim() ||
+      p.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+      p.category.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+      p.description.toLowerCase().includes(searchQuery.toLowerCase().trim());
+
+    return matchesCategory && matchesQuery;
+  });
+
+  const handleResetFilters = () => {
+    setActive("All");
+    setSearchQuery("");
+  };
 
   return (
     <main className={inter.className} style={{ background: "#fbfbf8", minHeight: "80vh" }}>
@@ -208,8 +232,34 @@ function ProductContent() {
         </p>
       </section>
 
-      {/* Category Filter Pills */}
+      {/* Search & Category Filter Section */}
       <div className={styles.filtersWrapper}>
+        <div className={styles.searchBarBox}>
+          <div className={styles.searchInputWrap}>
+            <Search size={18} className={styles.searchIcon} />
+            <input
+              type="text"
+              placeholder="Search products (e.g. Basmati, Cumin, Wheat, Sesame)..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+            />
+            {searchQuery && (
+              <button
+                className={styles.clearSearchBtn}
+                onClick={() => setSearchQuery("")}
+                aria-label="Clear search"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
+          <div className={styles.countBadge}>
+            <SlidersHorizontal size={14} />
+            <span>Showing {visibleProducts.length} of {products.length} Products</span>
+          </div>
+        </div>
+
         <div className={styles.filters}>
           {filters.map((category) => (
             <button
@@ -229,47 +279,65 @@ function ProductContent() {
 
       {/* Products Grid */}
       <section className={styles.grid}>
-        {visibleProducts.map((prod) => (
-          <div key={prod.id} className={styles.card}>
-            <div className={styles.imageWrap}>
-              {prod.image ? (
-                <Image
-                  src={prod.image}
-                  alt={prod.name}
-                  fill
-                  quality={95}
-                  className={styles.image}
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                />
-              ) : (
-                <div style={{ width: "100%", height: "100%", background: "#f1f5f9", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#94a3b8", fontSize: "0.85rem", fontWeight: 600 }}>
-                  <span style={{ fontSize: "1.8rem", marginBottom: "4px" }}>🌾</span>
-                  <span>{prod.name}</span>
-                </div>
-              )}
-              <span className={styles.tag}>{prod.category}</span>
-            </div>
+        {visibleProducts.length > 0 ? (
+          visibleProducts.map((prod) => (
+            <div key={prod.id} className={styles.card}>
+              <div className={styles.imageWrap}>
+                {prod.image ? (
+                  <Image
+                    src={prod.image}
+                    alt={`${prod.name} - Premium Indian Agricultural Exporter ECO EXPORT`}
+                    fill
+                    quality={80}
+                    className={styles.image}
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  />
+                ) : (
+                  <div className={styles.placeholderImg}>
+                    <span style={{ fontSize: "1.8rem", marginBottom: "4px" }}>🌾</span>
+                    <span>{prod.name}</span>
+                  </div>
+                )}
+                <span className={styles.tag}>{prod.category}</span>
+              </div>
 
-            <div className={styles.cardBody}>
-              <h3 className={`${styles.prodTitle} ${fraunces.className}`}>
-                {prod.name}
-              </h3>
-              <p className={styles.prodDesc}>{prod.description}</p>
-              <div className={styles.actions}>
-                <Link href={`/product/${prod.id}`} className={styles.link}>
-                  Details
-                </Link>
-                <Link
-                  href={`/inquiry?product=${encodeURIComponent(prod.name)}`}
-                  className={styles.buyBtnWrap}
-                >
-                  <button className={styles.buyBtn}>Inquire Now</button>
-                </Link>
+              <div className={styles.cardBody}>
+                <h3 className={`${styles.prodTitle} ${fraunces.className}`}>
+                  {prod.name}
+                </h3>
+                <p className={styles.prodDesc}>{prod.description}</p>
+                <div className={styles.actions}>
+                  <Link href={`/product/${prod.id}`} className={styles.link}>
+                    Details
+                  </Link>
+                  <button
+                    onClick={() => openRfqModal(prod.name)}
+                    className={styles.buyBtn}
+                  >
+                    Inquire Now
+                  </button>
+                </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className={styles.emptyState}>
+            <PackageSearch size={48} className={styles.emptyIcon} />
+            <h3>No products found</h3>
+            <p>We couldn't find any products matching "{searchQuery}". Try searching for another commodity.</p>
+            <button onClick={handleResetFilters} className={styles.resetBtn}>
+              Reset Filters & Search
+            </button>
           </div>
-        ))}
+        )}
       </section>
+
+      {/* Quick RFQ Popup Modal */}
+      <QuickRfqModal
+        isOpen={rfqModalOpen}
+        onClose={() => setRfqModalOpen(false)}
+        productName={selectedProduct}
+      />
     </main>
   );
 }

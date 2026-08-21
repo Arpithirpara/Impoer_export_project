@@ -105,19 +105,6 @@ export default function AnnouncementBar() {
 
   return (
     <>
-      {/* FLOATING RE-OPEN BADGE (Shows when modal is closed) */}
-      {!showModal && (
-        <button
-          className={styles.floatingChip}
-          onClick={() => setShowModal(true)}
-          title="Open Announcement"
-          aria-label="Open Announcement"
-        >
-          <span className={styles.welcomeEmoji}>📢</span>
-          <span className={styles.chipText}>Exhibition Announcement</span>
-        </button>
-      )}
-
       {/* RENDER MODAL VIA REACT PORTAL DIRECTLY ON DOCUMENT BODY */}
       {mounted && modalMarkup && createPortal(modalMarkup, document.body)}
     </>
