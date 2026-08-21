@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle, ShieldCheck } from "lucide-react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -43,118 +43,92 @@ export default function AdminLoginPage() {
     }, 1200);
   };
 
-  // Full Screen White & Green Preloader Screen with Logo Zoom Animation Effect
+  // Full Screen Preloader Screen
   if (isLoading) {
     return (
       <div
         style={{
           minHeight: "100vh",
           width: "100%",
-          background: "linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%)",
-          color: "#143528",
+          background: "linear-gradient(135deg, #0f172a 0%, #15803d 100%)",
+          color: "#ffffff",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           padding: "24px",
-          fontFamily: "inherit",
+          fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-          {/* Logo Zoom & Pulse Container */}
           <div
             style={{
               position: "relative",
-              width: "150px",
-              height: "150px",
-              marginBottom: "22px",
+              width: "140px",
+              height: "140px",
+              marginBottom: "20px",
               borderRadius: "50%",
               overflow: "hidden",
-              border: "4px solid #143528",
-              boxShadow: "0 12px 35px rgba(22, 163, 74, 0.3)",
-              animation: "ecoLogoZoomPulse 2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite alternate",
+              background: "#ffffff",
+              padding: "12px",
+              boxShadow: "0 15px 40px rgba(0, 0, 0, 0.4)",
+              animation: "ecoLogoZoom 1.8s infinite alternate cubic-bezier(0.34, 1.56, 0.64, 1)",
             }}
           >
             <Image
-              src="/header/logo.png"
+              src="/header/Eco_Logo.png"
               alt="Eco Export Preloader Logo"
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "contain", padding: "16px" }}
               priority
             />
           </div>
 
-          <h1
-            style={{
-              fontSize: "1.85rem",
-              fontWeight: 800,
-              color: "#143528",
-              margin: "0 0 4px",
-              fontFamily: "Georgia, serif",
-              letterSpacing: "0.03em",
-            }}
-          >
+          <h1 style={{ fontSize: "1.6rem", fontWeight: 800, margin: "0 0 6px", letterSpacing: "-0.02em" }}>
             ECO EXPORT
           </h1>
 
           <span
             style={{
-              fontSize: "0.82rem",
-              fontWeight: 800,
-              color: "#16a34a",
-              letterSpacing: "0.12em",
+              fontSize: "0.78rem",
+              fontWeight: 700,
+              color: "#4ade80",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
-              fontFamily: "monospace",
               marginBottom: "24px",
             }}
           >
-            AUTHENTICATING & LOADING ADMIN CONTROL PANEL...
+            Authenticating Admin Session...
           </span>
 
-          {/* Animated Green Loader Bar */}
           <div
             style={{
-              width: "220px",
-              height: "5px",
-              background: "#cbd5e1",
+              width: "200px",
+              height: "4px",
+              background: "rgba(255, 255, 255, 0.2)",
               borderRadius: "999px",
               overflow: "hidden",
-              position: "relative",
             }}
           >
             <div
               style={{
-                width: "60%",
+                width: "50%",
                 height: "100%",
-                background: "linear-gradient(90deg, #143528, #16a34a)",
+                background: "#4ade80",
                 borderRadius: "999px",
-                animation: "ecoLoaderMove 1.2s ease-in-out infinite alternate",
+                animation: "ecoLoaderMove 1.2s infinite alternate ease-in-out",
               }}
             />
           </div>
         </div>
 
         <style jsx>{`
-          @keyframes ecoLogoZoomPulse {
-            0% {
-              transform: scale(0.75);
-              box-shadow: 0 4px 15px rgba(22, 163, 74, 0.2);
-            }
-            70% {
-              transform: scale(1.12);
-              box-shadow: 0 16px 45px rgba(22, 163, 74, 0.45);
-            }
-            100% {
-              transform: scale(1.02);
-              box-shadow: 0 12px 35px rgba(22, 163, 74, 0.35);
-            }
+          @keyframes ecoLogoZoom {
+            0% { transform: scale(0.85); }
+            100% { transform: scale(1.08); }
           }
           @keyframes ecoLoaderMove {
-            0% {
-              transform: translateX(-40%);
-            }
-            100% {
-              transform: translateX(100%);
-            }
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(150%); }
           }
         `}</style>
       </div>
@@ -170,23 +144,23 @@ export default function AdminLoginPage() {
         alignItems: "center",
         justifyContent: "center",
         padding: "24px",
-        fontFamily: "inherit",
-        background: "linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #f8fafc 100%)",
+        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        background: "radial-gradient(circle at 50% 10%, #f0fdf4 0%, #f8fafc 60%, #e2e8f0 100%)",
       }}
     >
-      {/* Main White Login Card */}
+      {/* Premium Glassmorphism Card */}
       <div
         style={{
           width: "100%",
-          maxWidth: "460px",
+          maxWidth: "440px",
           background: "#ffffff",
-          border: "2px solid #143528",
-          borderRadius: "28px",
-          padding: "44px 36px",
-          boxShadow: "0 20px 40px -15px rgba(20, 53, 40, 0.12)",
+          borderRadius: "24px",
+          padding: "40px 32px",
+          boxShadow: "0 20px 50px -10px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.05)",
+          transition: "all 0.3s ease",
         }}
       >
-        {/* Official Eco Export Logo */}
+        {/* Brand Logo & Header */}
         <div
           style={{
             display: "flex",
@@ -199,47 +173,46 @@ export default function AdminLoginPage() {
           <div
             style={{
               position: "relative",
-              width: "140px",
-              height: "140px",
-              marginBottom: "14px",
-              borderRadius: "50%",
-              overflow: "hidden",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
-              border: "3px solid #143528",
+              width: "320px",
+              height: "115px",
+              marginBottom: "16px",
+              maxWidth: "100%",
             }}
           >
             <Image
-              src="/header/logo.png"
+              src="/header/Eco_Logo.png"
               alt="Eco Export Logo"
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "contain", filter: "contrast(1.05)" }}
               priority
+              unoptimized
             />
           </div>
-          <h1
+
+          <div
             style={{
-              fontSize: "1.75rem",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              background: "rgba(22, 163, 74, 0.08)",
+              border: "1px solid rgba(22, 163, 74, 0.2)",
+              color: "#15803d",
+              padding: "4px 12px",
+              borderRadius: "20px",
+              fontSize: "0.72rem",
               fontWeight: 800,
-              color: "#143528",
-              margin: "0 0 2px",
-              fontFamily: "Georgia, serif",
-              letterSpacing: "0.02em",
-            }}
-          >
-            ECO EXPORT
-          </h1>
-          <span
-            style={{
-              fontSize: "0.78rem",
-              fontWeight: 800,
-              color: "#16a34a",
+              letterSpacing: "0.06em",
               textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              fontFamily: "monospace",
+              marginBottom: "6px",
             }}
           >
-            AGRO EXPORT ADMIN PORTAL
-          </span>
+            <ShieldCheck size={13} />
+            <span>Control Panel Login</span>
+          </div>
+
+          <p style={{ margin: "4px 0 0", fontSize: "0.85rem", color: "#64748b", fontWeight: 500 }}>
+            Sign in to manage commodities, RFQs & global buyers
+          </p>
         </div>
 
         {/* Error Alert Box */}
@@ -250,13 +223,14 @@ export default function AdminLoginPage() {
               alignItems: "center",
               gap: "10px",
               background: "#fef2f2",
-              border: "1.5px solid #ef4444",
+              border: "1px solid #fca5a5",
               color: "#991b1b",
-              padding: "12px 16px",
-              borderRadius: "12px",
-              fontSize: "0.85rem",
-              fontWeight: 700,
+              padding: "12px 14px",
+              borderRadius: "14px",
+              fontSize: "0.84rem",
+              fontWeight: 600,
               marginBottom: "20px",
+              animation: "shake 0.3s ease",
             }}
           >
             <AlertCircle size={18} style={{ flexShrink: 0, color: "#dc2626" }} />
@@ -265,22 +239,19 @@ export default function AdminLoginPage() {
         )}
 
         {/* Login Form */}
-        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
           {/* Email Input */}
           <div>
             <label
               style={{
                 display: "block",
-                fontSize: "0.8rem",
-                fontWeight: 800,
-                color: "#000000",
-                marginBottom: "8px",
-                textTransform: "uppercase",
-                letterSpacing: "0.06em",
-                fontFamily: "monospace",
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                color: "#334155",
+                marginBottom: "7px",
               }}
             >
-              Admin Email Address
+              Email Address
             </label>
             <div style={{ position: "relative" }}>
               <Mail
@@ -290,7 +261,7 @@ export default function AdminLoginPage() {
                   left: "14px",
                   top: "50%",
                   transform: "translateY(-50%)",
-                  color: "#64748b",
+                  color: "#94a3b8",
                 }}
               />
               <input
@@ -298,17 +269,17 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter email address"
+                placeholder="admin@eco.com"
                 style={{
                   width: "100%",
                   padding: "12px 14px 12px 42px",
                   background: "#f8fafc",
                   border: "1.5px solid #cbd5e1",
                   borderRadius: "12px",
-                  color: "#000000",
-                  fontSize: "0.95rem",
+                  color: "#0f172a",
+                  fontSize: "0.92rem",
                   outline: "none",
-                  fontWeight: 700,
+                  fontWeight: 600,
                   transition: "all 0.2s ease",
                 }}
               />
@@ -320,16 +291,13 @@ export default function AdminLoginPage() {
             <label
               style={{
                 display: "block",
-                fontSize: "0.8rem",
-                fontWeight: 800,
-                color: "#000000",
-                marginBottom: "8px",
-                textTransform: "uppercase",
-                letterSpacing: "0.06em",
-                fontFamily: "monospace",
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                color: "#334155",
+                marginBottom: "7px",
               }}
             >
-              Secret Password
+              Password
             </label>
             <div style={{ position: "relative" }}>
               <Lock
@@ -339,7 +307,7 @@ export default function AdminLoginPage() {
                   left: "14px",
                   top: "50%",
                   transform: "translateY(-50%)",
-                  color: "#64748b",
+                  color: "#94a3b8",
                 }}
               />
               <input
@@ -347,17 +315,17 @@ export default function AdminLoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder="••••••••"
                 style={{
                   width: "100%",
                   padding: "12px 44px 12px 42px",
                   background: "#f8fafc",
                   border: "1.5px solid #cbd5e1",
                   borderRadius: "12px",
-                  color: "#000000",
-                  fontSize: "0.95rem",
+                  color: "#0f172a",
+                  fontSize: "0.92rem",
                   outline: "none",
-                  fontWeight: 700,
+                  fontWeight: 600,
                   transition: "all 0.2s ease",
                 }}
               />
@@ -366,62 +334,65 @@ export default function AdminLoginPage() {
                 onClick={() => setShowPassword(!showPassword)}
                 style={{
                   position: "absolute",
-                  right: "14px",
+                  right: "12px",
                   top: "50%",
                   transform: "translateY(-50%)",
                   background: "none",
                   border: "none",
-                  color: "#64748b",
+                  color: "#94a3b8",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
+                  padding: "4px",
                 }}
+                aria-label="Toggle password visibility"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
           </div>
 
-          {/* Submit Login Button */}
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading}
             style={{
               width: "100%",
-              padding: "14px",
-              background: "#143528",
+              padding: "13px",
+              background: "linear-gradient(135deg, #0f172a 0%, #15803d 100%)",
               color: "#ffffff",
               border: "none",
-              borderRadius: "14px",
-              fontSize: "0.95rem",
-              fontWeight: 800,
+              borderRadius: "12px",
+              fontSize: "0.92rem",
+              fontWeight: 700,
               cursor: isLoading ? "not-allowed" : "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
-              boxShadow: "0 6px 20px rgba(20, 53, 40, 0.25)",
-              marginTop: "8px",
+              boxShadow: "0 6px 18px rgba(21, 128, 61, 0.3)",
+              marginTop: "6px",
               transition: "all 0.2s ease",
             }}
           >
-            <span>Sign In To Control Panel</span>
+            <span>Sign In to Admin Panel</span>
             <ArrowRight size={18} />
           </button>
         </form>
 
-        {/* Back to Storefront Link */}
-        <div style={{ marginTop: "24px", textAlign: "center" }}>
+        {/* Back to Website Link */}
+        <div style={{ marginTop: "22px", textAlign: "center" }}>
           <Link
             href="/"
             style={{
               color: "#64748b",
-              fontSize: "0.85rem",
+              fontSize: "0.82rem",
               textDecoration: "none",
-              fontWeight: 700,
+              fontWeight: 600,
+              transition: "color 0.2s ease",
             }}
           >
-            ← Back to Storefront Website
+            ← Return to Eco Export Website
           </Link>
         </div>
       </div>
