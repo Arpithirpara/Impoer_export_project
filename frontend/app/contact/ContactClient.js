@@ -182,13 +182,14 @@ export default function ContactClient() {
 
           <div className={styles.mapWrap}>
             <iframe
-              title="AgriHarvest location"
-              src="https://www.google.com/maps?q=Ahmedabad,Gujarat,India&output=embed"
+              title="Eco Export Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4557.225054738016!2d72.498003776036!3d23.00323431704821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84d50dbb582d%3A0xe3f88d797efe5c3b!2sEco%20Export!5e1!3m2!1sen!2sin!4v1787303265365!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style={{ border: 0 }}
+              allowFullScreen=""
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="strict-origin-when-cross-origin"
             ></iframe>
           </div>
         </div>
