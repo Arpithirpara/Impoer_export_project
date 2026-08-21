@@ -93,10 +93,6 @@ export default function Header() {
               alt="Eco Export Logo"
               className={styles.logo}
             />
-            <div className={styles.brandDetails}>
-              <h2 className={styles.title}>ECO EXPORT</h2>
-              <p className={styles.subtitle}>Global Import & Export</p>
-            </div>
           </Link>
 
           <nav className={styles.desktopNav}>
@@ -270,11 +266,7 @@ export default function Header() {
           {/* Header Row in Overlay with Close Button */}
           <div className={styles.mobileOverlayHeader}>
             <Link href="/" className={styles.mobileBrandLogo} onClick={() => setMenuOpen(false)}>
-              <img src="/header/CompanyLogo.png" alt="Eco Export Logo" className={styles.overlayLogoImg} />
-              <div className={styles.overlayBrandGroup}>
-                <span className={styles.overlayBrandTitle}>ECO EXPORT</span>
-                <span className={styles.overlayBrandSub}>Global Trade</span>
-              </div>
+              <img src="/header/Eco_Logo.png" alt="Eco Export Logo" className={styles.overlayLogoImg} />
             </Link>
 
             <button

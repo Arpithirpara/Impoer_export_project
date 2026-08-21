@@ -20,7 +20,7 @@
 .container {
   width: 100%;
   max-width: 100%;
-  padding: 12px 32px;
+  padding: 4px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -33,7 +33,7 @@
 .logoSection {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   flex-shrink: 0;
   margin-left: 0 !important;
@@ -41,10 +41,12 @@
 }
 
 .logo {
-  width: 48px;
-  height: 48px;
+  height: 90px;
+  width: auto;
+  max-height: 95px;
   object-fit: contain;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
 }
 
 .logoSection:hover .logo {
@@ -54,26 +56,28 @@
 .brandDetails {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .title {
   margin: 0;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 800;
   color: #0f172a;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   line-height: 1.1;
   white-space: nowrap;
 }
 
 .subtitle {
   margin: 0;
-  font-size: 10.5px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   color: #15803d;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
+  margin-top: 2px;
 }
 
 /* ========================================= */
@@ -425,9 +429,11 @@
 }
 
 .overlayLogoImg {
-  width: 40px;
-  height: 40px;
+  height: 75px;
+  width: auto;
+  max-height: 80px;
   object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
 }
 
 .overlayBrandGroup {
@@ -436,7 +442,7 @@
 }
 
 .overlayBrandTitle {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
   color: #0f172a;
   letter-spacing: 0.02em;
@@ -444,11 +450,12 @@
 }
 
 .overlayBrandSub {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   color: #15803d;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  margin-top: 1px;
 }
 
 .closeBtn {
@@ -699,7 +706,13 @@
 /* Laptop screens (1025px - 1360px) */
 @media (max-width: 1360px) and (min-width: 1025px) {
   .container {
-    padding: 12px 18px;
+    padding: 4px 18px;
+  }
+
+  .logo {
+    height: 78px;
+    width: auto;
+    max-height: 80px;
   }
 
   .headerLeftGroup {
@@ -735,7 +748,13 @@
 /* Tablet & Mobile Screens (under 1024px) */
 @media (max-width: 1024px) {
   .container {
-    padding: 10px 16px;
+    padding: 4px 16px;
+  }
+
+  .logo {
+    height: 68px;
+    width: auto;
+    max-height: 70px;
   }
 
   .desktopNav {
@@ -762,20 +781,21 @@
   }
 
   .logoSection {
-    gap: 6px;
+    gap: 8px;
   }
 
   .logo {
-    width: 36px;
-    height: 36px;
+    height: 58px;
+    width: auto;
+    max-height: 60px;
   }
 
   .title {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .subtitle {
-    font-size: 8.5px;
+    font-size: 9px;
   }
 
   .mobileSearchToggleBtn {

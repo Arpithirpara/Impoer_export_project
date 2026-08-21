@@ -1,13 +1,10 @@
 /* =========================================================
-   ECO EXPORT WELCOME ANNOUNCEMENT MODAL — IMAGE ONLY
+   ECO EXPORT WELCOME ANNOUNCEMENT MODAL — PREMIUM POSTER POPUP
    100% Mobile & Desktop Responsive - Fixed Viewport Portal
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-/* Extra safety net: hide the native page scrollbar (right edge) whenever
-   the modal's own scroll-lock is active, so no scrollbar line shows
-   through in any browser, including older IE/Edge. */
 :global(html.no-scroll),
 :global(body.no-scroll) {
   scrollbar-width: none;
@@ -26,10 +23,10 @@
   position: fixed;
   bottom: 24px;
   left: 24px;
-  z-index: 999999;
+  z-index: 99999;
   background: linear-gradient(135deg, #0f172a 0%, #15803d 100%);
   color: #ffffff;
-  border: 1.5px solid rgba(74, 222, 128, 0.5);
+  border: 1.5px solid rgba(74, 222, 128, 0.4);
   padding: 10px 18px;
   border-radius: 30px;
   display: flex;
@@ -76,7 +73,7 @@
 }
 
 /* =========================================================
-   AUTO OPEN ANNOUNCEMENT MODAL (VIEWPORT PORTAL FIXED CENTERING)
+   ANNOUNCEMENT MODAL OVERLAY & POPUP CARD
    ========================================================= */
 .modalOverlay {
   position: fixed;
@@ -87,55 +84,41 @@
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: rgba(10, 15, 26, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 99999999 !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  animation: fadeInModal 0.25s ease-out;
+  padding: 20px;
+  animation: fadeInOverlay 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif !important;
 }
 
-.modalOverlay::-webkit-scrollbar {
-  display: none;
-}
-
-@keyframes fadeInModal {
+@keyframes fadeInOverlay {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-/* Poster Card Container (Fits 100% inside Viewport) — image only */
 .posterModalCard {
   position: relative;
-  background: #062314;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 0 0 0 1.5px rgba(255, 255, 255, 0.15);
-  max-width: 530px;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  max-width: 480px;
   width: 100%;
-  max-height: 92vh;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  margin: auto;
-  animation: zoomInModal 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: popInCard 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.posterModalCard::-webkit-scrollbar {
-  display: none;
-}
-
-@keyframes zoomInModal {
+@keyframes popInCard {
   from {
     opacity: 0;
-    transform: scale(0.92) translateY(18px);
+    transform: scale(0.9) translateY(24px);
   }
   to {
     opacity: 1;
@@ -143,55 +126,117 @@
   }
 }
 
-/* Red Top Close (Cross) Button Overlay */
+/* Floating Circle Close Button (Top-Right) */
 .posterCloseBtn {
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 20;
-  background: #dc2626;
+  top: 12px;
+  right: 12px;
+  z-index: 30;
+  background: rgba(15, 23, 42, 0.75);
   color: #ffffff;
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-bottom-left-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .posterCloseBtn:hover {
-  background: #b91c1c;
-  transform: scale(1.06);
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #ffffff;
+  transform: scale(1.1) rotate(90deg);
 }
 
-/* Single Announcement Image Poster Frame */
+/* Single Poster Image Container */
 .posterImageWrap {
   width: 100%;
-  line-height: 0;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
 }
 
 .singlePosterImg {
   width: 100%;
   height: auto;
+  max-height: calc(85vh - 65px);
+  object-fit: contain;
   display: block;
 }
 
+/* Modal Footer CTA Bar */
+.modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+}
+
+.modalCtaBtn {
+  flex: 1;
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+  color: #ffffff;
+  text-align: center;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(21, 128, 61, 0.25);
+}
+
+.modalCtaBtn:hover {
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(21, 128, 61, 0.35);
+}
+
+.modalDismissBtn {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalDismissBtn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
 /* =========================================================
-   100% PHONE DEVICE RESPONSIVE BREAKPOINTS
+   MOBILE RESPONSIVE BREAKPOINTS
    ========================================================= */
 @media (max-width: 640px) {
   .modalOverlay {
-    padding: 10px;
+    padding: 12px;
   }
 
   .posterModalCard {
     max-width: 100%;
-    max-height: 92vh;
-    border-radius: 16px;
+    max-height: 90vh;
+    border-radius: 18px;
+  }
+
+  .singlePosterImg {
+    max-height: calc(86vh - 65px);
   }
 
   .floatingChip {
