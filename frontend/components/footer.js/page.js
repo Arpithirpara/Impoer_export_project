@@ -33,14 +33,11 @@ export default function Footer() {
         <div className={styles.brandCol}>
           <Link href="/" className={styles.brandLogoWrapper}>
             <img
-              src="/header/CompanyLogo.png"
+              src="/header/Eco_Logo.png"
               alt="Eco Export Logo"
               className={styles.brandLogo}
             />
-            <div className={styles.brandTextGroup}>
-              <h3 className={styles.brandTitle}>ECO EXPORT</h3>
-              <span className={styles.brandSub}>Global Import & Export</span>
-            </div>
+           
           </Link>
 
           <p className={styles.tagline}>
@@ -138,6 +135,34 @@ export default function Footer() {
                 </div>
               </li>
             </ul>
+
+            {/* Small Location Map Box */}
+            <div className={styles.footerMapBox}>
+              <div className={styles.mapBadgeRow}>
+                <span className={styles.mapPinHeader}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  LOCATION MAP
+                </span>
+                <a
+                  href="https://maps.google.com/?q=Eco+Export+Ahmedabad"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mapDirectLink}
+                >
+                  View Large →
+                </a>
+              </div>
+              <div className={styles.iframeWrapper}>
+                <iframe
+                  title="Eco Export Office Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4557.225054738016!2d72.498003776036!3d23.00323431704821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84d50dbb582d%3A0xe3f88d797efe5c3b!2sEco%20Export!5e1!3m2!1sen!2sin!4v1787303265365!5m2!1sen!2sin"
+                  className={styles.mapIframe}
+                  loading="lazy"
+                  allowFullScreen=""
+                  referrerPolicy="strict-origin-when-cross-origin"
+                ></iframe>
+              </div>
+            </div>
           </div>
         </div>
       </div>
